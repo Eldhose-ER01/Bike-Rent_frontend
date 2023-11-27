@@ -4,28 +4,26 @@ import {userApi,adminApi,partnerApi} from'./Api'
 const TIMEOUT_DURATION = 110000;
 
 
-// let  baseurl='http://localhost:5000/'
 const createAxiosInstanceWithInterceptor=(baseurl,tokenName)=>{
-  console.log("uuuuuuuuuuuu");
+    console.log(baseurl,tokenName,"baseeeeeeeeeeeeeeeeee");
     const axiosInstance =axios.create({
         baseURL:baseurl,
         timeout:TIMEOUT_DURATION
     })
+
+ 
   axiosInstance.interceptors.request.use(
     (config) => {
-
-      // Modify the request config (e.g., add authentication headers)
-      // For example, add an authorization token from localStorage:
+      console.log(baseurl,tokenName,"baseeeeeeeeeeeeeeeeee22222222");
       const details = localStorage.getItem(tokenName);
-      const token =details?.token
-
-      if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+      if (details) {
+        config.headers['Authorization'] = `Bearer ${details}`;
       }
       return config;
     },
     (error) => {
       // Handle request errors
+      console.log("error from axios instance--------------");
       return Promise.reject(error);
     }
   );
@@ -36,6 +34,8 @@ const createAxiosInstanceWithInterceptor=(baseurl,tokenName)=>{
       return response;
     },
     (error) => {
+      console.log("Error Response Data:", error.response.data);
+      console.log("Error Response Headers:", error.response.headers);
       if (error.response) {
         // Handle specific HTTP error codes
         if (error.response.status === 401) {

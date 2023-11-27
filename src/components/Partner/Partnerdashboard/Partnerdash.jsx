@@ -7,11 +7,14 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 export default function Partnerdash() {
+  
     const menus=[
         {name:"Dashboard",link:'',icon:MdOutlineDashboard},
         {name:"User",link:'',icon:AiOutlineUser},
-        {name:"Profile",link:'',icon:AiOutlineUser},
-        {name:"Add Bike",link:'',icon:RiMotorbikeFill},
+        {name:"partnerprofile",link:'/partner/partnerprofile',icon:AiOutlineUser},
+        {name:"Add Bike",link:'/partner/addbike',icon:RiMotorbikeFill},
+        {name:"Bike List",link:'/partner/bikelist',icon:RiMotorbikeFill},
+
         {name:"Offer",link:'',icon:AiOutlineUser},
         {name:"Sales",link:'',icon:FiFolder}
     
@@ -53,9 +56,7 @@ export default function Partnerdash() {
         ))}
        </div>
         </div>
-        <div className="m-3 text-xl text-gray-900 font-semibold">
-        Partner Dashboard
-      </div>
+       
       </section>
     </div>
     

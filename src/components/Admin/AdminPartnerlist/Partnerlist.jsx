@@ -15,7 +15,6 @@ export default function Partnerlist() {
   const findUser = async () => {
     try {
       const response = await partnerlist();
-      console.log(response, "logggggggggggg");
       if (response.data.success) {
         setUser(response.data.userdata);
       }
@@ -29,8 +28,10 @@ export default function Partnerlist() {
 
   const bolockorunblock = async (id) => {
     try {
-      const response = await statuschangepartner(id);
-      if (response.data.success) setUser(response.data.userdata);
+      const response = await statuschangepartner(id); // Assuming statuschangepartner is correctly implemented
+      if (response.data.success) {
+        setUser(response.data.userdata);
+      }
     } catch (error) {
       console.log(error.message);
     }

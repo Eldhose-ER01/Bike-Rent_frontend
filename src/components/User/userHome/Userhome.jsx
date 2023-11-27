@@ -1,86 +1,109 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
-import { removeUser } from "../../../redux/Userslice";
+import UserNav from "../Usernavbar/UserNav";
 import { useNavigate } from "react-router-dom";
+import { getbikes } from "../../../configure/Userinterceptor";
+import { useState, useEffect } from "react";
+import Footer from "../Footer/Footer";
 export default function Userhome() {
-  let [open,setOpen]=useState(false)
-  const navigate=useNavigate()
-  const dispatch=useDispatch()
-  const { id }=useSelector((store)=>store.user.userD)
-  // console.log(id,"useeeeeeeeeeeeee");
-  const homelogout = () => {
-    dispatch(removeUser());
-    localStorage.clear();
-    navigate("/login");
+  const [bike, setbike] = useState([]);
+  const navigate = useNavigate();
+  const handleBookNow = () => {
+    navigate("/bikeselect");
   };
-//  const handlelogin = () => {
-//     navigate("/login");
-//   };
 
+  useEffect(() => {
+    const bikelist = async () => {
+      try {
+        const response = await getbikes();
+        if (response.data.success) {
+          setbike(response.data.bikesdata);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    bikelist();
+  }, []);
   return (
-    <div>
-      <div className="w-full relative">
-        <img
-         className="w-full h-screen hidden sm:block blur-3"
-          src="/Images/wallpaperflare.com_wallpaper (2).jpg"
-          alt="Image Description"
-        />
-        <img
-          className="w-full h-screen sm:block md:hidden lg:hidden xl:hidden"
-          src="/Images/majestic-lukas-4dZMVjr99pY-unsplash.jpg"
-          alt="Image Description"
-        />
-      <div className='shadow-md w-full fixed top-0 left-0'>
-      <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7'>
-      <div className='font-bold text-2xl cursor-pointer flex items-center font-[Poppins]  text-gray-800'>
-              Bike Rent
-            </div>
-           
-            <div className='text-3xl absolute right-8 top-6 cursor-pointer md:hidden'>
-      <ion-icon onClick={()=>{
-              
-              
-              setOpen(!open)
+    <div className="w-screen">
+      <div className="hidden md:block ">
+        <UserNav />
+        <div className="relative pt-[5rem] lg:pt-[6rem] w-screen ">
+          <div>
+            <img
+              src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
+              alt=""
+              className="mx-auto"
+            />
 
-            }} name={open ? 'close':'menu'}></ion-icon>
-      </div>
-            <ul className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white  md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 ':'top-[-490px]'}`}>   
-                    
-              <li className="md:ml-8 text-xl md:my-0 my-7">
-                <Link to="/" className="font-semibold">
-                  Home
-                </Link>
-              </li>
-              <li className="md:ml-8 text-xl cursor-pointer md:my-0 my-7">
-                <Link className="font-semibold" to="/bikes">
-                  Bikes
-                </Link>
-              </li>
-              <li className="md:ml-8 text-xl semibold md:my-0 my-7">
-                <Link className="font-semibold" to="/partner/login">Join Us</Link>
-              </li>
-              <li className="md:ml-8 text-xl semibold md:my-0 my-7">
-                <Link className="font-semibold" to="/tarif">Tarif</Link>
-              </li>
-              {id==null ?(
-                <li className="md:ml-8 text-xl semibold md:my-0 my-7">
-                <Link to={'/login'} className="font-semibold" >Login</Link>
-              </li>):(
-              <li className="md:ml-8 text-xl semibold md:my-0 my-7">
-              <Link to={'/login'} className="font-semibold"onClick={homelogout} >Logout</Link>
-            </li>
-              
-              )}
-
-            </ul>
-            <div className="font-bold text-2xl flex items-center font-[Poppins] mr-1 pt-1">
-              Profile
-            </div>
+            <img
+              src="../../../../public/Images/cbr650r.png"
+              alt=""
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 "
+            />
+            <img
+              src="../../../../public/Images/istockphoto-1180824340-612x612-removebg-preview.png"
+              alt=""
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-[10rem] h-40 w-46 scale-50 hover:scale-90 ease-in duration-300 cursor-pointer"
+              onClick={handleBookNow}
+            />
           </div>
         </div>
-       
       </div>
+
+      <div className=" md:hidden ">
+        <UserNav />
+        <div className="pt-[5rem] lg:pt-[6rem] lg:block">
+          <img
+            src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
+            alt=""
+            className="mx-auto"
+          />
+          <img
+            src="'../../../../public/Images/cbr650r.png"
+            alt=""
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 pb-[35rem] md:pb-[18rm] "
+          />
+          <img
+            src="../../../../public/Images/istockphoto-1180824340-612x612-removebg-preview.png"
+            alt=""
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 w-36  pb-[32rem] md:pb-[29rem] hover:scale-90 ease-in duration-100 cursor-pointer"
+            onClick={handleBookNow}
+          />
+        </div>
+      </div>
+
+      <div className="lg:w-screen bg-black flex flex-col items-center">
+        <h1 className="text-green-400 text-4xl mt-8 mb-4 font-extrabold">
+          Bikes Gallery
+        </h1>
+        <div className="flex flex-wrap justify-center">
+          {bike.map((value) => {
+            return (
+              <div key={value.id} className="w-full sm:w-72 h-80 bg-red-550 custom-shadow m-3 rounded-md border-2 border-red-700">
+                <img
+                  src="https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bW90b3JiaWtlfGVufDB8fDB8fHww"
+                  alt=""
+                  className="w-full h-40 object-cover rounded-t-md"
+                />
+                <h1 className="font-bold text-center text-lg uppercase text-white">
+                  {value.Bikename}
+                </h1>
+                <div className="p-3">
+                  <h1 className="font-bold text-green-400">Brand-{value.brand}</h1>
+                  <h1 className="font-bold text-green-400">Engine CC-{value.VehicleCC}</h1>
+                  <h1 className="font-bold text-green-400">Fuel Type-{value.FuelType}</h1>
+                  <h1 className="font-bold text-green-400">
+                   Rent Amount 24 Per Hour
+                  </h1>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+<Footer />
+
     </div>
   );
 }

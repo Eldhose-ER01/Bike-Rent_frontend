@@ -2,7 +2,6 @@ import { userAxiosInstance } from "./Interceptor.jsx";
 
 const Usersignup = async (data) => {
   try {
-    console.log(data, "llllllllllllllllll");
     const response = await userAxiosInstance.post(`/signup`, { data });
     return response;
   } catch (error) {
@@ -12,7 +11,6 @@ const Usersignup = async (data) => {
 const Otpform = async (data) => {
   try {
     const response = await userAxiosInstance.post("/otpsubmit", { data });
-    console.log(response, "oooooooooooooooooooo");
     return response;
   } catch (error) {
     console.log(error.message, "error form front");
@@ -28,7 +26,6 @@ const ResendOTP = async (data) => {
 };
 const Userlogin = async (data) => {
   try {
-    console.log(data, "kkkkkkkkkkkkkkkkkkkkkkk");
     const response = await userAxiosInstance.post("/login", { data });
     return response;
   } catch (error) {
@@ -67,4 +64,76 @@ const resetpassword=async(data)=>{
         console.log(error.message, "error form front");
     }
 }
-export { Usersignup, Otpform, ResendOTP, Userlogin, googleAuth,userEmail,forgetotp,resetpassword };
+const Profiledata=async()=>{
+  try {
+    const response=await userAxiosInstance.get('/profile')
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+  }
+}
+const editProfiledata=async(data)=>{
+  try {
+    const response=await userAxiosInstance.post('/editprofile',{data})
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+  }
+}
+const imageupload=async(id)=>{
+  try {
+    const response=await userAxiosInstance.post('/imageupload',{id})
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+  }
+}
+const imagelicencefront=async(id)=>{
+  try{
+    console.log("hiiiiiiiiiii");
+    const response=await userAxiosInstance.post('/licenseFrontSide',{id})
+    return response
+   }
+   catch(error){
+    console.log(error.message, "error form front");
+
+   }
+}
+const imagelicenceback=async(id)=>{
+  try{
+    console.log("hiiiiiiiiiii");
+    const response=await userAxiosInstance.post('/licenseBackSide',{id})
+    return response
+   }
+   catch(error){
+    console.log(error.message, "error form front");
+
+   }
+}
+const getbikes=async()=>{
+  try {
+    const response=await userAxiosInstance.get('/getbike')
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
+
+
+  export { 
+      Usersignup,
+      Otpform,
+      ResendOTP, 
+      Userlogin,
+      googleAuth,
+      userEmail,
+      forgetotp,
+      resetpassword,
+      Profiledata,
+      editProfiledata,
+      imageupload,
+      imagelicencefront,
+      imagelicenceback,
+      getbikes
+    };

@@ -4,6 +4,8 @@ import Admindash from'../Pages/Admin/Adashboard'
 import UserList from '../Pages/Admin/UserList'
 import PartnerRequist from '../Pages/Admin/PartnerRequist'
 import Partnerlist from '../Pages/Admin/Partnerlist'
+import BikeReq from '../Pages/Admin/BikeReq'
+
 function Adminroutes() {
   return (
     <div>
@@ -13,6 +15,7 @@ function Adminroutes() {
         <Route path='/user'element={<UserList/>}/>
         <Route path='/partnerreq'element={<PartnerRequist />}/>
         <Route path='/Partnerlist'element={<Partnerlist />}/>
+        <Route path='/bikerequest'element={< BikeReq/>}/>
 
         
 

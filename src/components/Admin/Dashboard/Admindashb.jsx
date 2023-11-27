@@ -10,7 +10,7 @@ export default function Admindashb() {
         {name:"User",link:'/admin/user',icon:AiOutlineUser},
         {name:"PartnerRequest",link:'/admin/partnerreq',icon:AiOutlineUser},
         {name:"Partner",link:'/admin/Partnerlist',icon:AiOutlineUser},
-        {name:"Partner Bike",link:'/user',icon:AiOutlineUser},
+        {name:"BikeRequest",link:'/admin/bikerequest',icon:AiOutlineUser},
         {name:"Sales",link:'/user',icon:FiFolder}
     
     ];
@@ -18,7 +18,7 @@ export default function Admindashb() {
   return (
     <div>
       <section className="flex gap-6">
-      <div className={`bg-sky-300 min-h-screen ${open ? "w-72" : "w-16"} duration-500 text-black px-4 font-extrabold`}>
+      <div className={`bg-green-300 min-h-screen ${open ? "w-72" : "w-16"} duration-500 text-black px-4 font-extrabold`}>
        <div className="py-3 flex justify-end">
         <HiMenuAlt3 size={26}
         className="cursor-pointer"

@@ -37,6 +37,10 @@ function LoginForm() {
       if (response.data.success) {
         navigate("/");
        toast.success("Home Page")
+       localStorage.setItem(
+        "token",
+        JSON.stringify(response.data.userdatas.token)
+      );
         dispatch(
           addUser({
             id: response.data.userdatas.id,
@@ -44,10 +48,7 @@ function LoginForm() {
             token: response.data.userdatas.token,
           })
         );
-        localStorage.setItem(
-          "token",
-          JSON.stringify(response.data.userdatas.token)
-        );
+      
       } else if (response.data.Block) {
         setBlock(response.data.Block);
       } else if (response.data.incorrectPassword) {

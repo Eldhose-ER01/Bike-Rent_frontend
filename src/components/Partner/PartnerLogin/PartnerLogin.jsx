@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
-import { addUser } from "../../../redux/Userslice";
+import { addUser } from "../../../redux/Partnerslice";
 import { useForm } from "react-hook-form";
 import { partnerlogin } from '../../../configure/Partnerinterceptor';
 export default function PartnerLogin() {
@@ -20,6 +20,7 @@ export default function PartnerLogin() {
   const[nonPassword,setnonPassword]=useState('')
   const[notemail,setnoEmail]=useState('')
   const[err,seterr]=useState('')
+  const[Block,setBlock]=useState('')
   const navigate=useNavigate()
   const dispatch = useDispatch();
   
@@ -35,7 +36,6 @@ export default function PartnerLogin() {
     try {
       // e.preventDefault()
       const data={email:formvalues.email,password:formvalues.password}
-        console.log(data,"jjjjjjjjjjjjjjjjjjjjjjj");
       const response = await partnerlogin(data);
 
       if (response.data.success) {
@@ -59,6 +59,8 @@ export default function PartnerLogin() {
         setnoEmail(response.data.incorrectemail);
       }else if (response.data.messages) {
         seterr(response.data.messages);
+      }else if (response.data.Block) {
+        setBlock(response.data.Block);
       }
        else {
         console.log("error");
@@ -133,6 +135,7 @@ export default function PartnerLogin() {
               {err && <span style={{ color: "red" }}>{err}</span>}
               <button type="submit" className="w-full text-black bg-sky-500 hover:bg-balck-700 focus:ring-2 focus:outline-none  font-bold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black-600 dark:hover-bg-black-700" 
               onClick={handleSubmit(handlesubmit)}>Sign in</button>
+              <div className='flex justify-center'>{Block && <span style={{ color: "red" }}>{Block}</span>}</div> 
               <p className="text-sm font-light text-blue-900 dark:text-black-400">
                 Don’t have an account yet? <a href="#" className="font-bold text-blue-1000 hover:underline dark:text-black-500"onClick={signup}>Sign up</a>
               </p>

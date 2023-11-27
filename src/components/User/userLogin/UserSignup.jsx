@@ -27,11 +27,20 @@ export default function UserSignup() {
   const [formValues, setFormvalues] = useState(initialValue);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  const validateEmail = (inputEmail) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailRegex.test(inputEmail));
+  };
 
   const handlechange = (e) => {
     const { value, name } = e.target;
     const newValue = value.trim();
-
+  
+    if (name === "email") {
+      validateEmail(newValue);
+    }
     setFormvalues({
       ...formValues,
       [name]: newValue,
@@ -147,7 +156,9 @@ export default function UserSignup() {
                       required=""
                     />
                     <div className="flex justify-center"> {err && <span style={{ color: "red" }}>{err}</span>}</div>
-                    
+                    {!isValidEmail && (
+                      <span style={{ color: "red" }}>Invalid Email Format</span>
+                    )}
                     {errors.email && <span style={{color:'red'}}>Please provide Email</span>}
                   </div>
                   <div>

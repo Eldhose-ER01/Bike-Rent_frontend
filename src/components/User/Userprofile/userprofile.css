@@ -1,0 +1,17 @@
+.height-set{
+    height: 530px;
+}
+.width-set{
+    width:500px;
+}
+.width-sets{
+    width:450px;
+}
+.custom-shadow {
+    box-shadow: 0 4px 6px rgba(45, 44, 44, 0.6);
+  }
+  .common-label {
+    width: 100px; /* Set your desired width */
+    height: 40px; /* Set your desired height */
+    /* Add any additional styling you need for the labels */
+  }
