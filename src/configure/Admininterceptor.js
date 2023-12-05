@@ -18,7 +18,6 @@ const finduser = async () => {
 };
 const statuschangeuser = async (id) => {
   try {
-    console.log("heloooo");
     const response = await adminAxiosInstance.put(`/statuschange?id=${id}`);
     return response;
   } catch (error) {
@@ -27,7 +26,6 @@ const statuschangeuser = async (id) => {
 };
 const partnerdata = async () => {
   try {
-    console.log("hiiiiiiiiiiiiiiiiiii");
     const response = await adminAxiosInstance.get("/partnerreq");
     return response;
   } catch (error) {
@@ -62,7 +60,6 @@ const partnerlist = async () => {
 };
 const statuschangepartner = async (id) => {
   try {
-    console.log("heloooo");
     const response = await adminAxiosInstance.put(`/partnerstatus?id=${id}`);
     return response;
   } catch (error) {
@@ -78,26 +75,43 @@ const bikerequst = async () => {
   }
 };
 
-const bikeacceptdata=async(id)=>{
+const bikeacceptdata = async (id) => {
   try {
-    const response=await adminAxiosInstance.put(`/acceptbike?id=${id}`)
-    return response
+    const response = await adminAxiosInstance.put(`/acceptbike?id=${id}`);
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
   }
-}
-const bikerejected=async(data)=>{
+};
+const bikerejected = async (data) => {
   try {
-    console.log(data,"iddddddddddddddddd");
-    const response=await adminAxiosInstance.put(`/rejectbike?id=${data.id}&&message=${data.message}`);
-    
-    return response
+    const response = await adminAxiosInstance.put(
+      `/rejectbike?id=${data.id}&&message=${data.message}`
+    );
+
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
-
+};
+const bikepatnerlist = async (data) => {
+  try {
+    const response = await adminAxiosInstance.post("/bikepartnerlist", {
+      data,
+    });
+    return response;
+  } catch (error) {
+    console.log(error, "error from stataus change");
+  }
+};
+const statuschangebike = async (id) => {
+  try {
+    const response = await adminAxiosInstance.put(`/blockbike?id=${id}`);
+    return response;
+  } catch (error) {
+    console.log(error, "error from stataus change");
+  }
+};
 export {
   Adminlogin,
   finduser,
@@ -109,5 +123,7 @@ export {
   statuschangepartner,
   bikerequst,
   bikeacceptdata,
-  bikerejected
+  bikerejected,
+  bikepatnerlist,
+  statuschangebike,
 };

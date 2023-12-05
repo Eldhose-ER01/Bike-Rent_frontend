@@ -48,7 +48,7 @@ export default function UserNav() {
                 <Link className="font-semibold" to="/partner/login">Join Us</Link>
               </li>
               <li className="md:ml-8 text-xl semibold md:my-0 my-7">
-                <Link className="font-semibold" to="/profile">Tarif</Link>
+                <Link className="font-semibold" to="/profile">Profile</Link>
               </li>
               {id==null ?(
                 <li className="md:ml-8 text-xl semibold md:my-0 my-7">

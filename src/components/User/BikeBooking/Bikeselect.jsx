@@ -3,15 +3,52 @@ import { FiSearch } from "react-icons/fi";
 import Footer from "../Footer/Footer";
 import { getbikes } from "../../../configure/Userinterceptor";
 import { useState, useEffect } from "react";
+import bikelist, {
+  addBiks,
+  price,
+  districts,
+  citys,
+  States,
+  Search,
+} from "../../../redux/bikelist";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function Bikeselect() {
-  const [bike, setbike] = useState([]);
+  const dispatch = useDispatch();
+  const [district, setDistrict] = useState([]);
+  const [bike, setBike] = useState([]);
+  const [City, setCity] = useState([]);
+  const [states, setStates] = useState([]);
+  const bikes = useSelector((value) => value.BikeSlice);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstIndex = lastItemIndex - itemsPerPage;
+  const thisPageItems = bikes.slice(firstIndex, lastItemIndex);
+
+  const pages = [];
+  for (let i = 1; i <= Math.ceil(bikes.length / itemsPerPage); i++) {
+    pages.push(i);
+  }
 
   useEffect(() => {
     const bikelist = async () => {
       try {
         const response = await getbikes();
         if (response.data.success) {
-          setbike(response.data.bikesdata);
+          const data = response.data.bikesdata;
+          dispatch(addBiks(data));
+          setBike(data);
+          const mapping = data.map((value) => value.ownerid.district);
+          const uniqueCities = Array.from(new Set(mapping));
+          setDistrict(uniqueCities);
+          const findCity = data.map((value) => value.ownerid.city);
+          const uniqueCity = Array.from(new Set(findCity));
+          setCity(uniqueCity);
+          const findState = data.map((value) => value.ownerid.state);
+          const uniqueState = Array.from(new Set(findState));
+          setStates(uniqueState);
         }
       } catch (error) {
         console.error(error);
@@ -19,9 +56,78 @@ export default function Bikeselect() {
     };
 
     bikelist();
-  }, []);
+  }, [dispatch]);
+
+  const handleLowTOHigh = (e) => {
+    const data = e.target.value;
+    dispatch(price(data));
+  };
+
+  const handleDistrict = (e) => {
+    const selectedDistrict = e.target.value;
+    dispatch(addBiks(bike));
+
+    // If a district is selected, filter the cities based on the selected district
+    if (selectedDistrict) {
+      const citiesInDistrict = bike
+        .filter((value) => value.ownerid.district === selectedDistrict)
+        .map((value) => value.ownerid.city);
+      setCity([...new Set(citiesInDistrict)]);
+    } else {
+      // If no district is selected, display all cities
+      const allCities = bike.map((value) => value.ownerid.city);
+      setCity([...new Set(allCities)]);
+    }
+
+    dispatch(districts(selectedDistrict));
+  };
+
+  const handleCity = (e) => {
+    const selectedCity = e.target.value;
+    dispatch(addBiks(bike));
+
+    // If a city is selected, filter the districts based on the selected city
+    if (selectedCity) {
+      const districtsInCity = bike
+        .filter((value) => value.ownerid.city === selectedCity)
+        .map((value) => value.ownerid.district);
+      setDistrict([...new Set(districtsInCity)]);
+      // setcategoryset(selectedCity)
+    } else {
+      // If no city is selected, display all districts
+      const allDistricts = bike.map((value) => value.ownerid.district);
+      setDistrict([...new Set(allDistricts)]);
+    }
+
+    dispatch(citys(selectedCity));
+  };
+
+  const handleSearch = (e) => {
+    dispatch(addBiks(bike));
+    dispatch(Search(e.target.value));
+  };
+
+  const handleState = (e) => {
+    const selectedState = e.target.value;
+    dispatch(addBiks(bike));
+
+    // If a state is selected, filter the districts based on the selected state
+    if (selectedState) {
+      const districtsInState = bike
+        .filter((value) => value.ownerid.state === selectedState)
+        .map((value) => value.ownerid.district);
+      setDistrict([...new Set(districtsInState)]);
+    } else {
+      // If no state is selected, display all districts
+      const allDistricts = bike.map((value) => value.ownerid.district);
+      setDistrict([...new Set(allDistricts)]);
+    }
+
+    dispatch(States(selectedState));
+  };
+
   return (
-    <div className="container">
+    <div className="container ">
       <div className="w-screen h-20 lg:h-24 ">
         <UserNav />
       </div>
@@ -32,6 +138,7 @@ export default function Bikeselect() {
               <input
                 type="text"
                 placeholder="Search..."
+                onChange={handleSearch}
                 className="border-2 border-gray-300 pl-8 pr-2 py-2 ml-2 rounded-md w-44 lg:w-52"
               />
               <div className="absolute left-2 top-2">
@@ -41,44 +148,57 @@ export default function Bikeselect() {
           </div>
 
           <div className="flex items-center ">
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
+            <select
+              onChange={(e) => {
+                handleLowTOHigh(e);
+              }}
+              className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44"
+            >
               <option value="">Select Price</option>
-              <option value="Low">Low To High</option>
-              <option value="High">High To Low</option>
-            </select>
-          </div>
-
-          <div className="flex items-center">
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
-              <option value="">Select category</option>
-              <option value="normalbuike">Normal Bike</option>
-              <option value="Sports">Sports</option>
-              <option value="mud">Mud bike</option>
+              <option value="low">Low To High</option>
+              <option value="high">High To Low</option>
             </select>
           </div>
 
           <div>
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
+            <select
+              onChange={handleState}
+              className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44"
+            >
               <option value="">Select State</option>
-              <option value="normalbuike">Normal Bike</option>
-              <option value="Sports">Sports</option>
-              <option value="mud">Mud bike</option>
+              {states.map((value, index) => (
+                <option key={index} value={value}>
+                  {value}
+                </option>
+              ))}
             </select>
           </div>
+
           <div className="flex items-center">
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
+            <select
+              onChange={handleDistrict}
+              className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44"
+            >
               <option value="">Select District</option>
-              <option value="normalbuike">Normal Bike</option>
-              <option value="Sports">Sports</option>
-              <option value="mud">Mud bike</option>
+              {district.map((value, index) => (
+                <option key={index} value={value}>
+                  {value}
+                </option>
+              ))}
             </select>
           </div>
+
           <div className="flex items-center">
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
+            <select
+              onChange={handleCity}
+              className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44"
+            >
               <option value="">Select City</option>
-              <option value="normalbuike">Normal Bike</option>
-              <option value="Sports">Sports</option>
-              <option value="mud">Mud bike</option>
+              {City.map((value, index) => (
+                <option key={index} value={value}>
+                  {value}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -128,14 +248,14 @@ export default function Bikeselect() {
           Available Bikes
         </h1>
         <div className="flex flex-wrap justify-center">
-          {bike.map((value) => {
+          {thisPageItems.map((value) => {
             return (
               <div
                 key={value.id}
                 className="w-full sm:w-72 h-96 bg-red-550 custom-shadow m-3 rounded-md border-2 border-red-700"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bW90b3JiaWtlfGVufDB8fDB8fHww"
+                  src={value.image}
                   alt=""
                   className="w-full h-40 object-cover rounded-t-md"
                 />
@@ -162,6 +282,26 @@ export default function Bikeselect() {
               </div>
             );
           })}
+        </div>
+        <div>
+          {pages
+            .slice(
+              Math.max(currentPage - 2, 0),
+              Math.min(currentPage + 1, pages.length)
+            )
+            .map((page, index) => (
+              <button
+                onClick={() => setCurrentPage(page)}
+                key={index}
+                className={`font-extrabold p-2 ${
+                  currentPage === page
+                    ? "text-4xl text-sky-300"
+                    : "text-xl text-green-600"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
         </div>
       </div>
 

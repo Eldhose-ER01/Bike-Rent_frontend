@@ -55,16 +55,23 @@ export default function ResetPassword() {
                 >
                   New Password
                 </label>
-                <input
-                  {...register("password", { required: true })}
+                <input    {...register("password", {
+              required: 'Please fill the password',
+              pattern: {
+                value: /^[^\s].*[^\s]$/,
+                message: 'Leading or trailing spaces are not allowed',
+              },
+            })}
                   type="password"
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-                {errors.password && (
-                  <span style={{ color: "red" }}>Please fill in the password</span>
-                )}
+                 {errors.password && (
+            <span className="flex justify-center  text-red-700">
+              {errors.password.message}
+            </span>
+          )}
               </div>
               <div>
                 <label
@@ -73,16 +80,27 @@ export default function ResetPassword() {
                 >
                   Confirm password
                 </label>
-                <input
-                  {...register("passwordd", {
-                    required: true,
-                    validate: (value) => value === password,
-                  })}
+             
+                 <input    {...register("passwordd", {
+                  required: 'Please fill the passwordd',
+                  pattern: {
+                    value: /^[^\s].*[^\s]$/,
+                    message: 'Leading or trailing spaces are not allowed',
+                  },
+                  validate: (value) => value === password,
+                })}
+                 
                   type="password"
                   id="passwordd"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
+                   {errors.passwordd && (
+            <span className="flex justify-center  text-red-700">
+              {errors.passwordd.message}
+            </span>
+          )}
+
                  {notpass && (
                   <span style={{ color: "red" }}>{notpass}</span>
                 )}

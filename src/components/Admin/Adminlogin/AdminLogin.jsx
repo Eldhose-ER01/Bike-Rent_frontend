@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addadmin } from "../../../redux/Adminslice";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 export default function AdminLogin() {
   const {
     register,
@@ -30,20 +31,22 @@ export default function AdminLogin() {
     try {
       const response = await Adminlogin(formvalues);
       if (response.data.success) {
-        navigate("/admin");
         dispatch(
           addadmin({
-            token: response.data.userdata.token,
-            email: response.data.userdata.email,
+            token: response.data.admindata.token,
+            email: response.data.admindata.email,
           })
         );
+
         localStorage.setItem(
           "token",
-          JSON.stringify(response.data.userdata.token)
+          JSON.stringify(response.data.admindata.token)
         );
       } else if (response.data.messages) {
         setErr(response.data.messages);
       }
+
+      navigate("/admin");
     } catch (error) {
       console.log(error);
     }
@@ -112,8 +115,7 @@ export default function AdminLogin() {
                     <span style={{ color: "red" }}>Please fill password</span>
                   )}
                   <div className="flex justify-center">
-
-                  {err && <span style={{ color: "red" }}>{err}</span>}
+                    {err && <span style={{ color: "red" }}>{err}</span>}
                   </div>
                 </div>
                 <div className="flex items-center justify-between">

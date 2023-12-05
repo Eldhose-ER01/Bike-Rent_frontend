@@ -43,7 +43,6 @@ export default function Bikeverify() {
 
   const bikeaccept = async (id) => {
     try {
-      console.log(id, "iddddddddddddddddddddddddddddd");
       const response = await bikeacceptdata(id);
       if (response.data.success) {
         refresh == true ? setRefresh(false) : setRefresh(true);

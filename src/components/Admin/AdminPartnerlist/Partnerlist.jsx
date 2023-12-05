@@ -1,17 +1,16 @@
 import { useState } from "react";
 import {
-    partnerlist,
+  partnerlist,
   statuschangepartner,
+  bikepatnerlist,
 } from "../../../configure/Admininterceptor";
 import { useEffect } from "react";
 import Dashboard from "../Dashboard/Admindashb";
-
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function Partnerlist() {
   const [user, setUser] = useState([]);
-
+  const navigate = useNavigate();
   const findUser = async () => {
     try {
       const response = await partnerlist();
@@ -26,6 +25,10 @@ export default function Partnerlist() {
     findUser();
   }, []);
 
+  const viewbikes = (id) => {
+    navigate("/admin/partnerbikeslists", { state: { id } });
+  };
+
   const bolockorunblock = async (id) => {
     try {
       const response = await statuschangepartner(id); // Assuming statuschangepartner is correctly implemented
@@ -36,6 +39,7 @@ export default function Partnerlist() {
       console.log(error.message);
     }
   };
+
   return (
     <div style={{ display: "flex" }} className="w-screen">
       <div style={{ flex: 1 }}>
@@ -84,6 +88,12 @@ export default function Partnerlist() {
                       >
                         Status
                       </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3  text-xs font-bold text-left text-gray-800 uppercase "
+                      >
+                        Bikes
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -131,6 +141,17 @@ export default function Partnerlist() {
                                   Unblock
                                 </button>
                               )}
+                            </td>
+                            <td className="px-6 py-4 text-sm font-medium  text-left whitespace-nowrap">
+                              <button
+                                type="button"
+                                className=" w-[100px] mtext-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900"
+                                onClick={() => {
+                                  viewbikes(user._id);
+                                }}
+                              >
+                                View Bikes
+                              </button>
                             </td>
                           </tr>
                         );

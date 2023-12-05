@@ -24,8 +24,7 @@ export default function Userlist() {
   const bolockorunblock = async (id) => {
     try {
       const response = await statuschangeuser(id);
-      if (response.data.success)
-       setUser(response.data.userdata);
+      if (response.data.success) setUser(response.data.userdata);
     } catch (error) {
       console.log(error.message);
     }

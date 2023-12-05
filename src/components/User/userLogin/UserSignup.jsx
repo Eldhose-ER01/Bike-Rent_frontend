@@ -14,9 +14,9 @@ export default function UserSignup() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
-  const[err,setErr]=useState()
+  const [err, setErr] = useState();
   const initialValue = {
     fname: "",
     lname: "",
@@ -37,7 +37,7 @@ export default function UserSignup() {
   const handlechange = (e) => {
     const { value, name } = e.target;
     const newValue = value.trim();
-  
+
     if (name === "email") {
       validateEmail(newValue);
     }
@@ -48,21 +48,18 @@ export default function UserSignup() {
   };
 
   const handlesubmit = async () => {
-    
     try {
       const response = await Usersignup(formValues);
       console.log("response : ", response);
       if (response.data.success) {
         navigate("/otp", { state: formValues });
-      }
-      else {
+      } else {
         console.log("errorm");
       }
 
-     if(response.data.errorMessage){
-      setErr(response.data.errorMessage);
+      if (response.data.errorMessage) {
+        setErr(response.data.errorMessage);
       }
-   
     } catch (error) {
       console.log(error);
     }
@@ -93,7 +90,7 @@ export default function UserSignup() {
           response.data.message === "authentication failed"
         ) {
           navigate("/");
-          toast.success("Enterd in to Home page")
+          toast.success("Enterd in to Home page");
         }
       }
     } catch (error) {
@@ -117,7 +114,14 @@ export default function UserSignup() {
                 </h1>
                 <form className="space-y-4 md:space-y-6" action="#">
                   <div>
-                    <input {...register("fname", { required: true })}
+                    <input
+                      {...register("fname", {
+                        required: "Please fill the firstname",
+                        pattern: {
+                          value: /^[^\s].*[^\s]$/,
+                          message: "Leading or trailing spaces are not allowed",
+                        },
+                      })}
                       type="text"
                       name="fname"
                       id="fname"
@@ -127,11 +131,21 @@ export default function UserSignup() {
                       placeholder="Enter Your First Name"
                     />
 
-                    {errors.fname && <span style={{color:'red'}}>Please fill the firstname</span>}
+                    {errors.fname && (
+                      <span className="flex justify-center  text-red-700">
+                        {errors.fname.message}
+                      </span>
+                    )}
                   </div>
                   <div>
                     <input
-                     {...register("lname", { required: true })}
+                      {...register("lname", {
+                        required: "Please fill the lastname",
+                        pattern: {
+                          value: /^[^\s].*[^\s]$/,
+                          message: "Leading or trailing spaces are not allowed",
+                        },
+                      })}
                       type="text"
                       name="lname"
                       id="lname"
@@ -141,11 +155,21 @@ export default function UserSignup() {
                       placeholder="Enter Your Last Name"
                       required=""
                     />
-                    {errors.lname && <span style={{color:'red'}}>Please fill the lastname</span>}
+                    {errors.lname && (
+                      <span className="flex justify-center  text-red-700">
+                        {errors.lname.message}
+                      </span>
+                    )}{" "}
                   </div>
                   <div>
                     <input
-                      {...register("email", { required: true })}
+                      {...register("email", {
+                        required: "Please fill the email",
+                        pattern: {
+                          value: /^[^\s].*[^\s]$/,
+                          message: "Leading or trailing spaces are not allowed",
+                        },
+                      })}
                       type="email"
                       name="email"
                       id="email"
@@ -155,15 +179,28 @@ export default function UserSignup() {
                       placeholder="Enter Your Email"
                       required=""
                     />
-                    <div className="flex justify-center"> {err && <span style={{ color: "red" }}>{err}</span>}</div>
+                    {errors.fname && (
+                      <span className="flex justify-center  text-red-700">
+                        {errors.fname.message}
+                      </span>
+                    )}
+                    <div className="flex justify-center">
+                      {" "}
+                      {err && <span style={{ color: "red" }}>{err}</span>}
+                    </div>
                     {!isValidEmail && (
                       <span style={{ color: "red" }}>Invalid Email Format</span>
                     )}
-                    {errors.email && <span style={{color:'red'}}>Please provide Email</span>}
                   </div>
                   <div>
                     <input
-                       {...register("phone", { required: true })}
+                      {...register("phone", {
+                        required: "Please fill the phone",
+                        pattern: {
+                          value: /^[^\s].*[^\s]$/,
+                          message: "Leading or trailing spaces are not allowed",
+                        },
+                      })}
                       type="phone"
                       name="phone"
                       id="phone"
@@ -173,12 +210,22 @@ export default function UserSignup() {
                       placeholder="Enter Your Mob"
                       required=""
                     />
-                    {errors.phone && <span style={{color:'red'}}>Please fill the mobile no</span>}
+                    {errors.phone && (
+                      <span className="flex justify-center  text-red-700">
+                        {errors.phone.message}
+                      </span>
+                    )}
                   </div>
 
                   <div>
                     <input
-                     {...register("password", { required: true })}
+                      {...register("password", {
+                        required: "Please fill the password",
+                        pattern: {
+                          value: /^[^\s].*[^\s]$/,
+                          message: "Leading or trailing spaces are not allowed",
+                        },
+                      })}
                       type="password"
                       name="password"
                       id="password"
@@ -188,7 +235,11 @@ export default function UserSignup() {
                       placeholder="Enter Your Password"
                       required=""
                     />
-                     {errors.password && <span style={{color:'red'}}>Please fill the password</span>}
+                    {errors.password && (
+                      <span className="flex justify-center  text-red-700">
+                        {errors.password.message}
+                      </span>
+                    )}
                   </div>
 
                   <button
