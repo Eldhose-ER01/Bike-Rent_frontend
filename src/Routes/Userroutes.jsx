@@ -17,7 +17,9 @@ import Editprofile from "../Pages/User/Editprofile";
 import SelectBooking from "../Pages/User/SelectBooking";
 import Page404notfind from "../Pages/ErrrorPages/Page404notfind";
 import ServerErr from "../Pages/ErrrorPages/ServerErr";
-
+import BikeBookingPage from "../Pages/User/BikeBooking";
+import BookingSucess from "../Pages/User/BookingSucess";
+import BookingCancels from "../Pages/User/BookingCancels";
 export default function Userroutes() {
   const dispatch = useDispatch();
   const checkIfUser = async (token) => {
@@ -68,6 +70,8 @@ export default function Userroutes() {
         <Route path="/googleauth" element={<Google />} />
         <Route path="/submitemail" element={<EmailSubmit />} />
         <Route path="/resetemail" element={<ResetPage />} />
+        <Route path='/bikebooking'element={<BikeBookingPage/>}/>
+        <Route path='/successbooking'element={<BookingSucess/>}/>
         <Route
           path="/forgetotp"
           element={userToken ? <Navigate to="/" /> : <ForgetOtp />}
@@ -80,6 +84,8 @@ export default function Userroutes() {
           path="/bikeselect"
           element={userToken ? <SelectBooking /> : <Userlogin />}
         />
+        <Route path="/bookingcancel" element={<BookingCancels />} />
+
         <Route path="/error404" element={<Page404notfind />} />
         <Route path="/error500" element={<ServerErr />} />
       </Routes>

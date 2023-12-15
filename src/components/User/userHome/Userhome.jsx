@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getbikes } from "../../../configure/Userinterceptor";
 import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
+import toast from "react-hot-toast";
 
 export default function Userhome() {
   const [bike, setbike] = useState([]);
@@ -26,7 +27,9 @@ export default function Userhome() {
   useEffect(() => {
     const bikelist = async () => {
       try {
+        toast.success("data")
         const response = await getbikes();
+
         if (response.data.success) {
           setbike(response.data.bikesdata);
         }

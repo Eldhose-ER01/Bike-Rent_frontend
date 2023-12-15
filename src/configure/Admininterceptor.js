@@ -74,6 +74,14 @@ const bikerequst = async () => {
     console.log(error, "error from stataus change");
   }
 };
+const bikerequstview = async (id) => {
+  try {
+    const response = await adminAxiosInstance.get(`/bikerequstview?id=${id}`);
+    return response;
+  } catch (error) {
+    console.log(error, "error from stataus change");
+  }
+};
 
 const bikeacceptdata = async (id) => {
   try {
@@ -126,4 +134,5 @@ export {
   bikerejected,
   bikepatnerlist,
   statuschangebike,
+  bikerequstview
 };

@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { userAxiosInstance } from "./Interceptor.jsx";
 
 const Usersignup = async (data) => {
@@ -106,12 +107,32 @@ const imagelicenceback = async (id) => {
 };
 const getbikes = async () => {
   try {
+
     const response = await userAxiosInstance.get("/getbike");
     return response;
   } catch (error) {
     console.log(error.message, "error form front");
   }
 };
+const Datesfind=async(data)=>{
+  try {
+    const response = await userAxiosInstance.post("/datesfind",{data});
+    return response;
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
+
+const Bookingsdatas=async(data)=>{
+  try {
+    const response = await userAxiosInstance.post("/create-checkout-session",{data});
+    return response;
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
 
 export {
   Usersignup,
@@ -128,4 +149,6 @@ export {
   imagelicencefront,
   imagelicenceback,
   getbikes,
+  Datesfind,
+  Bookingsdatas
 };

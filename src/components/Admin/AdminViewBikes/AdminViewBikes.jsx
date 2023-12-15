@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   bikepatnerlist,
   statuschangebike,
@@ -13,7 +14,7 @@ export default function AdminViewBikes() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [refresh, setRefresh] = useState(true);
-
+  const navigate=useNavigate()
   const lastItemIndex = currentPage * itemsPerPage;
   const firstIndex = lastItemIndex - itemsPerPage;
   const thisPageItems = bike.slice(firstIndex, lastItemIndex);
@@ -32,6 +33,10 @@ export default function AdminViewBikes() {
     finddata();
   }, [refresh]);
 
+
+  const returnpage=()=>{
+    navigate('/admin/Partnerlist')
+  }
   const bolockorunblock = async (id) => {
     try {
       const response = await statuschangebike(id);
@@ -47,8 +52,8 @@ export default function AdminViewBikes() {
         <img
           src="../../../../public/Images/pngwing.com.png"
           className="w-14 h-14 pt-3 pl-3 "
-          alt="ggggggggggg"
-        />
+          alt="image"
+        onClick={returnpage}/>
       </div>
       <div className="container mt-5 pr-10">
         <h1 className="font-extrabold font-serif flex justify-center text-3xl ">

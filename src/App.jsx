@@ -19,7 +19,7 @@ function App() {
 />
     <Router>
       <Routes>
-
+       
         <Route path='/*'element={<User/>}/>
         <Route path='/partner/*'element={<Partner/>}/>
         <Route path='/admin/*'element={<Admin/>}/>

@@ -57,7 +57,7 @@ export default function Partnerroutes() {
         />
         <Route
           path="/login"
-          element={userToken ? <PartnerLogin /> : <Partnerdashboard />}
+          element={userToken ? <Partnerdashboard /> : <PartnerLogin />}
         />
         <Route
           path="/signup"

@@ -10,7 +10,6 @@ import { useForm } from "react-hook-form";
 export default function Addbike() {
   const data = useSelector((state) => state.partner.partnerD);
   const [loader, setLoader] = useState(false);
-  console.log(data, "  kitti");
 
   const {
     register,
@@ -50,7 +49,6 @@ export default function Addbike() {
       formData
     ).then((response) => {
       data = response.data["secure_url"];
-      console.log(data, "ddddddddddddddddddddddddddd");
     });
     return data;
   };
@@ -70,13 +68,12 @@ export default function Addbike() {
   };
 
   const handleSubmits = async () => {
-    // e.preventDefault();
-    console.log("Handling submit...");
     try {
       const response = await partnerbikeadd(bikeData);
       if (response.data.success) {
         toast.success("value is adding");
-      
+        window.location.reload()
+        
       }
       if(response.data.messages){
         setErr(response.data.messages);
@@ -86,10 +83,7 @@ export default function Addbike() {
     }
   };
 
-  useEffect(() => {
-    
-  }, [bikeData])
-
+ 
   return (
     <div
       className={

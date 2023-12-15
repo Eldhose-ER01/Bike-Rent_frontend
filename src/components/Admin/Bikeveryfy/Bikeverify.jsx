@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { bikerequst } from "../../../configure/Admininterceptor";
+import { bikerequst,bikeacceptdata,bikerejected,bikerequstview } from "../../../configure/Admininterceptor";
 import Dashboard from "../Dashboard/Admindashb";
 import "./shadow.css";
 import toast from "react-hot-toast";
-import {
-  bikeacceptdata,
-  bikerejected,
-} from "../../../configure/Admininterceptor";
 export default function Bikeverify() {
   const [ModalVisibles, setIsModalVisibles] = useState(false);
 
@@ -15,21 +11,30 @@ export default function Bikeverify() {
   };
 
   const hideModals = () => {
-    setIsModalVisibles(false);
+    setIsModalVisibles(false)
   };
 
   const [bike, setBike] = useState([]);
   const [message, setMessage] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const[viewbike,setViewbike]=useState([])
 
   const handleChange = (event) => {
     setMessage(event.target.value);
   };
 
-  const toggleModal = () => {
-    setModalVisible(!modalVisible);
+  const toggleModal = async(id) => {
+    const response = await bikerequstview(id);
+    if (response.data.success) {
+      setViewbike([response.data.bikedata]);
+      setModalVisible(!modalVisible);
+    }
+   
   };
+  const toglehandle=()=>{
+    setModalVisible(!modalVisible);
+  }
 
   const findbikedata = async () => {
     const response = await bikerequst();
@@ -37,6 +42,7 @@ export default function Bikeverify() {
       setBike(response.data.bikedata);
     }
   };
+ 
   useEffect(() => {
     findbikedata();
   }, [refresh]);
@@ -45,7 +51,7 @@ export default function Bikeverify() {
     try {
       const response = await bikeacceptdata(id);
       if (response.data.success) {
-        refresh == true ? setRefresh(false) : setRefresh(true);
+        refresh == true ? setRefresh(false) : setRefresh(true)
         toast.success("bike accept");
       }
     } catch (error) {
@@ -61,8 +67,10 @@ export default function Bikeverify() {
       };
       const response = await bikerejected(data);
       if (response.data.success) {
-        refresh == true ? setRefresh(false) : setRefresh(true);
-        toast.success("bike rejectd");
+        refresh === true ? setRefresh(false) : setRefresh(true);
+        hideModals()
+        setMessage("")
+        toast.success("bike rejected")
       }
     } catch (error) {
       console.log(error);
@@ -238,7 +246,9 @@ export default function Bikeverify() {
                             <td className="px-6 py-4 text-left whitespace-nowrap">
                               {/* Modal toggle */}
                               <button
-                                onClick={toggleModal}
+                                onClick={()=>{
+                                  toggleModal(bike._id)
+                                }}
                                 className="w-[100px] text-green-400 hover:text-white border border-green-400 hover:bg-sky-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-sky-300 dark:text-black-300 dark:hover:text-white dark:hover:bg-green-400 dark:focus:ring-sky-200"
                                 type="button"
                               >
@@ -246,29 +256,38 @@ export default function Bikeverify() {
                               </button>
 
                               {/* Main modal */}
-                              {modalVisible && (
-                                <div
+                              
+                            </td>
+                          </tr>
+                        )
+                      })}
+                      
+                  </tbody>
+                </table>
+                {modalVisible ?
+                                viewbike.map((value,index)=>(
+                                <div key={index}
                                   className="fixed top-0 right-0 left-0 z-50 flex overflow-y-auto overflow-x-hidden justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
                                   tabIndex="-1"
                                   aria-hidden="true"
-                                >
+                                 >
                                   <div className="relative p-4 w-full max-w-2xl max-h-full custom-shadow">
                                     {/* Modal content */}
                                     <div className="relative bg-white rounded-lg shadow dark:bg-white-300 ">
                                       {/* Modal header */}
                                       <div>
                                         <img
-                                          src={bike.image}
+                                          src={value.image}
                                           alt=""
                                           className="w-20 h-20 mt-2"
                                         />
                                       </div>
                                       <div className="flex items-center justify-between p-4 md:p-3 border-b rounded-t dark:border-gray-600">
                                         <h3 className="text-xl font-semibold text-gray-900 dark:text-black">
-                                          {bike.Bikename}
+                                          {value.Bikename}
                                         </h3>
                                         <button
-                                          onClick={toggleModal}
+                                          onClick={toglehandle}
                                           type="button"
                                           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                           data-modal-hide="default-modal"
@@ -295,29 +314,29 @@ export default function Bikeverify() {
                                       <div className="p-4 md:p-5 space-y-4">
                                         <p className="text-base leading-relaxed text-black dark:text-black">
                                           <h1 className="font-semibold">
-                                            Brand:{bike.brand}
+                                            Brand:{value.brand}
                                           </h1>
                                           <h1 className="font-semibold">
-                                            Category:{bike.Category}
+                                            Category:{value.Category}
                                           </h1>
                                           <h1 className="font-semibold">
-                                            FuelType:{bike.FuelType}
+                                            FuelType:{value.FuelType}
                                           </h1>
                                           <h1 className="font-semibold">
-                                            VehicleCC:{bike.VehicleCC}
+                                            VehicleCC:{value.VehicleCC}
                                           </h1>
                                           <h1 className="font-semibold">
-                                            Bike Number:{bike.platenumber}
+                                            Bike Number:{value.platenumber}
                                           </h1>
                                           <h1 className="font-semibold">
-                                            RentPerDay:{bike.RentPerDay}
+                                            RentPerDay:{value.RentPerDay}
                                           </h1>
                                         </p>
                                       </div>
                                       {/* Modal footer */}
                                       <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                         <button
-                                          onClick={toggleModal}
+                                          onClick={toglehandle}
                                           type="button"
                                           className="w-[100px] text-green-400 hover:text-white border border-green-400 hover:bg-sky-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-sky-300 dark:text-black-300 dark:hover:text-white dark:hover:bg-green-400 dark:focus:ring-sky-200"
                                         >
@@ -327,13 +346,9 @@ export default function Bikeverify() {
                                     </div>
                                   </div>
                                 </div>
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
+                                 ))  :''
+                                           
+                } 
               </div>
             </div>
           </div>

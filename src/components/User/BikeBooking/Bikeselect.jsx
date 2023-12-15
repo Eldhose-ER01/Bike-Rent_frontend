@@ -1,7 +1,8 @@
 import UserNav from "../Usernavbar/UserNav";
 import { FiSearch } from "react-icons/fi";
 import Footer from "../Footer/Footer";
-import { getbikes } from "../../../configure/Userinterceptor";
+import { useNavigate } from "react-router-dom";
+import { getbikes, Datesfind } from "../../../configure/Userinterceptor";
 import { useState, useEffect } from "react";
 import bikelist, {
   addBiks,
@@ -12,6 +13,7 @@ import bikelist, {
   Search,
 } from "../../../redux/bikelist";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 export default function Bikeselect() {
   const dispatch = useDispatch();
@@ -19,9 +21,21 @@ export default function Bikeselect() {
   const [bike, setBike] = useState([]);
   const [City, setCity] = useState([]);
   const [states, setStates] = useState([]);
+  const [datecity, setdatecity] = useState("");
   const bikes = useSelector((value) => value.BikeSlice);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [Startingdate, Setstartingdate] = useState();
+  const [Endingdate, Setendingdate] = useState();
+
+  const [checkState, setCheckState] = useState("check");
+  const [checkDistrict, setcheckDistrict] = useState("check");
+
+  const [startime, Setstartime] = useState();
+  const [Endtartime, Setendtime] = useState();
+  const [refresh, setrefresh] = useState(false);
+  const [apply, setApply] = useState(false);
+  const navigate = useNavigate();
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstIndex = lastItemIndex - itemsPerPage;
@@ -56,7 +70,69 @@ export default function Bikeselect() {
     };
 
     bikelist();
-  }, [dispatch]);
+  }, [dispatch, refresh]);
+
+  const datesfind = async () => {
+    try {
+      if (startime == null) {
+        toast.error("please add start time");
+      } else if (Startingdate == null) {
+        toast.error("please add start Date");
+      } else if (Endtartime == null) {
+        toast.error("please add Drop Time");
+      } else if (Endingdate == null) {
+        toast.error("please add Dend Date");
+      } else if (datecity == "") {
+        toast.error("please Select City");
+      } else if (checkDistrict == "check") {
+        toast.error("please Select District");
+      } else if (states.length == null) {
+        toast.error("please Select State");
+      } else if (Endingdate < Startingdate) {
+        toast.error("please Select properdate");
+        return;
+      } else if (startime >= Endtartime && Startingdate == Endingdate) {
+        toast.error("please Select proper Time");
+        return;
+      } else if (checkState == "check") {
+        toast.error("please Select State");
+      } else {
+        const data = {
+          picktime: startime,
+          pickupdate: Startingdate,
+          dropdate: Endingdate,
+          DropTime: Endtartime,
+          city: datecity,
+        };
+        const response = await Datesfind(data);
+        if (response.data.success) {
+          toast.success("Applyed");
+          setApply(true);
+          dispatch(addBiks(response.data.bikedata));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const pickupdate = (e) => {
+    const data = e.target.value;
+    Setstartingdate(data);
+  };
+
+  const picktime = (e) => {
+    const data = e.target.value;
+    Setstartime(data);
+  };
+  const dropdate = (e) => {
+    const data = e.target.value;
+    Setendingdate(data);
+  };
+  const DropTime = (e) => {
+    const data = e.target.value;
+    Setendtime(data);
+  };
 
   const handleLowTOHigh = (e) => {
     const data = e.target.value;
@@ -65,13 +141,17 @@ export default function Bikeselect() {
 
   const handleDistrict = (e) => {
     const selectedDistrict = e.target.value;
+    setcheckDistrict(selectedDistrict);
     dispatch(addBiks(bike));
 
     // If a district is selected, filter the cities based on the selected district
     if (selectedDistrict) {
       const citiesInDistrict = bike
         .filter((value) => value.ownerid.district === selectedDistrict)
-        .map((value) => value.ownerid.city);
+        .map((value) => {
+          console.log(value);
+          return value.ownerid.city;
+        });
       setCity([...new Set(citiesInDistrict)]);
     } else {
       // If no district is selected, display all cities
@@ -84,6 +164,8 @@ export default function Bikeselect() {
 
   const handleCity = (e) => {
     const selectedCity = e.target.value;
+    setCheckState(selectedCity);
+    setdatecity(e.target.value);
     dispatch(addBiks(bike));
 
     // If a city is selected, filter the districts based on the selected city
@@ -113,6 +195,7 @@ export default function Bikeselect() {
 
     // If a state is selected, filter the districts based on the selected state
     if (selectedState) {
+      toast.success(selectedState);
       const districtsInState = bike
         .filter((value) => value.ownerid.state === selectedState)
         .map((value) => value.ownerid.district);
@@ -126,12 +209,30 @@ export default function Bikeselect() {
     dispatch(States(selectedState));
   };
 
+  const booking = (bikedetail) => {
+    if (!apply) {
+      toast.error("please Click Apply Button");
+      return;
+    } else {
+      const bookingData = {
+        picktime: startime,
+        pickupdate: Startingdate,
+        dropdate: Endingdate,
+        DropTime: Endtartime,
+        city: datecity,
+        BikeId: bikedetail,
+      };
+      navigate("/bikebooking", {
+        state: bookingData,
+      });
+    }
+  };
   return (
     <div className="container ">
-      <div className="w-screen h-20 lg:h-24 ">
+      <div className="h-20 lg:h-24 ">
         <UserNav />
       </div>
-      <div className="w-screen bg-red-600">
+      <div className=" bg-red-600">
         <div className="flex flex-wrap sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 p-4">
           <div className="flex items-center">
             <div className="relative">
@@ -203,47 +304,80 @@ export default function Bikeselect() {
           </div>
         </div>
       </div>
-      <div className="w-screen bg-red-600 mt-1">
+      <div className=" bg-red-600 mt-1">
         <div className="flex flex-wrap sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 p-4">
           <div className="flex items-center">
             <input
               type="date"
+              onChange={pickupdate}
               className="border-2 border-gray-300 ml-2 p-2 rounded-md"
+              min={new Date().toISOString().split("T")[0]}
             />
           </div>
 
           <div className="flex items-center">
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
+            <select
+              onChange={picktime}
+              className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44"
+            >
               <option value="">Select PickUpTime</option>
-              <option value="normalbuike">Normal Bike</option>
-              <option value="Sports">Sports</option>
-              <option value="mud">Mud bike</option>
+              <option value="06:00 AM">06:00 AM</option>
+              <option value="07:00 AM">07:00 AM</option>
+              <option value="08:00 AM">08:00 AM</option>
+              <option value="09:00 AM">09:00 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="01:00 PM">01:00 PM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="04:00 PM">04:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+              <option value="06:00 PM">06:00 PM</option>
             </select>
           </div>
 
           <div className="flex items-center">
             <input
               type="date"
+              onChange={dropdate}
               className="border-2 border-gray-300 ml-2 p-2 rounded-md"
+              min={new Date().toISOString().split("T")[0]}
             />
           </div>
 
           <div className="flex items-center">
-            <select className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44">
+            <select
+              onChange={DropTime}
+              className="border-2 border-gray-300 ml-2 p-2 rounded-md w-44"
+            >
               <option value="">Select DropTime</option>
-              <option value="normalbuike">Normal Bike</option>
-              <option value="Sports">Sports</option>
-              <option value="mud">Mud bike</option>
+              <option value="06:00 AM">06:00 AM</option>
+              <option value="07:00 AM">07:00 AM</option>
+              <option value="08:00 AM">08:00 AM</option>
+              <option value="09:00 AM">09:00 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+              <option value="12:00 PM">12:00 PM</option>
+              <option value="01:00 PM">01:00 PM</option>
+              <option value="02:00 PM">02:00 PM</option>
+              <option value="03:00 PM">03:00 PM</option>
+              <option value="04:00 PM">04:00 PM</option>
+              <option value="05:00 PM">05:00 PM</option>
+              <option value="06:00 PM">06:00 PM</option>
             </select>
           </div>
 
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md"
+            onClick={datesfind}
+          >
             Apply
           </button>
         </div>
       </div>
 
-      <div className=" lg:w-screen   bg-black flex flex-col items-center">
+      <div className="   bg-black flex flex-col items-center">
         <h1 className="text-green-400 text-4xl mt-8 mb-4 font-extrabold">
           Available Bikes
         </h1>
@@ -275,9 +409,14 @@ export default function Bikeselect() {
                     Rent-{value.RentPerDay}
                   </h1>
                   <h1 className="font-bold  text-white">Amount 24 Per Hour</h1>
-                  <h1 className="font-bold text-white text-center mt-4 box-border h-10 w-full bg-red-600 md:w-64 pt-2 border border-sky-400 hover:bg-sky-500 transition-colors duration-300 ease-in-out rounded cursor-pointer">
-                    Book Now
-                  </h1>
+                  <button>
+                    <h1
+                      className="font-bold text-white text-center mt-4 box-border h-10 w-full bg-red-600 md:w-64 pt-2 border border-sky-400 hover:bg-sky-500 transition-colors duration-300 ease-in-out rounded cursor-pointer"
+                      onClick={() => booking(value)}
+                    >
+                      Book Now
+                    </h1>
+                  </button>
                 </div>
               </div>
             );

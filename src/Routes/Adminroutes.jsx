@@ -14,7 +14,7 @@ import axios from "axios";
 
 function Adminroutes() {
   const dispatch = useDispatch();
-  const [chechAdmin, setChedkAdmin] = useState();
+  const [checkAdmin, setChedkAdmin] = useState();
   // Optional chaining to prevent errors
   const admin = useSelector((store) => store.admin.adminD);
   const admintoken = admin.token;
@@ -47,8 +47,13 @@ function Adminroutes() {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
+    dispatch(
+      addadmin({
+        token: token,
+      })
+    );
     token && checkIfadmin(token);
-  }, [admintoken]);
+  }, []);
 
   // Add a loading or fallback state for the initial render
   if (admintoken === undefined) {
@@ -58,32 +63,36 @@ function Adminroutes() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={admintoken ? <Admindash /> : <Adminlogin />} />
-
+     
+ <Route
+ path="/"
+ element={admintoken ? <Admindash /> : <Adminlogin />}
+/>
         <Route
           path="/login"
-          element={admintoken ? <Adminlogin /> : <Admindash />}
-        />
+          element={admintoken ? <Admindash /> : <Adminlogin />}/>
+        
         <Route
           path="/user"
-          element={admintoken ? <UserList /> : <Adminlogin />}
-        />
+          element={admintoken ? <UserList /> : <Adminlogin />}/>
+
+        
         <Route
           path="/partnerreq"
-          element={admintoken ? <PartnerRequist /> : <Adminlogin />}
-        />
+          element={admintoken ? <PartnerRequist /> : <Adminlogin />}/>
+        
         <Route
           path="/Partnerlist"
-          element={admintoken ? <Partnerlist /> : <Adminlogin />}
-        />
+          element={admintoken ? <Partnerlist /> : <Adminlogin />}/>        
         <Route
           path="/bikerequest"
-          element={admintoken ? <BikeReq /> : <Adminlogin />}
-        />
+          element={admintoken ? <BikeReq /> : <Adminlogin />}/>        
+        
         <Route
           path="/partnerbikeslists"
-          element={admintoken ? <AdminViewsBikes /> : <Adminlogin />}
-        />
+         element={admintoken ? <AdminViewsBikes /> : <Adminlogin />}/>        
+
+        
       </Routes>
     </div>
   );

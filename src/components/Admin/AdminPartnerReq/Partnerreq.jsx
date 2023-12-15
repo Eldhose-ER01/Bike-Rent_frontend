@@ -31,7 +31,6 @@ export default function Partnerreq() {
     setModalOpen(false);
   };
   useEffect(() => {
-    toast.success("entering into request");
     const findpartner = async () => {
       try {
         const response = await partnerdata();
@@ -57,7 +56,6 @@ export default function Partnerreq() {
   const acceptreq = async (id) => {
     try {
       const response = await partnerAccept(id);
-      console.log(response.data, "response from making the change");
       if (response.data.success) {
         toast.success("Partner is Accepted");
         refresh == true ? setRefresh(false) : setRefresh(true);

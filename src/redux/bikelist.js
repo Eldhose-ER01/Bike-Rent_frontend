@@ -33,6 +33,7 @@ const BikeSlice = createSlice({
       if (action.payload == "") {
         return state;
       } else {
+        console.log(state,"districtstate");
         const data = state.filter((value) => {
           return value.ownerid.district == action.payload;
         });
@@ -43,7 +44,9 @@ const BikeSlice = createSlice({
       if (action.payload == "") {
         return state;
       } else {
+        console.log(state,"state");
         const data = state.filter((value) => {
+          
           return value.ownerid.city == action.payload;
         });
         return data;
@@ -61,7 +64,6 @@ const BikeSlice = createSlice({
     },
     Search: (state, action) => {
       const value = action.payload;
-      toast.success(`${value}`);
       if (value == "") {
         return state;
       } else {

@@ -40,7 +40,7 @@ export default function UserNav() {
                 </Link>
               </li>
               <li className="md:ml-8 text-xl cursor-pointer md:my-0 my-7">
-                <Link className="font-semibold" to="/bikes">
+                <Link className="font-semibold" to="/bikeselect">
                   Bikes
                 </Link>
               </li>
