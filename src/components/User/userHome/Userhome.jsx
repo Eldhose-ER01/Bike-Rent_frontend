@@ -27,7 +27,7 @@ export default function Userhome() {
   useEffect(() => {
     const bikelist = async () => {
       try {
-        toast.success("data")
+    
         const response = await getbikes();
 
         if (response.data.success) {
@@ -41,10 +41,10 @@ export default function Userhome() {
     bikelist();
   }, []);
   return (
-    <div className="w-screen">
+    <div className="">
       <div className="hidden md:block ">
         <UserNav />
-        <div className="relative pt-[5rem] lg:pt-[6rem] w-screen ">
+        <div className="relative pt-[5rem] lg:pt-[6rem]  ">
           <div>
             <img
               src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
@@ -89,7 +89,7 @@ export default function Userhome() {
         </div>
       </div>
 
-      <div className="lg:w-screen bg-black flex flex-col items-center">
+      <div className=" bg-black flex flex-col items-center">
         <h1 className="text-green-400 text-4xl mt-8 mb-4 font-extrabold">
           Bikes Gallery
         </h1>

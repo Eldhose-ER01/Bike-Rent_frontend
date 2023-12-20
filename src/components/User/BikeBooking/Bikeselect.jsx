@@ -35,6 +35,7 @@ export default function Bikeselect() {
   const [Endtartime, Setendtime] = useState();
   const [refresh, setrefresh] = useState(false);
   const [apply, setApply] = useState(false);
+  const [wallet, setwallet] = useState('');
   const navigate = useNavigate();
 
   const lastItemIndex = currentPage * itemsPerPage;
@@ -107,6 +108,8 @@ export default function Bikeselect() {
         const response = await Datesfind(data);
         if (response.data.success) {
           toast.success("Applyed");
+          setwallet(response.data.wallet)
+          console.log(response.data.wallet,'this is my wallet amount')
           setApply(true);
           dispatch(addBiks(response.data.bikedata));
         }
@@ -115,6 +118,7 @@ export default function Bikeselect() {
       console.log(error);
     }
   };
+
 
   const pickupdate = (e) => {
     const data = e.target.value;
@@ -221,6 +225,7 @@ export default function Bikeselect() {
         DropTime: Endtartime,
         city: datecity,
         BikeId: bikedetail,
+        wallet:wallet
       };
       navigate("/bikebooking", {
         state: bookingData,

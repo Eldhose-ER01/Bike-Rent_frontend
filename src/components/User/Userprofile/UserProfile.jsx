@@ -131,6 +131,9 @@ export default function UserProfile() {
       console.log(err.message);
     }
   };
+  const BookingHistory=()=>{
+    navigate('/bookingview')
+  }
 
   return (
     <div>
@@ -307,7 +310,7 @@ export default function UserProfile() {
               />
             </div>
             <img
-              className="transition duration-300 ease-in-out hover:scale-125 h-[11em] w-[25em]"
+              className="transition duration-500 ease-in-out hover:scale-110 h-[11em] w-[25em]"
               src={
                 user.licenseFrontSide
                   ? `${user.licenseFrontSide}?${user.licenseFrontSide}`
@@ -335,7 +338,7 @@ export default function UserProfile() {
               />
             </div>
             <img
-              className="transition duration-300 ease-in-out hover:scale-125 h-[11em] w-[25em]"
+              className="transition duration-500 ease-in-out hover:scale-110 h-[11em] w-[25em]"
               src={
                 user.licenseBackSide
                   ? `${user.licenseBackSide}?${user.licenseBackSide}`
@@ -356,7 +359,7 @@ export default function UserProfile() {
         <button
           type="button"
           className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-        >
+         onClick={BookingHistory} >
           Booking History
         </button>
       </div>

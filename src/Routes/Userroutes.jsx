@@ -20,6 +20,8 @@ import ServerErr from "../Pages/ErrrorPages/ServerErr";
 import BikeBookingPage from "../Pages/User/BikeBooking";
 import BookingSucess from "../Pages/User/BookingSucess";
 import BookingCancels from "../Pages/User/BookingCancels";
+import BookingHIstorys from "../Pages/User/BookingHIstorys";
+import BookingsView from "../Pages/User/BookingsView";
 export default function Userroutes() {
   const dispatch = useDispatch();
   const checkIfUser = async (token) => {
@@ -85,6 +87,9 @@ export default function Userroutes() {
           element={userToken ? <SelectBooking /> : <Userlogin />}
         />
         <Route path="/bookingcancel" element={<BookingCancels />} />
+        <Route path="/bookinghistrory" element={<BookingHIstorys />} />
+        <Route path='/bookingview'element={<BookingsView/>}/>
+
 
         <Route path="/error404" element={<Page404notfind />} />
         <Route path="/error500" element={<ServerErr />} />

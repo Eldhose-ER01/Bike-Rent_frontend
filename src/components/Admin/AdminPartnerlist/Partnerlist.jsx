@@ -41,6 +41,7 @@ export default function Partnerlist() {
   };
 
   return (
+    
     <div style={{ display: "flex" }} className="w-screen">
       <div style={{ flex: 1 }}>
         <Dashboard />

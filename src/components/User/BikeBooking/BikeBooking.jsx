@@ -22,6 +22,7 @@ export default function BikeBooking() {
   const [sgst, setsgst] = useState("");
   const [cgst, setcgst] = useState("");
   const [helmet, sethelmet] = useState(1);
+  const[err,setErr]=useState( )
  
 console.log(helmet,"helmettttttttttttt");
   // const amount=totalTime*bikesdata.BikeId.RentPerDay
@@ -55,6 +56,7 @@ console.log(helmet,"helmettttttttttttt");
     setsgst(amount * (2 / 100));
   };
   const handleMethodSelect = (method) => {
+    console.log(method,"this is payment ");
     setSelectedMethod(method);
   };
   const data = {
@@ -63,6 +65,7 @@ console.log(helmet,"helmettttttttttttt");
     cgst: cgst,
     totalAmount: totalAmount,
     helmet: helmet,
+    Paymentmethod:selectedMethod
   };
   
   const finaldatas = [...bikesdata, data];
@@ -70,7 +73,9 @@ console.log(helmet,"helmettttttttttttt");
  
       const bookingsdata = async () => {
         try {
-          
+          if(selectedMethod==""){
+            toast.error("Please Select Payment Method")
+          }else{
           const response = await Bookingsdatas(finaldatas);
           console.log(response, 'Data received from the server');
       
@@ -79,13 +84,26 @@ console.log(helmet,"helmettttttttttttt");
       
             if (response.data.success) {
               toast.success('Booking success');
+            } else {
+              toast.error("Booking failed");
             }
+          }else if(response.data.wallet){
+            toast.success('Booking success');
+            navigate('/successbooking')
+          }else if(response.data.notamount){
+            toast.error(response.data.notamount)
+            
           }
+          else if (response.data.messages) {
+            toast.error(response.data.messages); // Display license error message
+          }
+        }
         } catch (error) {
           console.error('Error in bookingsdata:', error);
           // Handle errors on the front end
         }
-      };
+      }
+      
   const helmets=(e)=>{
   sethelmet(e.target.value)
   }
@@ -113,7 +131,7 @@ console.log(helmet,"helmettttttttttttt");
                     {value.BikeId.Bikename}
                   </h1>
                   <img
-                    src="https://stat.overdrive.in/wp-content/odgallery/2022/08/63812_2022_Honda_CB300F_DLX_PRO_1_468x263.jpg"
+                    src={value.BikeId.image}
                     className="w-64 h-48 mb-3 hover:scale-125 transform-gpu transition-transform duration-500 ease-in-out"
                     alt=""
                   />
@@ -215,10 +233,10 @@ console.log(helmet,"helmettttttttttttt");
             <div className="flex justify-between pl-4 pr-4 mt-1">
               <p className="font-medium text-lg">Wallet Amount</p>
 
-              <p>₹:0</p>
+              <p>₹:{bikesdata[0].wallet}</p>
             </div>
 
-            <div className="flex  pl-4 pr-4 mt-5 w-80 h-16 bg-red-700 rounded-lg ml-8  justify-between items-center ">
+            {/* <div className="flex  pl-4 pr-4 mt-5 w-80 h-16 bg-red-700 rounded-lg ml-8  justify-between items-center ">
               <input
                 className="w-[15rem] ml-2 text-black placeholder:text-black p-1 rounded-md bg-slate-300 h-10  "
                 type="text"
@@ -228,7 +246,7 @@ console.log(helmet,"helmettttttttttttt");
               <button className="font-bold ml-3 mb-1 text-green-400">
                 Apply
               </button>
-            </div>
+            </div> */}
           </div>
           <div></div>
           <div className="flex flex-col items-center mt-6 md:mt-8 w-full md:w-96  lg:h-56 pt-1 custom-shadow bg-slate-100">

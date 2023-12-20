@@ -79,15 +79,17 @@ export default function Partnerprofile() {
       <div
         className={
           loader === false
-            ? "flex justify-center  sm:mt-24 bg-transparent "
+            ? "flex justify-center   bg-transparent "
             : "flex justify-center mt-8 sm:mt-24 bg-transparent tracking-tight text-gray-900 dark:text-white opacity-30"
         }
       >
         {/* <div className="container mx-auto p-4 border border-blue-900 bg-blue-900 hidden sm:block"> */}
-        <div></div>
+     
         <Partnerdashboard />
+       
+        <div className="container mx-auto p-4 border border-red-300 custom-shadow md:mt-24 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 h-[40%]">
+        
 
-        <div className="container mx-auto p-4 border border-red-300 custom-shadow md:mt-2 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 h-[40%]">
           <div className="flex flex-col items-center">
             {/* Profile Picture */}
             <div className="py-3 relative">
@@ -147,11 +149,11 @@ export default function Partnerprofile() {
 
                 {isModalOpen && (
                   <div className="modal ">
-                    <div className=" w-96 h-64 bg-blue-400">
+                    <div className=" w-96 h-36 bg-blue-400">
                       <img src={partner?.aadhaar} alt="" />
                     </div>
 
-                    <button onClick={closeModal}>Close Modal</button>
+                    <button onClick={closeModal} className="mt-14">Close Modal</button>
                   </div>
                 )}
               </div>

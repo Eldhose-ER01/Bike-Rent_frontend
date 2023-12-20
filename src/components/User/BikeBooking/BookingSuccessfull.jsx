@@ -6,7 +6,7 @@ export default function BookingSuccessfull() {
     <div className="bg-white p-6 md:mx-auto">
       <svg
         viewBox="0 0 24 24"
-        className="text-yellow-400 w-16 h-16 mx-auto my-6"
+        className="text-green-400 w-16 h-16 mx-auto my-6"
       >
         <path
           fill="currentColor"
@@ -24,16 +24,11 @@ export default function BookingSuccessfull() {
         <div className="py-10 text-center flex flex-col md:flex-row md:justify-center">
   <a
     href="/"
-    className="px-12 bg-green-500 hover:bg-green-500 text-black font-semibold py-3 mb-3 md:mb-0 md:mr-3"
+    className="px-12 bg-black hover:bg-green-500 text-white font-semibold py-3 mb-3 md:mb-0 md:mr-3"
   >
     GO TO HOME
   </a>
-  <a
-    href="/"
-    className="px-12 bg-green-500 hover:bg-green-500 text-black font-semibold py-3"
-  >
-    PRINT INVOICE
-  </a>
+ 
 </div>
 
 

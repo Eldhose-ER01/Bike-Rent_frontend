@@ -134,6 +134,26 @@ const Bookingsdatas=async(data)=>{
   }
 }
 
+const Bookinghistory=async()=>{
+  try {
+    const response = await userAxiosInstance.get("/bookingview");
+    return response;
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
+const CancelBooking=async(id)=>{
+  try{
+    const response=await userAxiosInstance.post(`/cancelbooking?id=${id}`)
+    return response
+  }catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
+
+
 export {
   Usersignup,
   Otpform,
@@ -150,5 +170,7 @@ export {
   imagelicenceback,
   getbikes,
   Datesfind,
-  Bookingsdatas
+  Bookingsdatas,
+  Bookinghistory,
+  CancelBooking
 };

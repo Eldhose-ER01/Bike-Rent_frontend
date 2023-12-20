@@ -92,7 +92,8 @@ function Adminroutes() {
           path="/partnerbikeslists"
          element={admintoken ? <AdminViewsBikes /> : <Adminlogin />}/>        
 
-        
+              
+  
       </Routes>
     </div>
   );

@@ -8,6 +8,8 @@ import PartnerAddbike from "../Pages/Partner/PartnerAddbike";
 import PartnerBikelist from "../Pages/Partner/PartnerBikelist";
 import PartnerEditprofile from "../Pages/Partner/PartnerEditprofile";
 import EditBike from "../Pages/Partner/EditBike";
+import BookingsDetails from "../Pages/Partner/BookingsDetails";
+import BookingViews from "../Pages/Partner/BookingViews";
 import { useDispatch, useSelector } from "react-redux";
 import { partnerApi } from "../configure/Api";
 import { useEffect } from "react";
@@ -86,6 +88,14 @@ export default function Partnerroutes() {
         <Route
           path="/editbike"
           element={userToken ? <EditBike /> : <PartnerLogin />}
+        />
+          <Route
+          path="/getbooking"
+          element={userToken ? <BookingsDetails /> : <PartnerLogin />}
+        />
+         <Route
+          path="/bookingview"
+          element={userToken ? <BookingViews /> : <PartnerLogin />}
         />
         <Route path="/signupsuccess" element={<PartnerSucess />} />
       </Routes>

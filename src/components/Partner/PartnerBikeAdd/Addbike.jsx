@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Partnerdash from "../Partnerdashboard/Partnerdash";
 import "./bike.css";
 import { useSelector } from "react-redux";
@@ -26,6 +26,7 @@ export default function Addbike() {
     FuelType: "Petrol",
     RentPerDay: "",
     image: "",
+    rcimage:"",
     userid: data.id,
   });
 
@@ -53,6 +54,22 @@ export default function Addbike() {
     return data;
   };
 
+
+  const RcUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "kesrrxni");
+    console.log(formData, "fomdatadjdjghjdghhgruhoads");
+    let data = "";
+    await Axios.post(
+      "https://api.cloudinary.com/v1_1/dotjc7vax/image/upload",
+      formData
+    ).then((response) => {
+      data = response.data["secure_url"];
+    });
+    return data;
+  };
+
   
   const[err,setErr]=useState()
 
@@ -63,6 +80,17 @@ export default function Addbike() {
     setBikeData({
       ...bikeData,
       image: res,
+    });
+    setLoader(false);
+  };
+
+  const rcUpload = async (e) => {
+    e.preventDefault();
+    setLoader(true);
+    const res = await RcUpload(e.target.files[0]);
+    setBikeData({
+      ...bikeData,
+      rcimage: res,
     });
     setLoader(false);
   };
@@ -240,7 +268,7 @@ export default function Addbike() {
                   </select>
                 </div>
                 <div className="w-full h-20 p-3">
-                  <h1>RentPerDay</h1>
+                  <h1>RentPerHour</h1>
                   <input
                      {...register("RentPerDay", {
                       required: 'Please fill the RentPerDay',
@@ -290,9 +318,8 @@ export default function Addbike() {
   </div>
 </div>
 
-
                 
-                <div className="w-full h-20 p-3">
+             <div className="w-full h-20 p-3">
                   <h1>Image</h1>
 
                   <input
@@ -302,6 +329,20 @@ export default function Addbike() {
                     className="border w-full h-2/3 rounded-lg px-3 text-black"
                     defaultValue={bikeData.image}
                     onChange={imageUpload}
+                    accept="image/image"
+                  />
+                </div>
+
+                <div className="w-full h-20 p-3">
+                  <h1>Bike RC</h1>
+
+                  <input
+                    type="file"
+                    name="rcimage"
+                    id="rcimage"
+                    className="border w-full h-2/3 rounded-lg px-3 text-black"
+                    defaultValue={bikeData.rcimage}
+                    onChange={rcUpload}
                     accept="image/image"
                   />
                 </div>

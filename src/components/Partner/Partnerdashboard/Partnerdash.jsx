@@ -19,7 +19,7 @@ export default function Partnerdash() {
     { name: "Add Bike", link: '/partner/addbike', icon: RiMotorbikeFill },
     { name: "Bike List", link: '/partner/bikelist', icon: RiMotorbikeFill },
     { name: "Logout", link: '/partner/login', icon: IoMdLogOut },
-    { name: "Offer", link: '', icon: AiOutlineUser },
+    { name: "Boking", link: '/partner/getbooking', icon: AiOutlineUser },
   ];
 
   const [open, setOpen] = useState(true);

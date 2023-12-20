@@ -79,6 +79,15 @@ const deletebike = async (id) => {
     console.log(error.message, "error form front");
   }
 };
+const Getbooking=async()=>{
+  try {
+    const response=await partnerAxiosInstance.get('/getbooking');
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
 
 export {
   partnersignup,
@@ -90,4 +99,5 @@ export {
   partnerbikefind,
   editbike,
   deletebike,
+  Getbooking
 };
