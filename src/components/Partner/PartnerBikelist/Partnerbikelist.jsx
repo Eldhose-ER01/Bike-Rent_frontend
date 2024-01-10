@@ -4,36 +4,41 @@ import {
   partnerbikefind,
   deletebike,
 } from "../../../configure/Partnerinterceptor";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../../redux/Partnerslice";
+
 export default function Partnerbikelist() {
   const navigate = useNavigate();
   const [bikedata, setbikedata] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0)
+  
+  const handleClick = (index) => {
+    setPage(index + 1)
+  }
+  
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
   const dispatch = useDispatch();
 
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstIndex = lastItemIndex - itemsPerPage;
-  const thisPageItems = bikedata.slice(firstIndex, lastItemIndex);
-
-  const pages = [];
-  for (let i = 1; i <= Math.ceil(bikedata.length / itemsPerPage); i++) {
-    pages.push(i);
-  }
+ 
+  
 
   useEffect(() => {
     const bikeslist = async () => {
-      const response = await partnerbikefind();
+      const response = await partnerbikefind(page);
       if (response.data.success) {
         setbikedata(response.data.bikelist);
+        setPage(response.data.page)
+          setTotalPages(response.data.totalPages)
       }
     };
+    dispatch(isbookinpagefalse())
+
     bikeslist();
-  }, [bikedata]);
+  }, [page]);
 
   const bikedelete = async (id) => {
     try {
@@ -66,8 +71,8 @@ export default function Partnerbikelist() {
               <div className="p-1.5 w-full inline-block align-middle">
                 <div className="lg:w-[95%] bg-white flex flex-col items-center ml-10">
                   <div className="flex flex-wrap justify-center">
-                    {Array.isArray(thisPageItems) &&
-                      thisPageItems.map((value) => {
+                    {Array.isArray(bikedata) &&
+                      bikedata.map((value) => {
                         return (
                           <div
                             key={value.id}
@@ -126,26 +131,18 @@ export default function Partnerbikelist() {
                         );
                       })}
                   </div>
-                  <div>
-                    {pages
-                      .slice(
-                        Math.max(currentPage - 2, 0),
-                        Math.min(currentPage + 1, pages.length)
-                      )
-                      .map((page, index) => (
-                        <button
-                          onClick={() => setCurrentPage(page)}
-                          key={index}
-                          className={`font-extrabold p-2 ${
-                            currentPage === page
-                              ? "text-4xl text-black"
-                              : "text-xl text-green-600"
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      ))}
-                  </div>
+                  <div className='max-w-[1600px] bg-gray-100 flex justify-center'>
+        {totalPages > 0 &&
+          [...Array(totalPages)].map((val, index) => (
+            <button
+              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
+              key={index}
+              onClick={() => handleClick(index)}
+            >
+              {index + 1}
+            </button>
+          ))}
+      </div>
                 </div>
               </div>
             </div>

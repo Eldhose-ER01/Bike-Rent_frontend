@@ -6,12 +6,28 @@ import {
   partnerreject,
 } from "../../../configure/Admininterceptor";
 import toast from "react-hot-toast";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+import { useDispatch } from "react-redux";
 
 export default function Partnerreq() {
+  const Dispatch=useDispatch()
+
   const [partner, setPartner] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [singlemodal, setsinglemodal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const lastItemIndex = currentPage * itemsPerPage;
+  const firstIndex = lastItemIndex - itemsPerPage;
+  const thisPageItems = partner.slice(firstIndex, lastItemIndex);
+
+
+  const pages = [];
+  for (let i = 1; i <= Math.ceil(partner.length / itemsPerPage); i++) {
+    pages.push(i);
+  }
 
   const [ModalOpen, issetModalOpen] = useState(false);
   const openModal = () => {
@@ -42,7 +58,10 @@ export default function Partnerreq() {
         console.log(error);
       }
     };
+    Dispatch(isbookinpagefalse())
+
     findpartner();
+   
   }, [refresh]);
   const rejectuser = async (id) => {
     try {
@@ -127,8 +146,8 @@ export default function Partnerreq() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {partner.length >= 0 &&
-                      partner.map((user, index) => {
+                    {thisPageItems.length >= 0 &&
+                      thisPageItems.map((user, index) => {
                         return (
                           <tr key={user._id}>
                             <td className="px-6 py-4 text-sm text-left font-medium text-gray-800 whitespace-nowrap">
@@ -333,6 +352,26 @@ export default function Partnerreq() {
                   </tbody>
                 </table>
               </div>
+              <div className="flex justify-center items-center text-center mt-5">
+          {pages
+            .slice(
+              Math.max(currentPage - 2, 0),
+              Math.min(currentPage + 1, pages.length)
+            )
+            .map((page, index) => (
+              <button
+                onClick={() => setCurrentPage(page)}
+                key={index}
+                className={`font-extrabold p-2 ${
+                  currentPage === page
+                    ? "text-md text-white border border-gray-300 bg-black rounded-md"
+                    : "text-md text-green-600"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+        </div>
             </div>
           </div>
         </div>

@@ -8,15 +8,21 @@ import { CancelBooking } from "../../../configure/Userinterceptor";
 export default function BookingView() {
   const [bookingData, setBookingdata] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const[running,setrunning]=useState()
-  
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0)
+  
+  const handleClick = (index) => {
+    setPage(index + 1)
+  }
   const bookingdata = async () => {
     try {
-      const response = await Bookinghistory();
+      const response = await Bookinghistory(page);
       if (response.data.success) {
         setBookingdata(response.data.bookings);
+        setPage(response.data.page)
+        setTotalPages(response.data.totalPages)
       }
     } catch (error) {
       console.log(error);
@@ -25,23 +31,23 @@ export default function BookingView() {
 
   useEffect(() => {
     bookingdata();
-  }, [refresh]);
+  }, [refresh,page]);
 
   const cancel = async (id) => {
     try {
       const response = await CancelBooking(id);
       if (response.data.success) {
-console.log('here');
         refresh == true ? setRefresh(false) : setRefresh(true);
         toast.success("Your Booking is Canceled");
-      }else if(response.data.messages){
-        toast.error(response.data.messages)
+      } else if (response.data.Running) {
+        toast.error("Not Cancel Bike is Currently Running");
+      } else if (response.data.completed) {
+        toast.error("Your Ride Alredy Completed");
       }
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   return (
     <div className="container mt-5 pr-10">
@@ -101,7 +107,7 @@ console.log('here');
                           {index + 1}
                         </td>
                         <td className="px-6 py-4 text-sm text-green-700 text-left whitespace-nowrap font-bold">
-                          {user._id}
+                          {user.bike.platenumber}
                         </td>
                         <td className="px-6 py-4 text-sm text-green-700 text-left whitespace-nowrap font-bold">
                           {user.bike.Bikename}
@@ -121,23 +127,44 @@ console.log('here');
                               Cancel
                             </button>
                           ) : (
-                            <span className="text-red-600 font-bold">Booking Canceled</span>
+                            <span className="text-red-600 font-bold">
+                              Booking Canceled
+                            </span>
                           )}
                         </td>
                         <td className="px-6 py-4 text-left whitespace-nowrap">
                           <button
                             type="button"
                             className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-                            onClick={() => navigate("/bookinghistory", { state: { bike: user } })}
+                            onClick={() =>
+                              navigate("/bookinghistrory", {
+                                state: { bike: user },
+                              })
+                            }
                           >
                             View
                           </button>
-                         
                         </td>
                       </tr>
                     ))}
                 </tbody>
               </table>
+              <div className=" bg-gray-100 flex justify-center text-center">
+                {totalPages > 0 &&
+                  [...Array(totalPages)].map((val, index) => (
+                    <button
+                      className={`${
+                        page === index + 1 ? "bg-black" : "bg-black"
+                      } py-2 px-4 rounded-md m-1 text-white ${
+                        page === index + 1 ? "font-bold" : "font-normal"
+                      } focus:outline-none focus:ring focus:ring-offset-2`}
+                      key={index}
+                      onClick={() => handleClick(index)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

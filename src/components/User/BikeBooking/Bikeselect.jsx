@@ -14,6 +14,7 @@ import bikelist, {
 } from "../../../redux/bikelist";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 
 export default function Bikeselect() {
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ export default function Bikeselect() {
   }
 
   useEffect(() => {
+
+dispatch(isbookinpagefalse())
     const bikelist = async () => {
       try {
         const response = await getbikes();
@@ -413,7 +416,7 @@ export default function Bikeselect() {
                   <h1 className="font-bold  text-white">
                     Rent-{value.RentPerDay}
                   </h1>
-                  <h1 className="font-bold  text-white">Amount 24 Per Hour</h1>
+                  <h1 className="font-bold  text-white">Amount Per Hour</h1>
                   <button>
                     <h1
                       className="font-bold text-white text-center mt-4 box-border h-10 w-full bg-red-600 md:w-64 pt-2 border border-sky-400 hover:bg-sky-500 transition-colors duration-300 ease-in-out rounded cursor-pointer"

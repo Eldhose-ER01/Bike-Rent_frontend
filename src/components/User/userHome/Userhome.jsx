@@ -1,9 +1,10 @@
 import UserNav from "../Usernavbar/UserNav";
 import { useNavigate } from "react-router-dom";
-import { getbikes } from "../../../configure/Userinterceptor";
+import { findBikes } from "../../../configure/Userinterceptor";
 import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
-import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 
 export default function Userhome() {
   const [bike, setbike] = useState([]);
@@ -12,26 +13,28 @@ export default function Userhome() {
     navigate("/bikeselect");
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(2);
-
-  const lastItemIndex = currentPage * itemsPerPage;
-  const firstIndex = lastItemIndex - itemsPerPage;
-  const thisPageItems = bike.slice(firstIndex, lastItemIndex);
-
-  const pages = [];
-  for (let i = 1; i <= Math.ceil(bike.length / itemsPerPage); i++) {
-    pages.push(i);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0)
+  
+  const handleClick = (index) => {
+    setPage(index + 1)
   }
+  
+ 
+ 
+const Dispatch=useDispatch()
 
   useEffect(() => {
+    Dispatch(isbookinpagefalse())
     const bikelist = async () => {
       try {
-    
-        const response = await getbikes();
+        const response = await findBikes(page);
 
         if (response.data.success) {
           setbike(response.data.bikesdata);
+          setPage(response.data.page)
+          setTotalPages(response.data.totalPages)
+        
         }
       } catch (error) {
         console.error(error);
@@ -39,7 +42,7 @@ export default function Userhome() {
     };
 
     bikelist();
-  }, []);
+  }, [page]);
   return (
     <div className="">
       <div className="hidden md:block ">
@@ -94,7 +97,7 @@ export default function Userhome() {
           Bikes Gallery
         </h1>
         <div className="flex flex-wrap justify-center">
-          {thisPageItems.map((value) => {
+          {bike.map((value) => {
             return (
               <div
                 key={value.id}
@@ -126,26 +129,20 @@ export default function Userhome() {
             );
           })}
         </div>
-        <div>
-          {pages
-            .slice(
-              Math.max(currentPage - 2, 0),
-              Math.min(currentPage + 1, pages.length)
-            )
-            .map((page, index) => (
-              <button
-                onClick={() => setCurrentPage(page)}
-                key={index}
-                className={`font-extrabold p-2 ${
-                  currentPage === page
-                    ? "text-4xl text-sky-300"
-                    : "text-xl text-green-600"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-        </div>
+
+        <div className='max-w-[1600px] bg-gray-500 flex justify-center'>
+        {totalPages > 0 &&
+          [...Array(totalPages)].map((val, index) => (
+            <button
+              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
+              key={index}
+              onClick={() => handleClick(index)}
+            >
+              {index + 1}
+            </button>
+          ))}
+      </div>
+       
       </div>
       <Footer />
     </div>

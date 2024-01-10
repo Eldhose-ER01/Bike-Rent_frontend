@@ -3,21 +3,27 @@ import { findprofile } from "../../../configure/Partnerinterceptor";
 import { TbCameraBolt } from "react-icons/tb";
 import Axios from "axios";
 import Partnerdashboard from "../../../Pages/Partner/Partnerdashboard";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 
 import { imageprofile } from "../../../configure/Partnerinterceptor";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 export default function Partnerprofile() {
-  const [partner, setPartner] = useState(null);
+  const [partner, setPartner] = useState();
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => {
     setModalOpen(true);
   };
+  const Dispatch=useDispatch()
 
   const closeModal = () => {
     setModalOpen(false);
   };
+//  const isorder=useSelector((store)=>store.navSlice)
+//  console.log(isorder)
 
   const findpartner = async () => {
     const response = await findprofile();
@@ -26,8 +32,10 @@ export default function Partnerprofile() {
     }
   };
   useEffect(() => {
+    Dispatch(isbookinpagefalse())
+
     findpartner();
-  }, [loader]);
+  }, []);
 
   const ProfleUpload = async (file) => {
     const formData = new FormData();

@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import {
   bikepatnerlist,
   statuschangebike,
 } from "../../../configure/Admininterceptor";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+import { useDispatch } from "react-redux";
 
 export default function AdminViewBikes() {
+  const Dispatch=useDispatch()
+
   const [bike, setBike] = useState([]);
   const location = useLocation();
   const data = location.state.id;
@@ -31,6 +34,8 @@ export default function AdminViewBikes() {
   };
   useEffect(() => {
     finddata();
+    Dispatch(isbookinpagefalse())
+
   }, [refresh]);
 
 

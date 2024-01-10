@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import UserNav from "../Usernavbar/UserNav";
 import { useLocation } from "react-router-dom";
 import Timecalculate from "./TimeCalculation";
 import { useNavigate } from "react-router-dom";
-import { Bookingsdatas } from "../../../configure/Userinterceptor";
+import { Applycoupon, Bookingsdatas,alredybook } from "../../../configure/Userinterceptor";
 import Footer from "../Footer/Footer";
 import "./Style.css";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { isbookinpagetrue } from "../../../redux/NavbarSlice";
 
 export default function BikeBooking() {
   const location = useLocation();
   const bookingData = location.state;
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+ const Dispatch=useDispatch()
   // Now, you can access bookingData and use it in your component
-  console.log(bookingData);
   const [bikesdata, setBikedata] = useState([bookingData]);
   const [totalTime, setTotalTime] = useState("");
   const [totalAmount, setAmount] = useState();
@@ -22,13 +24,14 @@ export default function BikeBooking() {
   const [sgst, setsgst] = useState("");
   const [cgst, setcgst] = useState("");
   const [helmet, sethelmet] = useState(1);
-  const[err,setErr]=useState( )
- 
-console.log(helmet,"helmettttttttttttt");
+  const [couponAmount,setCouponAmount] = useState(0)
+ const codeRef = useRef()
+
   // const amount=totalTime*bikesdata.BikeId.RentPerDay
   // setAmount(amount)
 
   useEffect(() => {
+    Dispatch(isbookinpagetrue())
     console.log(bikesdata, "this is bike data");
     const time = Timecalculate(
       bikesdata[0].picktime,
@@ -45,7 +48,6 @@ console.log(helmet,"helmettttttttttttt");
     const finalamounts = amount + cgst + sgst;
     setFinalAmount(finalamounts);
   }, [totalTime, totalAmount]);
-  console.log(bookingData, "dataaaaaaaaaaaaaaaaaaaaas");
 
   const [selectedMethod, setSelectedMethod] = useState("");
 
@@ -56,7 +58,7 @@ console.log(helmet,"helmettttttttttttt");
     setsgst(amount * (2 / 100));
   };
   const handleMethodSelect = (method) => {
-    console.log(method,"this is payment ");
+    console.log(method, "this is payment ");
     setSelectedMethod(method);
   };
   const data = {
@@ -65,49 +67,76 @@ console.log(helmet,"helmettttttttttttt");
     cgst: cgst,
     totalAmount: totalAmount,
     helmet: helmet,
-    Paymentmethod:selectedMethod
+    Paymentmethod: selectedMethod,
+    coupon:couponAmount
   };
-  
+
   const finaldatas = [...bikesdata, data];
 
- 
-      const bookingsdata = async () => {
-        try {
-          if(selectedMethod==""){
-            toast.error("Please Select Payment Method")
-          }else{
-          const response = await Bookingsdatas(finaldatas);
-          console.log(response, 'Data received from the server');
-      
-          if (response.data.url) {
-            window.location.href = response.data.url;
-      
-            if (response.data.success) {
-              toast.success('Booking success');
-            } else {
-              toast.error("Booking failed");
-            }
-          }else if(response.data.wallet){
-            toast.success('Booking success');
-            navigate('/successbooking')
-          }else if(response.data.notamount){
-            toast.error(response.data.notamount)
-            
+  const bookingsdata = async () => {
+    try {
+      console.log('jjjjjjjjjjjjjj')
+      if (selectedMethod == "") {
+        toast.error("Please Select Payment Method");
+      } else {
+        const res= await alredybook(finaldatas)
+        console.log(res,'this is my resonne')
+        if(res.data.success){
+        const response = await Bookingsdatas(finaldatas);
+
+        if (response.data.url) {
+          window.location.href = response.data.url;
+
+          if (response.data.success) {
+            toast.success("Booking success");
+          } else {
+            toast.error("Booking failed");
           }
-          else if (response.data.messages) {
-            toast.error(response.data.messages); // Display license error message
-          }
+        } else if (response.data.wallet) {
+          toast.success("Booking Started");
+          navigate("/successbooking");
+        } else if (response.data.notamount) {
+          toast.error(response.data.notamount);
+        } else if (response.data.messages) {
+          toast.error(response.data.messages); // Display license error message
         }
-        } catch (error) {
-          console.error('Error in bookingsdata:', error);
-          // Handle errors on the front end
-        }
+      }else{
+        toast.error("Allready Booked")
       }
-      
-  const helmets=(e)=>{
-  sethelmet(e.target.value)
-  }
+    }
+    } catch (error) {
+      console.error("Error in bookingsdata:", error);
+      // Handle errors on the front end
+    }
+  };
+console.log(finaldatas,"bookingDatabookingData");
+  
+  const helmets = (e) => {
+    sethelmet(e.target.value);
+  };
+const handleCoupon  =async()=>{
+  try {
+     if(codeRef.current.value){
  
+        const data = {
+          code:codeRef.current.value,
+          amonut:finalAmount?finalAmount:""
+        }
+      await Applycoupon(data).then((res)=>{
+        if(res.data.success){
+          toast.success(res.data.message)
+          setCouponAmount(res.data.amount)
+        }else{
+          toast.error(res.data.message)
+        }
+      })
+     }else{
+      toast.error("input feild is empty")
+     }
+  } catch (error) {
+    toast.error(error.message)
+  }
+}
   return (
     <div>
       <div>
@@ -157,25 +186,25 @@ console.log(helmet,"helmettttttttttttt");
                       <span>Drop up point</span>
                       <span>{value.BikeId.Sublocation}</span>
                     </p>
-                    
+
                     <p className="text-lg font-medium flex flex-row justify-between pt-1">
                       <span>Total rent for {totalTime} Hours</span>
                       <span>Total Amount:{totalAmount}</span>
                     </p>
 
                     <p className="text-lg font-medium flex flex-row justify-between pt-1">
-  <span>Number of Helmet (?)</span>
-  <select
-    className="w-12 h-6 font-bold rounded-md bg-slate-300 "
-    onChange={(e) => {
-      helmets(e);
-    }}
-    value={helmet} // Add this line to set the selected value
-  >
-    <option value={1}>1</option>
-    <option value={2}>2</option>
-  </select>
-</p>
+                      <span>Number of Helmet (?)</span>
+                      <select
+                        className="w-12 h-6 font-bold rounded-md bg-slate-300 "
+                        onChange={(e) => {
+                          helmets(e);
+                        }}
+                        value={helmet} // Add this line to set the selected value
+                      >
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                      </select>
+                    </p>
 
                     <p className="text-lg font-medium flex flex-row justify-between">
                       <span>Owner Name</span>
@@ -227,7 +256,7 @@ console.log(helmet,"helmettttttttttttt");
             <div className="flex justify-between pl-4 pr-4 mt-1">
               <p className="font-medium text-lg">Discount Amount</p>
 
-              <p>₹:0</p>
+              <p>₹:{couponAmount}</p>
             </div>
 
             <div className="flex justify-between pl-4 pr-4 mt-1">
@@ -236,17 +265,18 @@ console.log(helmet,"helmettttttttttttt");
               <p>₹:{bikesdata[0].wallet}</p>
             </div>
 
-            {/* <div className="flex  pl-4 pr-4 mt-5 w-80 h-16 bg-red-700 rounded-lg ml-8  justify-between items-center ">
+            <div className="flex  pl-4 pr-4 mt-5 w-80 h-16 bg-red-700 rounded-lg ml-8  justify-between items-center ">
               <input
                 className="w-[15rem] ml-2 text-black placeholder:text-black p-1 rounded-md bg-slate-300 h-10  "
                 type="text"
                 name="code"
                 placeholder="Enter Coupon Code"
+                 ref={codeRef}
               />
-              <button className="font-bold ml-3 mb-1 text-green-400">
+              <button onClick={handleCoupon} className="font-bold ml-3 mb-1 text-green-400">
                 Apply
               </button>
-            </div> */}
+            </div>
           </div>
           <div></div>
           <div className="flex flex-col items-center mt-6 md:mt-8 w-full md:w-96  lg:h-56 pt-1 custom-shadow bg-slate-100">
@@ -278,7 +308,7 @@ console.log(helmet,"helmettttttttttttt");
               <p className="text-lg font-bold">
                 Total Amount:{" "}
                 <span className="text-green-600" name="finalAmunt">
-                  ₹:{finalAmount}
+                  ₹:{finalAmount-couponAmount}
                 </span>
               </p>
             </div>

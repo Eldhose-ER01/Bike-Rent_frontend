@@ -26,7 +26,6 @@ export default function PartnerLogin() {
     const { value, name } = e.target;
 
     const newValue = value.trim();
-    console.log(newValue);
     setFormvalues({ ...formvalues, [name]: newValue });
   };
 
@@ -37,7 +36,6 @@ export default function PartnerLogin() {
       const response = await partnerlogin(data);
 
       if (response.data.success) {
-        toast.success("Home Page");
         dispatch(
           addUser({
             id: response.data.partnerdata.id,
@@ -49,7 +47,8 @@ export default function PartnerLogin() {
           "token",
           JSON.stringify(response.data.partnerdata.token)
         );
-        navigate("/partner");
+        navigate("/partner/");
+        window.location.href = "/partner/";
       } else if (response.data.incorrectPassword) {
         setnonPassword(response.data.incorrectPassword);
       } else if (response.data.incorrectemail) {

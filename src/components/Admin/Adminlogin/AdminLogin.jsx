@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addadmin } from "../../../redux/Adminslice";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+
 export default function AdminLogin() {
   const {
     register,
@@ -24,7 +24,6 @@ export default function AdminLogin() {
     const { value, name } = e.target;
 
     const newValue = value.trim();
-    console.log(newValue);
     setFormvalues({ ...formvalues, [name]: newValue });
   };
   const submitdetails = async () => {

@@ -1,6 +1,6 @@
 import UserNav from "../Usernavbar/UserNav";
 import Footer from "../Footer/Footer";
-import { useState, useEffect, useRef } from "react";
+import { useState,useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useLocation } from "react-router-dom";
@@ -8,11 +8,9 @@ import { useLocation } from "react-router-dom";
 export default function BookingHistory() {
   const location = useLocation();
   const bookingData = location.state;
-  console.log(bookingData, "dhhdiufhh");
   const pdfRef = useRef();
   const [Data, setData] = useState(bookingData);
 
-  console.log(Data,"awsedfghjk");
 
   const downloadPdf = () => {
     const input = pdfRef.current;

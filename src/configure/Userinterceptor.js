@@ -68,7 +68,16 @@ const resetpassword = async (data) => {
 const Profiledata = async () => {
   try {
     const response = await userAxiosInstance.get("/profile");
-    return response;
+    if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
   }
@@ -76,7 +85,16 @@ const Profiledata = async () => {
 const editProfiledata = async (data) => {
   try {
     const response = await userAxiosInstance.post("/editprofile", { data });
-    return response;
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
   }
@@ -84,7 +102,16 @@ const editProfiledata = async (data) => {
 const imageupload = async (id) => {
   try {
     const response = await userAxiosInstance.post("/imageupload", { id });
-    return response;
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
   }
@@ -105,11 +132,20 @@ const imagelicenceback = async (id) => {
     console.log(error.message, "error form front");
   }
 };
-const getbikes = async () => {
+const getbikes = async (page) => {
   try {
 
-    const response = await userAxiosInstance.get("/getbike");
-    return response;
+    const response = await userAxiosInstance.get(`/getbike?page=${page}`);
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
   }
@@ -117,7 +153,16 @@ const getbikes = async () => {
 const Datesfind=async(data)=>{
   try {
     const response = await userAxiosInstance.post("/datesfind",{data});
-    return response;
+  if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
 
@@ -134,10 +179,19 @@ const Bookingsdatas=async(data)=>{
   }
 }
 
-const Bookinghistory=async()=>{
+const Bookinghistory=async(page)=>{
   try {
-    const response = await userAxiosInstance.get("/bookingview");
-    return response;
+    const response = await userAxiosInstance.get(`/bookingview?page=${page}`);
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
 
@@ -146,12 +200,164 @@ const Bookinghistory=async()=>{
 const CancelBooking=async(id)=>{
   try{
     const response=await userAxiosInstance.post(`/cancelbooking?id=${id}`)
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
     return response
   }catch (error) {
     console.log(error.message, "error form front");
 
   }
 }
+const usercoupon=async()=>{
+  try {
+    const response = await userAxiosInstance.get("/usercoupon");
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
+const Applycoupon=async(data)=>{
+  try {
+    const response = await userAxiosInstance.post(`/Applycoupon`,{data});
+    if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+
+  }
+}
+
+const WalletHistorys=async(page)=>{
+try {
+  const response=await userAxiosInstance.get(`/wallethistory?page=${page}`)
+ if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+} catch (error) {
+  console.log(error.message, "error form front");
+
+}
+}
+
+
+const BookingPartner=async()=>{
+  try {
+    const response=await userAxiosInstance.get('/bookingpartner')
+   if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+  } catch (error) {
+    console.log(error.message, "error form front");
+  
+  }
+  }
+  const getChat=async(id)=>{
+    try {
+      const response=await userAxiosInstance.get(`/getChat?id=${id}`)
+     if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+    } catch (error) {
+      console.log(error.message, "error form front");
+    
+    }
+    }
+    const saveChat=async(data)=>{
+      try {
+
+        const response=await userAxiosInstance.post('/saveChat',{data})
+
+        return response
+      } catch (error) {
+        console.log(error.message, "error form front");
+      
+      }
+      }
+
+      const findBikes = async (page) => {
+        try {
+      
+          const response = await userAxiosInstance.get(`/findbikes?page=${page}`);
+         if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+        } catch (error) {
+          console.log(error.message, "error form front");
+        }
+      };
+
+      const alredybook = async (data) => {
+        try {
+      console.log('jjjjjjjjjjj')
+          const response = await userAxiosInstance.post('/alredybooked',{data});
+         if(response.data.message=="partner is blocked"){
+      localStorage.removeItem('token')
+      toast.error("Partner is blocked")
+      window.location.href ="/login";
+
+    }else{
+      return response
+
+    }
+    return response
+        } catch (error) {
+          console.log(error.message, "error form front");
+        }
+      };
+      
 
 
 export {
@@ -172,5 +378,13 @@ export {
   Datesfind,
   Bookingsdatas,
   Bookinghistory,
-  CancelBooking
-};
+  CancelBooking,
+  usercoupon,
+  Applycoupon,
+  WalletHistorys,
+  BookingPartner,
+  getChat,
+  saveChat,
+  findBikes,
+  alredybook
+  };

@@ -2,28 +2,43 @@ import { useState } from "react";
 import {
   partnerlist,
   statuschangepartner,
-  bikepatnerlist,
 } from "../../../configure/Admininterceptor";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+import { useDispatch } from "react-redux";
+
 import { useEffect } from "react";
 import Dashboard from "../Dashboard/Admindashb";
 import { useNavigate } from "react-router-dom";
 
 export default function Partnerlist() {
+  const Dispatch = useDispatch();
+  const [search, setSearch] = useState("");
   const [user, setUser] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const handleClick = (index) => {
+    setPage(index + 1);
+  };
   const navigate = useNavigate();
   const findUser = async () => {
     try {
-      const response = await partnerlist();
+      console.log("Search Value:", search);
+      const response = await partnerlist(search, page);
       if (response.data.success) {
         setUser(response.data.userdata);
+        setPage(response.data.page);
+        setTotalPages(response.data.totalPages);
       }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
+    Dispatch(isbookinpagefalse());
     findUser();
-  }, []);
+    
+  }, [search, page]);
 
   const viewbikes = (id) => {
     navigate("/admin/partnerbikeslists", { state: { id } });
@@ -41,7 +56,6 @@ export default function Partnerlist() {
   };
 
   return (
-    
     <div style={{ display: "flex" }} className="w-screen">
       <div style={{ flex: 1 }}>
         <Dashboard />
@@ -51,6 +65,18 @@ export default function Partnerlist() {
         <h1 className="font-extrabold font-serif flex justify-center text-3xl ">
           Partner List
         </h1>
+        <div>
+          <input
+            className="h-10 w-52 ml-3 mt-5 bg-slate-200 border border-green-400 pl-1 rounded-md"
+            type="text"
+            name="search"
+            placeholder="Search Name here.."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="p-1.5 w-full inline-block align-middle">
@@ -99,8 +125,11 @@ export default function Partnerlist() {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {user.length >= 0 &&
-                      user.map((user, index) => {
-                        return (
+                      user.map((user, index) => (
+                        
+                        user.isVerifed == 'verified' && (
+                      
+                         
                           <tr key={user._id}>
                             <td className="px-6 py-4 text-sm text-left font-medium text-gray-800 whitespace-nowrap">
                               {index + 1}
@@ -155,10 +184,26 @@ export default function Partnerlist() {
                               </button>
                             </td>
                           </tr>
-                        );
-                      })}
+                        )
+                      ))}
                   </tbody>
                 </table>
+              </div>
+              <div className="max-w-[1600px] bg-gray-100 flex justify-center mt-3">
+                {totalPages > 0 &&
+                  [...Array(totalPages)].map((val, index) => (
+                    <button
+                      className={`${
+                        page === index + 1 ? "bg-black" : "bg-black"
+                      } py-2 px-4 rounded-md m-1 text-white ${
+                        page === index + 1 ? "font-bold" : "font-normal"
+                      } focus:outline-none focus:ring focus:ring-offset-2`}
+                      key={index}
+                      onClick={() => handleClick(index)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
               </div>
             </div>
           </div>

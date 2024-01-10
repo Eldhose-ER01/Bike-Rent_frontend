@@ -4,22 +4,37 @@ import {
   statuschangeuser,
 } from "../../../configure/Admininterceptor";
 import { useEffect, useState } from "react";
-export default function Userlist() {
-  const [user, setUser] = useState([]);
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+import { useDispatch } from "react-redux";
 
+export default function Userlist() {
+  const Dispatch=useDispatch()
+  const [search, setSearch] = useState("");
+
+  const [user, setUser] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0)
+  
+  const handleClick = (index) => {
+    setPage(index + 1)
+  }
   const findUser = async () => {
     try {
-      const response = await finduser();
+      const response = await finduser(page,search);
       if (response.data.success) {
-        setUser(response.data.userdata);
+        setUser(response.data.userdata)
+        setPage(response.data.page)
+        setTotalPages(response.data.totalPages)
       }
-    } catch (error) {
+    } catch (error) {   
       console.log(error);
     }
   };
   useEffect(() => {
+    Dispatch(isbookinpagefalse())
+
     findUser();
-  }, []);
+  }, [page,search]);
 
   const bolockorunblock = async (id) => {
     try {
@@ -39,6 +54,18 @@ export default function Userlist() {
         <h1 className="font-extrabold font-serif flex justify-center text-3xl ">
           User List
         </h1>
+        <div>
+          <input
+            className="h-10 w-52 ml-3 mt-5 bg-slate-200 border border-green-400 pl-1 rounded-md"
+            type="text"
+            name="search"
+            placeholder="Search Name here.."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="p-1.5 w-full inline-block align-middle">
@@ -131,6 +158,18 @@ export default function Userlist() {
                   </tbody>
                 </table>
               </div>
+              <div className='max-w-[1600px] bg-gray-100 flex justify-center mt-3'>
+        {totalPages > 0 &&
+          [...Array(totalPages)].map((val, index) => (
+            <button
+              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
+              key={index}
+              onClick={() => handleClick(index)}
+            >
+              {index + 1}
+            </button>
+          ))}
+      </div>
             </div>
           </div>
         </div>

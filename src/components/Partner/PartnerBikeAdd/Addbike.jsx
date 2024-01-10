@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Partnerdash from "../Partnerdashboard/Partnerdash";
 import "./bike.css";
 import { useSelector } from "react-redux";
@@ -6,8 +6,12 @@ import { partnerbikeadd } from "../../../configure/Partnerinterceptor";
 import toast from "react-hot-toast";
 import Axios from "axios";
 import { useForm } from "react-hook-form";
+import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+import { useDispatch } from "react-redux";
 
 export default function Addbike() {
+  const Dispatch=useDispatch()
+
   const data = useSelector((state) => state.partner.partnerD);
   const [loader, setLoader] = useState(false);
 
@@ -54,7 +58,9 @@ export default function Addbike() {
     return data;
   };
 
-
+useEffect(() => {
+  Dispatch(isbookinpagefalse())
+}, [])
   const RcUpload = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -297,7 +303,7 @@ export default function Addbike() {
     {...register("platenumber", {
       required: 'Please fill the platenumber',
       pattern: {
-        value: /^[A-Z]{2}-[0-9]{2}-[0-9]{1,4}$/,
+       value: /^[A-Z]{2}-[0-9]{2}[A-Z]*-[0-9]{1,4}$/,
         message: 'Invalid platenumber format. Example: KL-73A-4444',
       },
     })}

@@ -12,6 +12,7 @@ import Google from "../Pages/User/GoogleAuth";
 import EmailSubmit from "../Pages/User/EmailSubmit";
 import ResetPage from "../Pages/User/ResetPage";
 import ForgetOtp from "../Pages/User/ForgetOtp";
+import Offers from "../Pages/User/Offers";
 import axios from "axios";
 import Editprofile from "../Pages/User/Editprofile";
 import SelectBooking from "../Pages/User/SelectBooking";
@@ -22,6 +23,8 @@ import BookingSucess from "../Pages/User/BookingSucess";
 import BookingCancels from "../Pages/User/BookingCancels";
 import BookingHIstorys from "../Pages/User/BookingHIstorys";
 import BookingsView from "../Pages/User/BookingsView";
+import UserChat from "../Pages/User/UserChat";
+import WalletHistorys from "../Pages/User/WalletHistorys";
 export default function Userroutes() {
   const dispatch = useDispatch();
   const checkIfUser = async (token) => {
@@ -52,6 +55,7 @@ export default function Userroutes() {
   return (
     <div>
       <Routes>
+      <Route path="/*" element={<Page404notfind />} />
         <Route path="/" element={<Userhome />} />
         <Route
           path="/login"
@@ -72,8 +76,7 @@ export default function Userroutes() {
         <Route path="/googleauth" element={<Google />} />
         <Route path="/submitemail" element={<EmailSubmit />} />
         <Route path="/resetemail" element={<ResetPage />} />
-        <Route path='/bikebooking'element={<BikeBookingPage/>}/>
-        <Route path='/successbooking'element={<BookingSucess/>}/>
+        <Route path="/successbooking" element={<BookingSucess />} />
         <Route
           path="/forgetotp"
           element={userToken ? <Navigate to="/" /> : <ForgetOtp />}
@@ -82,14 +85,39 @@ export default function Userroutes() {
           path="/editprofile"
           element={userToken ? <Editprofile /> : <Userlogin />}
         />
+        
+        <Route
+          path="/bikebooking"
+          element={userToken ? <BikeBookingPage /> : <Userlogin />}
+        />
+
+        <Route
+          path="/bookinghistrory"
+          element={userToken ? <BookingHIstorys /> : <Userlogin />}
+        />
+
+        <Route
+          path="/bookingview"
+          element={userToken ? <BookingsView /> : <Userlogin />}
+        />
+
         <Route
           path="/bikeselect"
           element={userToken ? <SelectBooking /> : <Userlogin />}
         />
+          <Route
+          path="/offer"
+          element={userToken ? <Offers /> : <Userlogin />}
+        />
+        <Route
+          path="/chat"
+          element={userToken ? <UserChat /> : <Userlogin />}
+        />
+        <Route
+          path="/wallethistory"
+          element={userToken ? <WalletHistorys /> : <Userlogin />}
+        />
         <Route path="/bookingcancel" element={<BookingCancels />} />
-        <Route path="/bookinghistrory" element={<BookingHIstorys />} />
-        <Route path='/bookingview'element={<BookingsView/>}/>
-
 
         <Route path="/error404" element={<Page404notfind />} />
         <Route path="/error500" element={<ServerErr />} />

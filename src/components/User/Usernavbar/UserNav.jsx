@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import { removeUser } from "../../../redux/Userslice";
@@ -9,12 +9,16 @@ export default function UserNav() {
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const { id }=useSelector((store)=>store.user.userD)
+  const isorder=useSelector((store)=>store.navSlice)
   // console.log(id,"useeeeeeeeeeeeee");
   const homelogout = () => {
     dispatch(removeUser());
     localStorage.clear();
     navigate("/login");
   };
+  useEffect(()=>{
+        console.log(isorder,'checking the nav ststus status');
+  },[isorder])
  
   return (
     <div>
@@ -50,6 +54,16 @@ export default function UserNav() {
               <li className="md:ml-8 text-xl semibold md:my-0 my-7">
                 <Link className="font-semibold" to="/profile">Profile</Link>
               </li>
+              <li className="md:ml-8 text-xl semibold md:my-0 my-7">
+                <Link className="font-semibold" to="/chat">Chat</Link>
+              </li>
+        {isorder.isbookingpage?
+          <li className="md:ml-8 text-xl semibold md:my-0 my-7">
+            <Link className="font-semibold" to="/offer">Offers</Link>
+          </li>
+          :null }
+
+            
               {id==null ?(
                 <li className="md:ml-8 text-xl semibold md:my-0 my-7">
                 <Link to={'/login'} className="font-semibold" >Login</Link>
@@ -61,10 +75,7 @@ export default function UserNav() {
               )}
 
             </ul>
-            <div className="font-bold text-2xl flex items-center font-[Poppins] mr-1 pt-1">
-            <Link className="font-semibold" to="/profile">Profile</Link>
-              
-            </div>
+           <div></div>
           </div>
         </div>
     </div>
