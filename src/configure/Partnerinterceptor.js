@@ -194,15 +194,16 @@ const Chartbooking = async () => {
 const Uniquechatuser = async () => {
   try {
     const response = await partnerAxiosInstance.get('/chatuser');
-    if(response.data.message=="partner is blocked"){
-      localStorage.removeItem('token')
-      toast.error("Partner is blocked")
-      window.location.href = "/partner/login";
+    // if(response.data.message=="partner is blocked"){
+    //   localStorage.removeItem('token')
+    //   toast.error("Partner is blocked")
+    //   window.location.href = "/partner/login";
 
-    }else{
-      return response
+    // }else{
+    //   return response
 
-    }
+    // }
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
   }
@@ -210,17 +211,20 @@ const Uniquechatuser = async () => {
 
 
 const getChat=async(id)=>{
+  console.log("vannuuuuu");
   try {
     const response=await partnerAxiosInstance.get(`/getChat?id=${id}`)
-    if(response.data.message=="partner is blocked"){
-      localStorage.removeItem('token')
-      toast.error("Partner is blocked")
-      window.location.href = "/partner/login";
+    // if(response.data.message=="partner is blocked"){
+    //   localStorage.removeItem('token')
+    //   toast.error("Partner is blocked")
+    //   window.location.href = "/partner/login";
 
-    }else{
-      return response
+    // }else{
+    //   return response
 
-    }
+    // }
+    console.log(response,"response");
+    return response
   } catch (error) {
     console.log(error.message, "error form front");
   

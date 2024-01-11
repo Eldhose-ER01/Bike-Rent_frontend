@@ -2,7 +2,6 @@ import "./PartnerSignup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
 import { addUser } from "../../../redux/Partnerslice";
 import { useForm } from "react-hook-form";
 import { partnerlogin } from "../../../configure/Partnerinterceptor";
@@ -36,6 +35,12 @@ export default function PartnerLogin() {
       const response = await partnerlogin(data);
 
       if (response.data.success) {
+        navigate("/partner/");
+        // window.location.href = "/partner/";
+        localStorage.setItem(
+          "token",
+          JSON.stringify(response.data.partnerdata.token)
+        );
         dispatch(
           addUser({
             id: response.data.partnerdata.id,
@@ -43,12 +48,8 @@ export default function PartnerLogin() {
             token: response.data.partnerdata.token,
           })
         );
-        localStorage.setItem(
-          "token",
-          JSON.stringify(response.data.partnerdata.token)
-        );
-        navigate("/partner/");
-        window.location.href = "/partner/";
+      
+       
       } else if (response.data.incorrectPassword) {
         setnonPassword(response.data.incorrectPassword);
       } else if (response.data.incorrectemail) {

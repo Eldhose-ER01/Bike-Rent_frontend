@@ -293,15 +293,15 @@ const BookingPartner=async()=>{
   const getChat=async(id)=>{
     try {
       const response=await userAxiosInstance.get(`/getChat?id=${id}`)
-     if(response.data.message=="partner is blocked"){
-      localStorage.removeItem('token')
-      toast.error("Partner is blocked")
-      window.location.href ="/login";
+    //  if(response.data.message=="partner is blocked"){
+    //   localStorage.removeItem('token')
+    //   toast.error("Partner is blocked")
+    //   window.location.href ="/login";
 
-    }else{
-      return response
+    // }else{
+    //   return response
 
-    }
+    // }
     return response
     } catch (error) {
       console.log(error.message, "error form front");

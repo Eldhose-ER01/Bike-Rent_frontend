@@ -96,11 +96,19 @@ const [currentMessage, setCurrentMessage] = useState("");
         }
 
         await saveChat(data).then((response) => {
+          console.log(response,'this is my user save chat response...........')
+          if(response.data.success){
+          // console.log('this is my user save chat response...........2')
 
-          toast.success("working chat")
+            toast.success("working chat")
             socket.emit("sentMessage")
 
-            const items = response?.data?.orderItems;
+            // const items = response?.data?.orderItems;
+          }else{
+            toast.error("not working")
+
+          }
+        
         });
     }
   return (

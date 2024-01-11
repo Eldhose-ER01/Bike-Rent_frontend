@@ -26,14 +26,7 @@ export default function Partnerroutes() {
   
   const [checkPartner, setChedkPartner] = useState();
 
-  const user = useSelector((store) => store.partner.partnerD);
-  console.log(user, "this si token");
-  const userToken = user.token;
-
   const checkIfPartner = async (token) => {
-    try{
-
-   
     const response = await axios.post(`${partnerApi}/checkispartner`, null, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -41,7 +34,7 @@ export default function Partnerroutes() {
     });
   
       if (response.data.success) {
-        setChedkPartner(response.data.partnerdata.token);
+     
 
         dispatch(
           addUser({
@@ -52,12 +45,11 @@ export default function Partnerroutes() {
         );
       }
      
-    }
-    catch (error) {
-      console.error("Error checking if user is an admin:", error);
-    }
+   
    
   };
+
+ 
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -69,7 +61,9 @@ export default function Partnerroutes() {
     token && checkIfPartner(token);
   }, []);
 
-  
+  const user = useSelector((store) => store.partner.partnerD);
+  console.log(user, "this si token");
+  const userToken = user.token; 
 
   return (
     <div>
@@ -128,10 +122,12 @@ export default function Partnerroutes() {
           path="/partnersale"
           element={userToken ? <PartenerSale /> : <PartnerLogin />}
         />
-          <Route
+          {/* <Route
           path="/partnerchat"
           element={userToken ? <PartnerChat /> : <PartnerLogin />}
-        />
+        /> */}
+
+        <Route path="/partnerchat" element={<PartnerChat />} />
         <Route path="/signupsuccess" element={<PartnerSucess />} />
         <Route path="/error404" element={<Page404notfind />} />
         <Route path="/error500" element={<ServerErr />} />

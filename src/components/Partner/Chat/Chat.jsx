@@ -51,7 +51,6 @@ useEffect(() => {
 const usechatsid=(id)=>{
     setuserid(id)
     setRefresh(id)
-
 }
 
 const [currentMessage, setCurrentMessage] = useState("");
@@ -87,7 +86,7 @@ if(refresh){
     };
 }
     
-    }, [refresh]);
+    }, [refresh,userid]);
 
     const handleMessage = async () => {
         const test = currentMessage ? currentMessage : '';
@@ -103,6 +102,7 @@ if(refresh){
         }
 
         await saveChat(data).then((response) => {
+          toast.success("working")
             socket.emit("sentMessage")
             const items = response?.data?.orderItems;
         });
