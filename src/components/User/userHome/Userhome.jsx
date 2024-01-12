@@ -52,7 +52,7 @@ const Dispatch=useDispatch()
           <div>
             <img
               // src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
-              src="/assets/Images/honda-unicorn-abc-right-side-view_360x240.webp"
+              src="\assets\Images\bullet-right-front-three-quarter-3.webp"
               alt=""
               className="mx-auto"
             />
