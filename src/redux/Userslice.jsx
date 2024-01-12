@@ -5,21 +5,21 @@ const userSlice=createSlice({
     initialState:{
         userD:{
             token:null,
-            name:null,
-            id:null
+            // name:null,
+            // id:null
         }
     },
 
     reducers:{
         addUser:(state,action)=>{
-            state.userD.token=action.payload.token,
-            state.userD.name=action.payload.name,
-            state.userD.id=action.payload.id
+            state.userD.token=action.payload.token
+            // state.userD.name=action.payload.name,
+            // state.userD.id=action.payload.id
         },
         removeUser:(state)=>{
-            state.userD.token=null,
-            state.userD.name=null,
-            state.userD.id=null
+            state.userD.token=null
+            // state.userD.name=null,
+            // state.userD.id=null
         }
     }
 

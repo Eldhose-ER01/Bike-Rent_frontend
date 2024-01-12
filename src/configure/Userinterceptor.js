@@ -33,14 +33,15 @@ const Userlogin = async (data) => {
     console.log(error.message, "error form front");
   }
 };
-// const googleAuth = async (data) => {
-//   try {
-//     const response = await userAxiosInstance.post("/googleauth", { data });
-//     return response;
-//   } catch (error) {
-//     console.log(error.message, "error form front");
-//   }
-// };
+const googleAuth = async (data) => {
+  try {
+    const response = await userAxiosInstance.post("/googleauth", { data });
+    
+    return response;
+  } catch (error) {
+    console.log(error.message, "error form front");
+  }
+};
 const userEmail = async (data) => {
   try {
     const response = await userAxiosInstance.post("/provideemail", { data });
@@ -365,7 +366,7 @@ export {
   Otpform,
   ResendOTP,
   Userlogin,
-  // googleAuth,
+  googleAuth,
   userEmail,
   forgetotp,
   resetpassword,

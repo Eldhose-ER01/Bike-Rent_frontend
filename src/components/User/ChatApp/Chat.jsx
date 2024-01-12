@@ -64,13 +64,15 @@ const [currentMessage, setCurrentMessage] = useState("");
                 await getChat(partnerId).then((res) => {
                 console.log("partnerIdpartnerId",res.data.findChat[0].chat);
                     setChatPerson(res.data.findChat[0].chat);
+                setUserdetails(res.data.findChat[0].partnerId);
+
                 })
             })
-              await getChat(partnerId).then((res) => {
-                console.log(res.data, 'oooooo')
-                setUserdetails(res.data.findChat[0].partnerId);
-                setChatPerson(res.data.findChat[0].chat);
-            });
+            //   await getChat(partnerId).then((res) => {
+            //     console.log(res.data, 'oooooo')
+            //     setUserdetails(res.data.findChat[0].partnerId);
+            //     setChatPerson(res.data.findChat[0].chat);
+            // });
             
             
         }

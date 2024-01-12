@@ -8,7 +8,7 @@ import Userlogin from "../Pages/User/Userlogin";
 import Userhome from "../components/User/userHome/Userhome";
 import OTP from "../Pages/User/Otp";
 import Signup from "../Pages/User/UserSignup";
-// import Google from "../Pages/User/GoogleAuth";
+import Google from "../Pages/User/GoogleAuth";
 import EmailSubmit from "../Pages/User/EmailSubmit";
 import ResetPage from "../Pages/User/ResetPage";
 import ForgetOtp from "../Pages/User/ForgetOtp";
@@ -38,19 +38,26 @@ export default function Userroutes() {
       dispatch(
         addUser({
           token: response.data.userdatas.token,
-          username: response.data.userdatas.name,
-          id: response.data.userdatas.id,
+          // username: response.data.userdatas.name,
+          // id: response.data.userdatas.id,
         })
       );
     }
   };
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = JSON.parse(localStorage.getItem("Usertoken"));
+    dispatch(
+      addUser({
+        token:token,
+      })
+    );
+    
     token && checkIfUser(token);
   }, []);
   const user = useSelector((store) => store.user.userD);
   const userToken = user.token;
+  console.log(userToken,'hhhhhhhhhhhh')
 
   return (
     <div>
@@ -73,7 +80,7 @@ export default function Userroutes() {
           path="/profile"
           element={userToken ? <Userprofile /> : <Userlogin />}
         />
-        {/* <Route path="/googleauth" element={<Google />} /> */}
+        <Route path="/googleauth" element={<Google />} />
         <Route path="/submitemail" element={<EmailSubmit />} />
         <Route path="/resetemail" element={<ResetPage />} />
         <Route path="/successbooking" element={<BookingSucess />} />

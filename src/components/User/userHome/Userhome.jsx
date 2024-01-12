@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
 import { useDispatch } from "react-redux";
 import { isbookinpagefalse } from "../../../redux/NavbarSlice";
+import Homeimage from "../../../../src/assets/Images/ktm-duke648ffc0a8466e.webp"
 
 export default function Userhome() {
   const [bike, setbike] = useState([]);
@@ -42,7 +43,7 @@ const Dispatch=useDispatch()
     };
 
     bikelist();
-  }, [page]);
+  }, []);
   return (
     <div className="">
       <div className="hidden md:block ">
@@ -50,7 +51,8 @@ const Dispatch=useDispatch()
         <div className="relative pt-[5rem] lg:pt-[6rem]  ">
           <div>
             <img
-              src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
+              // src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
+              src={Homeimage}
               alt=""
               className="mx-auto"
             />

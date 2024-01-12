@@ -48,14 +48,14 @@ const createAxiosInstanceWithInterceptor = (baseurl, tokenName) => {
   return axiosInstance;
 };
 
-const userAxiosInstance = createAxiosInstanceWithInterceptor(userApi, "token");
+const userAxiosInstance = createAxiosInstanceWithInterceptor(userApi, "Usertoken");
 const adminAxiosInstance = createAxiosInstanceWithInterceptor(
   adminApi,
   "token"
 );
 const partnerAxiosInstance = createAxiosInstanceWithInterceptor(
   partnerApi,
-  "token"
+  "partnertoken"
 );
 
 export { userAxiosInstance, adminAxiosInstance, partnerAxiosInstance };

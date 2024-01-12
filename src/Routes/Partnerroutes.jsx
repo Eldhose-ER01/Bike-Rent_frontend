@@ -39,8 +39,8 @@ export default function Partnerroutes() {
         dispatch(
           addUser({
             token: response.data.partnerdata.token,
-            username: response.data.partnerdata.name,
-            id: response.data.partnerdata.id,
+            // username: response.data.partnerdata.name,
+            // id: response.data.partnerdata.id,
           })
         );
       }
@@ -52,7 +52,7 @@ export default function Partnerroutes() {
  
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = JSON.parse(localStorage.getItem("partnertoken"));
     dispatch(
       addUser({
         token: token,

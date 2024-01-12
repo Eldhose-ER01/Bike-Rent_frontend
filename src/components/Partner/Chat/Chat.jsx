@@ -69,15 +69,17 @@ if(refresh){
 
             await getChat(userid).then((res) => {
                 setChatPerson(res.data.findChat[0].chat);
+            setUserdetails(res.data.findChat[0].partnerId);
+
 
             });
         });
   
-        await getChat(userid).then((res) => {
-            console.log(res.data.findChat[0].chat, 'oooooo')
-            setUserdetails(res.data.findChat[0].partnerId);
-            setChatPerson(res.data.findChat[0].chat);
-        });   
+        // await getChat(userid).then((res) => {
+        //     console.log(res.data.findChat[0].chat, 'oooooo')
+        //     setUserdetails(res.data.findChat[0].partnerId);
+        //     setChatPerson(res.data.findChat[0].chat);
+        // });   
     }
     chatTrigar()
 

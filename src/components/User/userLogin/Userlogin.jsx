@@ -38,14 +38,14 @@ function LoginForm() {
         navigate("/");
        toast.success("Home Page")
        localStorage.setItem(
-        "token",
+        "Usertoken",
         JSON.stringify(response.data.userdatas.token)
       );
         dispatch(
           addUser({
             id: response.data.userdatas.id,
-            name: response.data.userdatas.name,
-            token: response.data.userdatas.token,
+            // name: response.data.userdatas.name,
+            // token: response.data.userdatas.token,
           })
         );
       

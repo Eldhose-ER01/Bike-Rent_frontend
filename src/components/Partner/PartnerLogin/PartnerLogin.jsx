@@ -38,13 +38,13 @@ export default function PartnerLogin() {
         navigate("/partner/");
         window.location.href = "/partner/";
         localStorage.setItem(
-          "token",
+          "partnertoken",
           JSON.stringify(response.data.partnerdata.token)
         );
         dispatch(
           addUser({
-            id: response.data.partnerdata.id,
-            name: response.data.partnerdata.name,
+            // id: response.data.partnerdata.id,
+            // name: response.data.partnerdata.name,
             token: response.data.partnerdata.token,
           })
         );
