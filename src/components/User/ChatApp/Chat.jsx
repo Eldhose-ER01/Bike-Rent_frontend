@@ -39,7 +39,6 @@ useEffect(() => {
 }, [])
 
 const partnersid=(id,first,last,image)=>{
-  console.log(id,first,last,image)
     setPartnerid(id)
     setRefresh(id)
     setname(first+last)

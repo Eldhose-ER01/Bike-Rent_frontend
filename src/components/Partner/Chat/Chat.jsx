@@ -13,6 +13,9 @@ const[partnerdetail,partnerSetDetail]=useState([])
 const[userlist,setUserlist]=useState([])
 const[userid,setuserid]=useState()
 const[refresh,setRefresh]=useState()
+const[name,setname]=useState('No user Selected')
+
+const[image,setimage]=useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB1unljthnNhq11gRkFBXbUgElDzv8g1v0iWSrQ6bi5Yhd_JvrGstVekNgbnF-vvPkC4c&usqp=CAU")
 
 
 const findpartner=async()=>{
@@ -48,9 +51,11 @@ useEffect(() => {
 
 }, [refresh])
 
-const usechatsid=(id)=>{
+const usechatsid=(id,first,last,image)=>{
     setuserid(id)
     setRefresh(id)
+    setname(first+last)
+    setimage(image)
 }
 
 const [currentMessage, setCurrentMessage] = useState("");
@@ -129,7 +134,7 @@ if(refresh){
             {
   userlist.map((userl, index) => {
     return (
-      <div key={index} className="flex justify-center items-center py-5 border-b border-b-gray-300" onClick={()=>usechatsid(userl._id)}>
+      <div key={index} className="flex justify-center items-center py-5 border-b border-b-gray-300" onClick={()=>usechatsid(userl._id,userl.fname,userl.lname,userl.image) }>
         <div className="cursor-pointer flex items-center">
           <img src={userl.image} className="w-20 h-20 rounded-full" alt="" />
           <div className="ml-6">
@@ -149,10 +154,10 @@ if(refresh){
     </div>
     <div className="w-[75%] border h-screen bg-white flex flex-col items-center ">
         <div className="w-[75%] bg-slate-100 h-[80px] mt-14 rounded-full flex items-center px-14 shadow-md">
-            <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB1unljthnNhq11gRkFBXbUgElDzv8g1v0iWSrQ6bi5Yhd_JvrGstVekNgbnF-vvPkC4c&usqp=CAU"width={60} height={60} alt=""  />
+            <div><img src={image?image:''}width={60} height={50} className="rounded-full" alt=""  />
 </div>
 <div className="ml-6">
-<h3 className="text-lg">Eldhose</h3>
+<h3 className="text-lg">{name?name:''}</h3>
 <p className="text-sm font-light text-gray-600">Online</p>
 </div>
 </div>
