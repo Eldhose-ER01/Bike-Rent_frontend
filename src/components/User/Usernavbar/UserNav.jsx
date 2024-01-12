@@ -8,7 +8,7 @@ export default function UserNav() {
     let [open,setOpen]=useState(false)
   const navigate=useNavigate()
   const dispatch=useDispatch()
-  const { id }=useSelector((store)=>store.user.userD)
+  const { token }=useSelector((store)=>store.user.userD)
   const isorder=useSelector((store)=>store.navSlice)
   // console.log(id,"useeeeeeeeeeeeee");
   const homelogout = () => {
@@ -64,7 +64,7 @@ export default function UserNav() {
           :null }
 
             
-              {id==null ?(
+              {token==null ?(
                 <li className="md:ml-8 text-xl semibold md:my-0 my-7">
                 <Link to={'/login'} className="font-semibold" >Login</Link>
               </li>):(
