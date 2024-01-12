@@ -36,7 +36,7 @@ export default function PartnerLogin() {
 
       if (response.data.success) {
         navigate("/partner/");
-        // window.location.href = "/partner/";
+        window.location.href = "/partner/";
         localStorage.setItem(
           "token",
           JSON.stringify(response.data.partnerdata.token)

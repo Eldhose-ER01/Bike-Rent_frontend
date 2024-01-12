@@ -162,14 +162,15 @@ const [currentMessage, setCurrentMessage] = useState("");
 {chatPerson?.map((chatPerson, index) => {
   return (
     <div key={index} className="p-14">
-   { chatPerson.user!=''?
+   { chatPerson.partner!=''?
 
       <div className="max-w-[44%] bg-slate-200 rounded-b-xl rounded-tr-xl p-2 mb-6">
-        {chatPerson.user}
+      {chatPerson.partner}
       </div>
-      :chatPerson.partner!='' &&
+      :chatPerson.user!='' &&
       <div className="max-w-[44%] bg-sky-400 rounded-b-xl rounded-tl-xl ml-auto p-2 text-white mb-6">
-        {chatPerson.partner}
+       
+        {chatPerson.user}
       </div>
 }
     </div>
