@@ -51,8 +51,8 @@ const Dispatch=useDispatch()
         <div className="relative pt-[5rem] lg:pt-[6rem]  ">
           <div>
             <img
-              // src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
-              src={Homeimage}
+              src={"../../../assets/Images/cbr650r-homebanner_new5.jpg"}
+              // src={Homeimage}
               alt=""
               className="mx-auto"
             />
