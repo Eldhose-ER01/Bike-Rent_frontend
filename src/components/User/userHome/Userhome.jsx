@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
 import { useDispatch } from "react-redux";
 import { isbookinpagefalse } from "../../../redux/NavbarSlice";
-// import Homeimage from "../../../assets/license.jpg"
+
 
 export default function Userhome() {
   const [bike, setbike] = useState([]);
@@ -51,22 +51,19 @@ const Dispatch=useDispatch()
         <div className="relative pt-[5rem] lg:pt-[6rem]  ">
           <div>
             <img
-              // src={"../../../assets/Images/cbr650r-homebanner_new5.jpg"}
-              src="/static/Images/cbr650r-homebanner_new5.jpg"
+             src="/static/Images/cbr650r-homebanner_new5.jpg"
               alt=""
               className="mx-auto"
             />
 
             <img
-              // src="\assets\Images\honda-unicorn-abc-right-side-view_360x240.webp" 
-              // src="/assets/Images/Himalayan-new-colour-brown.avif"
-              src="/static/Images/cbr650r-homebanner_new5.jpg"
-              // src={Homeimage}
+               src="/static/Images/cbr650r.png"
               alt=""
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 "
             />
             <img
-              // src="../../../../public/Images/istockphoto-1180824340-612x612-removebg-preview.png"
+              
+              src="/static/Images/istockphoto-1180824340-612x612-removebg-preview.png"
               alt=""
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-[10rem] h-40 w-46 scale-50 hover:scale-90 ease-in duration-300 cursor-pointer"
               onClick={handleBookNow}
@@ -79,25 +76,20 @@ const Dispatch=useDispatch()
         <UserNav />
         <div className="pt-[5rem] lg:pt-[6rem] lg:block">
           <img
-              // src="assets/Images/honda-unicorn-abc-right-side-view_360x240.webp"
-              // src="/assets/Images/Himalayan-new-colour-brown.avif"
-              src="/static/Images/cbr650r-homebanner_new5.jpg"
-
-// src={Homeimage}
-            // src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
+             src="/static/Images/cbr650r-homebanner_new5.jpg"
             alt=""
             className="mx-auto"
           />
           <img
-                        src="/assets/Images/Himalayan-new-colour-brown.avif"
-
+            src="/static/Images/cbr650r.png"
             // src="'../../../../public/Images/cbr650r.png"
-          // src={Homeimage}
             alt=""
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 pb-[35rem] md:pb-[18rm] "
           />
           <img
-            src="../../../../public/Images/istockphoto-1180824340-612x612-removebg-preview.png"
+           src="/static/Images/istockphoto-1180824340-612x612-removebg-preview.png"
+
+            // src="../../../../public/Images/istockphoto-1180824340-612x612-removebg-preview.png"
             alt=""
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 w-36  pb-[32rem] md:pb-[29rem] hover:scale-90 ease-in duration-100 cursor-pointer"
             onClick={handleBookNow}

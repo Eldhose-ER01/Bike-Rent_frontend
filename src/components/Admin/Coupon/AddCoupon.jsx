@@ -46,7 +46,7 @@ const AddCoupon = () => {
     <div>
      <div className="h-16 w-screen bg-green-400">
         <img
-          src="../../../../public/Images/pngwing.com.png"
+          src="/static/Images/pngwing.com.png"
           className="w-14 h-14 pt-3 pl-3 "
           alt="image"
         onClick={returnpage}/>

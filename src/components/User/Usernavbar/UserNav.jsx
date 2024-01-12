@@ -25,7 +25,7 @@ export default function UserNav() {
            <div className='shadow-md w-full fixed top-0 left-0 z-10'>
       <div className='md:flex items-center justify-between bg-black py-4 md:px-10 px-7 md:h-24 h-20'> 
       <div className='font-bold text-2xl cursor-pointer flex items-center font-[Poppins]  text-gray-800'>
-              <img src="../../../../public/Images/run-rider-high-resolution-logo-white.png" alt="" className="w-24 h-16 md:w-36 md:h-24 " />
+              <img src="/static/Images/run-rider-high-resolution-logo-white.png" alt="" className="w-24 h-16 md:w-36 md:h-24 " />
             </div>
            
             <div className='text-3xl absolute right-8 top-6 cursor-pointer md:hidden text-white'>

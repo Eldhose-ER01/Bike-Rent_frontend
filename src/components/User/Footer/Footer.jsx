@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
               <a href="https://flowbite.com/" className="flex items-center">
-                  <img src="../../../../public/Images/run-rider-high-resolution-logo-white.png" className="h-12 w-15 me-3" alt="FlowBite Logo" />
+                  <img src="/static/Images/run-rider-high-resolution-logo-white.png" className="h-12 w-15 me-3" alt="FlowBite Logo" />
                   <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-green-500">Run Rider</span>
               </a>
           </div>
