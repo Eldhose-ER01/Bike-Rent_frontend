@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
 import { useDispatch } from "react-redux";
 import { isbookinpagefalse } from "../../../redux/NavbarSlice";
-import Homeimage from "../../../../src/assets/Images/ktm-duke648ffc0a8466e.webp"
+// import Homeimage from "../../../../src/assets/Images/ktm-duke648ffc0a8466e.webp"
 
 export default function Userhome() {
   const [bike, setbike] = useState([]);
@@ -52,13 +52,13 @@ const Dispatch=useDispatch()
           <div>
             <img
               // src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
-              src={Homeimage}
+              src="/assets/Images/honda-unicorn-abc-right-side-view_360x240.webp"
               alt=""
               className="mx-auto"
             />
 
             <img
-              src="\assets\Images\honda-unicorn-abc-right-side-view_360x240.webp"
+              // src="\assets\Images\honda-unicorn-abc-right-side-view_360x240.webp" 
               alt=""
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-4 lg:mt-8 "
             />
