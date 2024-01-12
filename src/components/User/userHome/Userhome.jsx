@@ -52,7 +52,7 @@ const Dispatch=useDispatch()
           <div>
             <img
               // src={"../../../assets/Images/cbr650r-homebanner_new5.jpg"}
-              src={Homeimage}
+              src="assets/Images/honda-unicorn-abc-right-side-view_360x240.webp"
               alt=""
               className="mx-auto"
             />
@@ -77,8 +77,9 @@ const Dispatch=useDispatch()
         <UserNav />
         <div className="pt-[5rem] lg:pt-[6rem] lg:block">
           <img
+              src="assets/Images/honda-unicorn-abc-right-side-view_360x240.webp"
 
-src={Homeimage}
+// src={Homeimage}
             // src="../../../../public/Images/cbr650r-homebanner_new5.jpg"
             alt=""
             className="mx-auto"
