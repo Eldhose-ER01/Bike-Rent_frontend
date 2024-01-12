@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import { Usersignup, googleAuth } from "../../../configure/Userinterceptor";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import {auth}  from "../../../components/User/userLogin/GoogleAuth";
+import { Usersignup} from "../../../configure/Userinterceptor";
+// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import {auth}  from "../../../components/User/userLogin/GoogleAuth";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../redux/Userslice";
 import toast from "react-hot-toast";
@@ -65,41 +65,41 @@ export default function UserSignup() {
     }
   };
 
-  const handleGoogle = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
+  // const handleGoogle = async () => {
+  //   try {
+  //     const provider = new GoogleAuthProvider();
 
-      const result = await signInWithPopup(auth, provider);
-    console.log(result,'handle goodle');
+  //     const result = await signInWithPopup(auth, provider);
+  //   console.log(result,'handle goodle');
 
 
-      const response = await googleAuth(result);
-      if (response.data.success) {
-        navigate("/");
-        dispatch(
-          addUser({
-            id: response.data.userdatas.id,
-            // name: response.data.userdatas.name,
-            // token: response.data.userdatas.token,
-          })
-        );
-        localStorage.setItem(
-          "token",
-          JSON.stringify(response.data.userdatas.token)
-        );
-      } else {
-        if (
-          response.data.success === false &&
-          response.data.message === "authentication failed"
-        ) {
-          navigate("/");
-          toast.success("Enterd in to Home page");
-        }
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  //     const response = await googleAuth(result);
+  //     if (response.data.success) {
+  //       navigate("/");
+  //       dispatch(
+  //         addUser({
+  //           id: response.data.userdatas.id,
+  //           // name: response.data.userdatas.name,
+  //           // token: response.data.userdatas.token,
+  //         })
+  //       );
+  //       localStorage.setItem(
+  //         "token",
+  //         JSON.stringify(response.data.userdatas.token)
+  //       );
+  //     } else {
+  //       if (
+  //         response.data.success === false &&
+  //         response.data.message === "authentication failed"
+  //       ) {
+  //         navigate("/");
+  //         toast.success("Enterd in to Home page");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   return (
     <div>
