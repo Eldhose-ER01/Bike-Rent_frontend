@@ -43,9 +43,9 @@ function LoginForm() {
         );
         dispatch(
           addUser({
-            id: response.data.userdatas.id,
+            // id: response.data.userdatas.id,
             // name: response.data.userdatas.name,
-            // token: response.data.userdatas.token,
+            token: response.data.userdatas.token,
           })
         );
       } else if (response.data.Block) {
