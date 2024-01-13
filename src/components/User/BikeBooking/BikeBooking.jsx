@@ -3,7 +3,11 @@ import UserNav from "../Usernavbar/UserNav";
 import { useLocation } from "react-router-dom";
 import Timecalculate from "./TimeCalculation";
 import { useNavigate } from "react-router-dom";
-import { Applycoupon, Bookingsdatas,alredybook } from "../../../configure/Userinterceptor";
+import {
+  Applycoupon,
+  Bookingsdatas,
+  // alredybook,
+} from "../../../configure/Userinterceptor";
 import Footer from "../Footer/Footer";
 import "./Style.css";
 import toast from "react-hot-toast";
@@ -15,7 +19,7 @@ export default function BikeBooking() {
   const bookingData = location.state;
 
   const navigate = useNavigate();
- const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
   // Now, you can access bookingData and use it in your component
   const [bikesdata, setBikedata] = useState([bookingData]);
   const [totalTime, setTotalTime] = useState("");
@@ -24,15 +28,11 @@ export default function BikeBooking() {
   const [sgst, setsgst] = useState("");
   const [cgst, setcgst] = useState("");
   const [helmet, sethelmet] = useState(1);
-  const [couponAmount,setCouponAmount] = useState(0)
- const codeRef = useRef()
-
-  // const amount=totalTime*bikesdata.BikeId.RentPerDay
-  // setAmount(amount)
+  const [couponAmount, setCouponAmount] = useState(0);
+  const codeRef = useRef();
 
   useEffect(() => {
-    Dispatch(isbookinpagetrue())
-    console.log(bikesdata, "this is bike data");
+    Dispatch(isbookinpagetrue());
     const time = Timecalculate(
       bikesdata[0].picktime,
       bikesdata[0].pickupdate,
@@ -58,7 +58,6 @@ export default function BikeBooking() {
     setsgst(amount * (2 / 100));
   };
   const handleMethodSelect = (method) => {
-    console.log(method, "this is payment ");
     setSelectedMethod(method);
   };
   const data = {
@@ -68,75 +67,71 @@ export default function BikeBooking() {
     totalAmount: totalAmount,
     helmet: helmet,
     Paymentmethod: selectedMethod,
-    coupon:couponAmount
+    coupon: couponAmount,
   };
 
   const finaldatas = [...bikesdata, data];
 
   const bookingsdata = async () => {
     try {
-      console.log('jjjjjjjjjjjjjj')
       if (selectedMethod == "") {
         toast.error("Please Select Payment Method");
       } else {
-        const res= await alredybook(finaldatas)
-        console.log(res,'this is my resonne')
-        if(res.data.success){
-        const response = await Bookingsdatas(finaldatas);
+        // const res = await alredybook(finaldatas);
+        // if (res.data.success) {
+          const response = await Bookingsdatas(finaldatas);
 
-        if (response.data.url) {
-          window.location.href = response.data.url;
+          if (response.data.url) {
+            window.location.href = response.data.url;
 
-          if (response.data.success) {
-            toast.success("Booking success");
-          } else {
-            toast.error("Booking failed");
+            if (response.data.success) {
+              toast.success("Booking success");
+            } else {
+              toast.error("Booking failed");
+            }
+          } else if (response.data.wallet) {
+            toast.success("Booking Started");
+            navigate("/successbooking");
+          } else if (response.data.notamount) {
+            toast.error(response.data.notamount);
+          } else if (response.data.messages) {
+            toast.error(response.data.messages); // Display license error message
           }
-        } else if (response.data.wallet) {
-          toast.success("Booking Started");
-          navigate("/successbooking");
-        } else if (response.data.notamount) {
-          toast.error(response.data.notamount);
-        } else if (response.data.messages) {
-          toast.error(response.data.messages); // Display license error message
-        }
-      }else{
-        toast.error("Allready Booked")
+        // } else {
+        //   toast.error("Allready Booked");
+        // }
       }
-    }
     } catch (error) {
       console.error("Error in bookingsdata:", error);
       // Handle errors on the front end
     }
   };
-console.log(finaldatas,"bookingDatabookingData");
-  
+
   const helmets = (e) => {
     sethelmet(e.target.value);
   };
-const handleCoupon  =async()=>{
-  try {
-     if(codeRef.current.value){
- 
+  const handleCoupon = async () => {
+    try {
+      if (codeRef.current.value) {
         const data = {
-          code:codeRef.current.value,
-          amonut:finalAmount?finalAmount:""
-        }
-      await Applycoupon(data).then((res)=>{
-        if(res.data.success){
-          toast.success(res.data.message)
-          setCouponAmount(res.data.amount)
-        }else{
-          toast.error(res.data.message)
-        }
-      })
-     }else{
-      toast.error("input feild is empty")
-     }
-  } catch (error) {
-    toast.error(error.message)
-  }
-}
+          code: codeRef.current.value,
+          amonut: finalAmount ? finalAmount : "",
+        };
+        await Applycoupon(data).then((res) => {
+          if (res.data.success) {
+            toast.success(res.data.message);
+            setCouponAmount(res.data.amount);
+          } else {
+            toast.error(res.data.message);
+          }
+        });
+      } else {
+        toast.error("input feild is empty");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <div>
       <div>
@@ -271,9 +266,12 @@ const handleCoupon  =async()=>{
                 type="text"
                 name="code"
                 placeholder="Enter Coupon Code"
-                 ref={codeRef}
+                ref={codeRef}
               />
-              <button onClick={handleCoupon} className="font-bold ml-3 mb-1 text-green-400">
+              <button
+                onClick={handleCoupon}
+                className="font-bold ml-3 mb-1 text-green-400"
+              >
                 Apply
               </button>
             </div>
@@ -308,7 +306,7 @@ const handleCoupon  =async()=>{
               <p className="text-lg font-bold">
                 Total Amount:{" "}
                 <span className="text-green-600" name="finalAmunt">
-                  ₹:{finalAmount-couponAmount}
+                  ₹:{finalAmount - couponAmount}
                 </span>
               </p>
             </div>

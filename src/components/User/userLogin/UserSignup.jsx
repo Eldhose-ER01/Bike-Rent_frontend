@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import { Usersignup} from "../../../configure/Userinterceptor";
+import { Usersignup } from "../../../configure/Userinterceptor";
 // import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import {auth}  from "../../../components/User/userLogin/GoogleAuth";
 import { useDispatch } from "react-redux";
@@ -50,7 +50,6 @@ export default function UserSignup() {
   const handlesubmit = async () => {
     try {
       const response = await Usersignup(formValues);
-      console.log("response : ", response);
       if (response.data.success) {
         navigate("/otp", { state: formValues });
       } else {
@@ -71,7 +70,6 @@ export default function UserSignup() {
 
   //     const result = await signInWithPopup(auth, provider);
   //   console.log(result,'handle goodle');
-
 
   //     const response = await googleAuth(result);
   //     if (response.data.success) {

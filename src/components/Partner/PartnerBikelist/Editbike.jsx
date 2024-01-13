@@ -13,13 +13,11 @@ export default function Editbike() {
   const initialValue = location.state || {};
   const [bikedata, setBikedata] = useState(initialValue);
 
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
-
+  } = useForm();
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -64,7 +62,6 @@ export default function Editbike() {
   };
 
   const handleSubmits = async () => {
-   
     try {
       const response = await editbike(bikedata);
       if (response.data.success) {
@@ -87,17 +84,20 @@ export default function Editbike() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-4">
-              <label htmlFor="Bikename" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="Bikename"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Bike Name
               </label>
               <input
-               {...register("Bikename", {
-                required: 'Please fill the Bikename',
-                pattern: {
-                  value: /^[^\s].*[^\s]$/,
-                  message: 'Leading or trailing spaces are not allowed',
-                },
-              })}
+                {...register("Bikename", {
+                  required: "Please fill the Bikename",
+                  pattern: {
+                    value: /^[^\s].*[^\s]$/,
+                    message: "Leading or trailing spaces are not allowed",
+                  },
+                })}
                 type="text"
                 id="Bikename"
                 name="Bikename"
@@ -105,25 +105,28 @@ export default function Editbike() {
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
               />
-                {errors.Bikename && (
-            <span className="flex justify-center  text-red-700">
-              {errors.Bikename.message}
-            </span>
-          )}
+              {errors.Bikename && (
+                <span className="flex justify-center  text-red-700">
+                  {errors.Bikename.message}
+                </span>
+              )}
             </div>
 
             <div className="mb-4">
-              <label htmlFor="brand" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="brand"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Brand
               </label>
               <input
-               {...register("brand", {
-                required: 'Please fill the brand',
-                pattern: {
-                  value: /^[^\s].*[^\s]$/,
-                  message: 'Leading or trailing spaces are not allowed',
-                },
-              })}
+                {...register("brand", {
+                  required: "Please fill the brand",
+                  pattern: {
+                    value: /^[^\s].*[^\s]$/,
+                    message: "Leading or trailing spaces are not allowed",
+                  },
+                })}
                 type="text"
                 id="brand"
                 name="brand"
@@ -132,25 +135,27 @@ export default function Editbike() {
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
               />
               {errors.brand && (
-            <span className="flex justify-center  text-red-700">
-              {errors.brand.message}
-            </span>
-          )}
+                <span className="flex justify-center  text-red-700">
+                  {errors.brand.message}
+                </span>
+              )}
             </div>
 
-
             <div className="mb-4">
-              <label htmlFor="image" className="block text-sm font-medium text-gray-600">
-               Category
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-600"
+              >
+                Category
               </label>
               <input
-               {...register("Category", {
-                required: 'Please fill the Category',
-                pattern: {
-                  value: /^[^\s].*[^\s]$/,
-                  message: 'Leading or trailing spaces are not allowed',
-                },
-              })}
+                {...register("Category", {
+                  required: "Please fill the Category",
+                  pattern: {
+                    value: /^[^\s].*[^\s]$/,
+                    message: "Leading or trailing spaces are not allowed",
+                  },
+                })}
                 type="text"
                 id="Category"
                 name="Category"
@@ -158,28 +163,28 @@ export default function Editbike() {
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
               />
-                {errors.Category && (
-            <span className="flex justify-center  text-red-700">
-              {errors.Category.message}
-            </span>
-          )}
+              {errors.Category && (
+                <span className="flex justify-center  text-red-700">
+                  {errors.Category.message}
+                </span>
+              )}
             </div>
 
-
-      
-
             <div className="mb-4">
-              <label htmlFor="RentPerDay" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="RentPerDay"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Rent
               </label>
               <input
-              {...register("RentPerDay", {
-                required: 'Please fill the RentPerDay',
-                pattern: {
-                  value: /^[^\s].*[^\s]$/,
-                  message: 'Leading or trailing spaces are not allowed',
-                },
-              })}
+                {...register("RentPerDay", {
+                  required: "Please fill the RentPerDay",
+                  pattern: {
+                    value: /^[^\s].*[^\s]$/,
+                    message: "Leading or trailing spaces are not allowed",
+                  },
+                })}
                 type="text"
                 id="RentPerDay"
                 name="RentPerDay"
@@ -187,40 +192,45 @@ export default function Editbike() {
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
               />
-               {errors.RentPerDay && (
-            <span className="flex justify-center  text-red-700">
-              {errors.RentPerDay.message}
-            </span>
-          )}
+              {errors.RentPerDay && (
+                <span className="flex justify-center  text-red-700">
+                  {errors.RentPerDay.message}
+                </span>
+              )}
             </div>
             <div className="mb-4">
-              <label htmlFor="RentPerDay" className="block text-sm font-medium text-gray-600">
-              VehicleCC
+              <label
+                htmlFor="RentPerDay"
+                className="block text-sm font-medium text-gray-600"
+              >
+                VehicleCC
               </label>
               <input
-               {...register("VehicleCC", {
-                required: 'Please fill the VehicleCC',
-                pattern: {
-                  value: /^[^\s].*[^\s]$/,
-                  message: 'Leading or trailing spaces are not allowed',
-                },
-              })}
+                {...register("VehicleCC", {
+                  required: "Please fill the VehicleCC",
+                  pattern: {
+                    value: /^[^\s].*[^\s]$/,
+                    message: "Leading or trailing spaces are not allowed",
+                  },
+                })}
                 type="text"
                 id="VehicleCC"
                 name="VehicleCC"
-                defaultValue={bikedata.bike?.
-                  VehicleCC}
+                defaultValue={bikedata.bike?.VehicleCC}
                 onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-indigo-500"
               />
               {errors.VehicleCC && (
-            <span className="flex justify-center  text-red-700">
-              {errors.VehicleCC.message}
-            </span>
-          )}
+                <span className="flex justify-center  text-red-700">
+                  {errors.VehicleCC.message}
+                </span>
+              )}
             </div>
             <div className="mb-4">
-              <label htmlFor="image" className="block text-sm font-medium text-gray-600">
+              <label
+                htmlFor="image"
+                className="block text-sm font-medium text-gray-600"
+              >
                 Image
               </label>
               <input

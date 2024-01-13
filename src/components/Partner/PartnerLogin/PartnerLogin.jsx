@@ -48,8 +48,6 @@ export default function PartnerLogin() {
             token: response.data.partnerdata.token,
           })
         );
-      
-       
       } else if (response.data.incorrectPassword) {
         setnonPassword(response.data.incorrectPassword);
       } else if (response.data.incorrectemail) {

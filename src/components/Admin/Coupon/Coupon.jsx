@@ -177,18 +177,22 @@ export default function Coupon() {
                   </tbody>
                 </table>
               </div>
-              <div className='max-w-[1600px] bg-gray-100 flex justify-center mt-4'>
-        {totalPages > 0 &&
-          [...Array(totalPages)].map((val, index) => (
-            <button
-              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
-              key={index}
-              onClick={() => handleClick(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-      </div>
+              <div className="max-w-[1600px] bg-gray-100 flex justify-center mt-4">
+                {totalPages > 0 &&
+                  [...Array(totalPages)].map((val, index) => (
+                    <button
+                      className={`${
+                        page === index + 1 ? "bg-black" : "bg-black"
+                      } py-2 px-4 rounded-md m-1 text-white ${
+                        page === index + 1 ? "font-bold" : "font-normal"
+                      } focus:outline-none focus:ring focus:ring-offset-2`}
+                      key={index}
+                      onClick={() => handleClick(index)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

@@ -36,11 +36,11 @@ function LoginForm() {
 
       if (response.data.success) {
         navigate("/");
-       toast.success("Home Page")
-       localStorage.setItem(
-        "Usertoken",
-        JSON.stringify(response.data.userdatas.token)
-      );
+        toast.success("Home Page");
+        localStorage.setItem(
+          "Usertoken",
+          JSON.stringify(response.data.userdatas.token)
+        );
         dispatch(
           addUser({
             id: response.data.userdatas.id,
@@ -48,7 +48,6 @@ function LoginForm() {
             // token: response.data.userdatas.token,
           })
         );
-      
       } else if (response.data.Block) {
         setBlock(response.data.Block);
       } else if (response.data.incorrectPassword) {
@@ -177,7 +176,8 @@ function LoginForm() {
                 <a
                   href="#"
                   className="font-bold text-blue-1000 hover:underline dark:text-black-500"
-               onClick={()=>navigate('/signup')} >
+                  onClick={() => navigate("/signup")}
+                >
                   Sign up
                 </a>
               </p>

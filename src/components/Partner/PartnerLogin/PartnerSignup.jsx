@@ -45,14 +45,12 @@ export default function PartnerSignup() {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "kesrrxni");
-    console.log(formData, "fomdatadjdjghjdghhgruhoads");
     let data = "";
     await Axios.post(
       "https://api.cloudinary.com/v1_1/dotjc7vax/image/upload",
       formData
     ).then((response) => {
       data = response.data["secure_url"];
-      console.log(data, "ddddddddddddddddddddddddddd");
     });
     return data;
   };

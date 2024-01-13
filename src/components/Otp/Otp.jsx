@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { ResendOTP } from "../../configure/Userinterceptor";
 
 export default function Otp() {
-  
   const navigate = useNavigate();
 
   const location = useLocation();

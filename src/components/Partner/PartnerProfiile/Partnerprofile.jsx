@@ -17,13 +17,13 @@ export default function Partnerprofile() {
   const openModal = () => {
     setModalOpen(true);
   };
-  const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
 
   const closeModal = () => {
     setModalOpen(false);
   };
-//  const isorder=useSelector((store)=>store.navSlice)
-//  console.log(isorder)
+  //  const isorder=useSelector((store)=>store.navSlice)
+  //  console.log(isorder)
 
   const findpartner = async () => {
     const response = await findprofile();
@@ -32,7 +32,7 @@ export default function Partnerprofile() {
     }
   };
   useEffect(() => {
-    Dispatch(isbookinpagefalse())
+    Dispatch(isbookinpagefalse());
 
     findpartner();
   }, []);
@@ -92,12 +92,10 @@ export default function Partnerprofile() {
         }
       >
         {/* <div className="container mx-auto p-4 border border-blue-900 bg-blue-900 hidden sm:block"> */}
-     
-        <Partnerdashboard />
-       
-        <div className="container mx-auto p-4 border border-red-300 custom-shadow md:mt-24 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 h-[40%]">
-        
 
+        <Partnerdashboard />
+
+        <div className="container mx-auto p-4 border border-red-300 custom-shadow md:mt-24 md:w-1/2 lg:w-1/2 xl:w-1/2 2xl:w-1/2 h-[40%]">
           <div className="flex flex-col items-center">
             {/* Profile Picture */}
             <div className="py-3 relative">
@@ -161,7 +159,9 @@ export default function Partnerprofile() {
                       <img src={partner?.aadhaar} alt="" />
                     </div>
 
-                    <button onClick={closeModal} className="mt-14">Close Modal</button>
+                    <button onClick={closeModal} className="mt-14">
+                      Close Modal
+                    </button>
                   </div>
                 )}
               </div>

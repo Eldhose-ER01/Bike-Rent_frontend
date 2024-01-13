@@ -11,18 +11,18 @@ export default function BookingView() {
 
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0)
-  
+  const [totalPages, setTotalPages] = useState(0);
+
   const handleClick = (index) => {
-    setPage(index + 1)
-  }
+    setPage(index + 1);
+  };
   const bookingdata = async () => {
     try {
       const response = await Bookinghistory(page);
       if (response.data.success) {
         setBookingdata(response.data.bookings);
-        setPage(response.data.page)
-        setTotalPages(response.data.totalPages)
+        setPage(response.data.page);
+        setTotalPages(response.data.totalPages);
       }
     } catch (error) {
       console.log(error);
@@ -31,7 +31,7 @@ export default function BookingView() {
 
   useEffect(() => {
     bookingdata();
-  }, [refresh,page]);
+  }, [refresh, page]);
 
   const cancel = async (id) => {
     try {

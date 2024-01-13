@@ -40,10 +40,10 @@ export default function UserProfile() {
       console.log(error);
     }
   };
-  const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
 
   useEffect(() => {
-    Dispatch(isbookinpagefalse())
+    Dispatch(isbookinpagefalse());
     profileuser();
   }, [refresh]);
 
@@ -134,23 +134,23 @@ export default function UserProfile() {
       console.log(err.message);
     }
   };
-  const BookingHistory=()=>{
-    navigate('/bookingview')
-  }
+  const BookingHistory = () => {
+    navigate("/bookingview");
+  };
 
-const wallethistory=()=>{
-  navigate('/wallethistory')
-}
+  const wallethistory = () => {
+    navigate("/wallethistory");
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
   const openModal = () => {
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    document.body.style.overflow = "hidden"; // Prevent scrolling when modal is open
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'visible'; // Enable scrolling when modal is closed
+    document.body.style.overflow = "visible"; // Enable scrolling when modal is closed
   };
   return (
     <div>
@@ -366,79 +366,79 @@ const wallethistory=()=>{
           </div>
         </div>
       </div>
-      
+
       <div className="flex justify-center mt-6">
-      <div>
-      <button
-      
-      className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-   onClick={()=>{wallethistory(user._id)}} >
-      Wallet History
-    </button>
-      </div>
-      <button
-        onClick={openModal}
-        className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-      >
-        Wallet 
-      </button>
+        <div>
+          <button
+            className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+            onClick={() => {
+              wallethistory(user._id);
+            }}
+          >
+            Wallet History
+          </button>
+        </div>
+        <button
+          onClick={openModal}
+          className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+        >
+          Wallet
+        </button>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              onClick={closeModal}
-              className="fixed inset-0 transition-opacity"
-            >
-              <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-            </div>
-
-            <span
-              className="hidden sm:inline-block sm:align-middle sm:h-screen"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3
-                      className="text-lg leading-6 font-medium text-gray-900 text-center mt-5"
-                      id="modal-title"
-                    >
-                    Wallet Amount:
-                    </h3>
-                    <div className="mt-2">
-                      <p className=" text-green-500 font-bold text-xl">
-                      ₹:{user.wallet}
-                     
-                      </p>
-                    </div>
-                  </div>
-                 
-                  </div>
-                
+        {isModalOpen && (
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                onClick={closeModal}
+                className="fixed inset-0 transition-opacity"
+              >
+                <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
               </div>
 
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button
-                  onClick={closeModal}
-                  type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Close
-                </button>
+              <span
+                className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+              >
+                &#8203;
+              </span>
+
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3
+                        className="text-lg leading-6 font-medium text-gray-900 text-center mt-5"
+                        id="modal-title"
+                      >
+                        Wallet Amount:
+                      </h3>
+                      <div className="mt-2">
+                        <p className=" text-green-500 font-bold text-xl">
+                          ₹:{user.wallet}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    onClick={closeModal}
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
         <button
           type="button"
           className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
-         onClick={BookingHistory} >
+          onClick={BookingHistory}
+        >
           Booking History
         </button>
       </div>
@@ -466,8 +466,6 @@ const wallethistory=()=>{
           <span className="sr-only">Loading...</span>
         </div>
       ) : null}
-     
-
     </div>
   );
 }

@@ -8,33 +8,33 @@ import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 import { useDispatch } from "react-redux";
 
 export default function Userlist() {
-  const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
   const [search, setSearch] = useState("");
 
   const [user, setUser] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0)
-  
+  const [totalPages, setTotalPages] = useState(0);
+
   const handleClick = (index) => {
-    setPage(index + 1)
-  }
+    setPage(index + 1);
+  };
   const findUser = async () => {
     try {
-      const response = await finduser(page,search);
+      const response = await finduser(page, search);
       if (response.data.success) {
-        setUser(response.data.userdata)
-        setPage(response.data.page)
-        setTotalPages(response.data.totalPages)
+        setUser(response.data.userdata);
+        setPage(response.data.page);
+        setTotalPages(response.data.totalPages);
       }
-    } catch (error) {   
+    } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    Dispatch(isbookinpagefalse())
+    Dispatch(isbookinpagefalse());
 
     findUser();
-  }, [page,search]);
+  }, [page, search]);
 
   const bolockorunblock = async (id) => {
     try {
@@ -158,25 +158,26 @@ export default function Userlist() {
                   </tbody>
                 </table>
               </div>
-              <div className='max-w-[1600px] bg-gray-100 flex justify-center mt-3'>
-        {totalPages > 0 &&
-          [...Array(totalPages)].map((val, index) => (
-            <button
-              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
-              key={index}
-              onClick={() => handleClick(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-      </div>
+              <div className="max-w-[1600px] bg-gray-100 flex justify-center mt-3">
+                {totalPages > 0 &&
+                  [...Array(totalPages)].map((val, index) => (
+                    <button
+                      className={`${
+                        page === index + 1 ? "bg-black" : "bg-black"
+                      } py-2 px-4 rounded-md m-1 text-white ${
+                        page === index + 1 ? "font-bold" : "font-normal"
+                      } focus:outline-none focus:ring focus:ring-offset-2`}
+                      key={index}
+                      onClick={() => handleClick(index)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-
-      
     </div>
   );
 }

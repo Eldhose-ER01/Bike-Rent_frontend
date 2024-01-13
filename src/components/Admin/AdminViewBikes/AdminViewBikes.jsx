@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   bikepatnerlist,
   statuschangebike,
@@ -8,7 +8,7 @@ import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 import { useDispatch } from "react-redux";
 
 export default function AdminViewBikes() {
-  const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
 
   const [bike, setBike] = useState([]);
   const location = useLocation();
@@ -17,7 +17,7 @@ export default function AdminViewBikes() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const [refresh, setRefresh] = useState(true);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const lastItemIndex = currentPage * itemsPerPage;
   const firstIndex = lastItemIndex - itemsPerPage;
   const thisPageItems = bike.slice(firstIndex, lastItemIndex);
@@ -34,14 +34,12 @@ export default function AdminViewBikes() {
   };
   useEffect(() => {
     finddata();
-    Dispatch(isbookinpagefalse())
-
+    Dispatch(isbookinpagefalse());
   }, [refresh]);
 
-
-  const returnpage=()=>{
-    navigate('/admin/Partnerlist')
-  }
+  const returnpage = () => {
+    navigate("/admin/Partnerlist");
+  };
   const bolockorunblock = async (id) => {
     try {
       const response = await statuschangebike(id);
@@ -58,7 +56,8 @@ export default function AdminViewBikes() {
           src="/static/Images/pngwing.com.png"
           className="w-14 h-14 pt-3 pl-3 "
           alt="image"
-        onClick={returnpage}/>
+          onClick={returnpage}
+        />
       </div>
       <div className="container mt-5 pr-10">
         <h1 className="font-extrabold font-serif flex justify-center text-3xl ">

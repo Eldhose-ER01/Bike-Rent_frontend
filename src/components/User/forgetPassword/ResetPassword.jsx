@@ -16,7 +16,7 @@ export default function ResetPassword() {
   const location = useLocation();
   const value = location.state;
   const navigate = useNavigate();
-  const[notpass,setnoPass]=useState('')
+  const [notpass, setnoPass] = useState("");
 
   const password = watch("password");
 
@@ -31,8 +31,8 @@ export default function ResetPassword() {
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/login");
-      }else if(response.data.messages){
-        setnoPass(response.data.messages)
+      } else if (response.data.messages) {
+        setnoPass(response.data.messages);
       }
     } catch (error) {
       console.error(error);
@@ -55,23 +55,24 @@ export default function ResetPassword() {
                 >
                   New Password
                 </label>
-                <input    {...register("password", {
-              required: 'Please fill the password',
-              pattern: {
-                value: /^[^\s].*[^\s]$/,
-                message: 'Leading or trailing spaces are not allowed',
-              },
-            })}
+                <input
+                  {...register("password", {
+                    required: "Please fill the password",
+                    pattern: {
+                      value: /^[^\s].*[^\s]$/,
+                      message: "Leading or trailing spaces are not allowed",
+                    },
+                  })}
                   type="password"
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-                 {errors.password && (
-            <span className="flex justify-center  text-red-700">
-              {errors.password.message}
-            </span>
-          )}
+                {errors.password && (
+                  <span className="flex justify-center  text-red-700">
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
               <div>
                 <label
@@ -80,34 +81,32 @@ export default function ResetPassword() {
                 >
                   Confirm password
                 </label>
-             
-                 <input    {...register("passwordd", {
-                  required: 'Please fill the passwordd',
-                  pattern: {
-                    value: /^[^\s].*[^\s]$/,
-                    message: 'Leading or trailing spaces are not allowed',
-                  },
-                  validate: (value) => value === password,
-                })}
-                 
+
+                <input
+                  {...register("passwordd", {
+                    required: "Please fill the passwordd",
+                    pattern: {
+                      value: /^[^\s].*[^\s]$/,
+                      message: "Leading or trailing spaces are not allowed",
+                    },
+                    validate: (value) => value === password,
+                  })}
                   type="password"
                   id="passwordd"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-300 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
-                   {errors.passwordd && (
-            <span className="flex justify-center  text-red-700">
-              {errors.passwordd.message}
-            </span>
-          )}
-
-                 {notpass && (
-                  <span style={{ color: "red" }}>{notpass}</span>
+                {errors.passwordd && (
+                  <span className="flex justify-center  text-red-700">
+                    {errors.passwordd.message}
+                  </span>
                 )}
+
+                {notpass && <span style={{ color: "red" }}>{notpass}</span>}
                 {errors.passwordd && (
                   <span style={{ color: "red" }}>
-                    Please fill in the confirm password and make sure it matches the
-                    new password
+                    Please fill in the confirm password and make sure it matches
+                    the new password
                   </span>
                 )}
               </div>

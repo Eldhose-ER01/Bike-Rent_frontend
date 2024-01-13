@@ -30,11 +30,11 @@ export default function Bikeverify() {
   const [refresh, setRefresh] = useState(false);
   const [viewbike, setViewbike] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0)
-  
+  const [totalPages, setTotalPages] = useState(0);
+
   const handleClick = (index) => {
-    setPage(index + 1)
-  }
+    setPage(index + 1);
+  };
   const handleChange = (event) => {
     setMessage(event.target.value);
   };
@@ -53,9 +53,9 @@ export default function Bikeverify() {
   const findbikedata = async () => {
     const response = await bikerequst(page);
     if (response.data.success) {
-      setBike(response.data.bikedata)
-      setPage(response.data.page)
-      setTotalPages(response.data.totalPages)
+      setBike(response.data.bikedata);
+      setPage(response.data.page);
+      setTotalPages(response.data.totalPages);
     }
   };
 
@@ -63,7 +63,7 @@ export default function Bikeverify() {
     Dispatch(isbookinpagefalse());
 
     findbikedata();
-  }, [refresh,page]);
+  }, [refresh, page]);
 
   const bikeaccept = async (id) => {
     try {
@@ -440,18 +440,22 @@ export default function Bikeverify() {
               </div>
             </div>
           </div>
-          <div className='max-w-[1600px] bg-gray-100 flex justify-center mt-4'>
-        {totalPages > 0 &&
-          [...Array(totalPages)].map((val, index) => (
-            <button
-              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
-              key={index}
-              onClick={() => handleClick(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-      </div>
+          <div className="max-w-[1600px] bg-gray-100 flex justify-center mt-4">
+            {totalPages > 0 &&
+              [...Array(totalPages)].map((val, index) => (
+                <button
+                  className={`${
+                    page === index + 1 ? "bg-black" : "bg-black"
+                  } py-2 px-4 rounded-md m-1 text-white ${
+                    page === index + 1 ? "font-bold" : "font-normal"
+                  } focus:outline-none focus:ring focus:ring-offset-2`}
+                  key={index}
+                  onClick={() => handleClick(index)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+          </div>
         </div>
       </div>
     </div>

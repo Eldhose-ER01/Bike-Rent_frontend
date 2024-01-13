@@ -1,6 +1,6 @@
 import UserNav from "../Usernavbar/UserNav";
 import Footer from "../Footer/Footer";
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useLocation } from "react-router-dom";
@@ -10,7 +10,6 @@ export default function BookingHistory() {
   const bookingData = location.state;
   const pdfRef = useRef();
   const [Data, setData] = useState(bookingData);
-
 
   const downloadPdf = () => {
     const input = pdfRef.current;
@@ -52,13 +51,9 @@ export default function BookingHistory() {
           </h2>
 
           <div className="w-full mt-3 lg:mt-0  lg:w-[45rem] h-auto   mb-3 lg:mb-0 lg:mr-3 flex flex-col lg:flex-row">
-          
-            <div
-              
-              className="w-full lg:w-[40%] md:h-[130%] lg:h-[100%] flex flex-col justify-center items-center shadow-xl bg-slate-100"
-            >
+            <div className="w-full lg:w-[40%] md:h-[130%] lg:h-[100%] flex flex-col justify-center items-center shadow-xl bg-slate-100">
               <h1 className="text-2xl font-bold mb-4">
-              {Data?.bike?.bike?.Bikename}
+                {Data?.bike?.bike?.Bikename}
               </h1>
               <img
                 src={Data.bike.bike.image}
@@ -75,7 +70,7 @@ export default function BookingHistory() {
                 </p>
 
                 <p className="text-lg font-medium flex flex-row justify-between">
-                <span>{Data.bike.PickupTime}</span>
+                  <span>{Data.bike.PickupTime}</span>
 
                   <span>{Data.bike.dropTime}</span>
                 </p>
@@ -96,7 +91,7 @@ export default function BookingHistory() {
 
                 <p className="text-lg font-medium flex flex-row justify-between pt-1">
                   <span>Number of Helmet (?)</span>
-                   <span>{Data.bike.helmet}</span>
+                  <span>{Data.bike.helmet}</span>
                 </p>
 
                 <p className="text-lg font-medium flex flex-row justify-between">
@@ -117,7 +112,9 @@ export default function BookingHistory() {
                 </p>
                 <p className="text-lg font-medium flex flex-row justify-between">
                   <span>GrandTotal</span>
-                  <span className="font-extrabold text-green-800 text-xl">₹:{Data.bike.grandTotal}</span>
+                  <span className="font-extrabold text-green-800 text-xl">
+                    ₹:{Data.bike.grandTotal}
+                  </span>
                 </p>
 
                 <p className="text-lg font-medium flex flex-row justify-between">
@@ -131,13 +128,10 @@ export default function BookingHistory() {
                 </p>
               </div>
             </div>
-           
-          
           </div>
         </div>
       </div>
 
-      
       <div className="flex justify-center mt-16 mb-6">
         <button
           className="bg-red-600 hover:bg-green-600 text-white py-2 px-4 rounded text-xl"

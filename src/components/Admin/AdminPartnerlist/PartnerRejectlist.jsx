@@ -1,11 +1,11 @@
 import Dashboard from "../Dashboard/Admindashb";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Rejectlists } from "../../../configure/Admininterceptor";
 import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 import { useDispatch } from "react-redux";
 export default function PartnerRejectlist() {
-    const Dispatch = useDispatch();
-    const [user, setUser] = useState([]);
+  const Dispatch = useDispatch();
+  const [user, setUser] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -14,16 +14,12 @@ export default function PartnerRejectlist() {
   };
 
   const findUser = async () => {
-
     try {
       const response = await Rejectlists(page);
       if (response.data.success) {
-
         setUser(response.data.datas);
-        console.log(response.data.datas,"response.data.data");
         setPage(response.data.page);
         setTotalPages(response.data.totalPages);
-       
       }
     } catch (error) {
       console.log(error);
@@ -33,7 +29,6 @@ export default function PartnerRejectlist() {
   useEffect(() => {
     Dispatch(isbookinpagefalse());
     findUser();
-   
   }, [page]);
   return (
     <div style={{ display: "flex" }} className="w-screen">
@@ -45,9 +40,7 @@ export default function PartnerRejectlist() {
         <h1 className="font-extrabold font-serif flex justify-center text-3xl ">
           Reject Partners
         </h1>
-        <div>
-       
-        </div>
+        <div></div>
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="p-1.5 w-full inline-block align-middle">
@@ -84,40 +77,43 @@ export default function PartnerRejectlist() {
                         scope="col"
                         className="px-6 py-3  text-xs font-bold text-left text-gray-800 uppercase "
                       >
-                 Company Name
+                        Company Name
                       </th>
-                     
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
- 
-    {user.map((userData, index) => {
-      return (
-        <tr key={userData._id}>
-          <td className="px-6 py-4 text-sm text-left font-medium text-gray-800 whitespace-nowrap">
-            {index + 1}
-          </td>
-          <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
-            {userData.fname}
-          </td>
-          <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
-            {userData.email}
-          </td>
-          <td className="px-6 py-4 text-sm font-medium text-left whitespace-nowrap">
-            <a className="text-green-500 hover:text-green-700" href="#">
-              {userData.phone}
-            </a>
-          </td>
-          <td className="px-6 py-4 text-sm font-medium text-left whitespace-nowrap">
-            <a className="text-green-500 hover:text-green-700" href="#">
-              {userData.companyname}
-            </a>
-          </td>
-        </tr>
-      );
-    })}
-</tbody>
-
+                    {user.map((userData, index) => {
+                      return (
+                        <tr key={userData._id}>
+                          <td className="px-6 py-4 text-sm text-left font-medium text-gray-800 whitespace-nowrap">
+                            {index + 1}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
+                            {userData.fname}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
+                            {userData.email}
+                          </td>
+                          <td className="px-6 py-4 text-sm font-medium text-left whitespace-nowrap">
+                            <a
+                              className="text-green-500 hover:text-green-700"
+                              href="#"
+                            >
+                              {userData.phone}
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 text-sm font-medium text-left whitespace-nowrap">
+                            <a
+                              className="text-green-500 hover:text-green-700"
+                              href="#"
+                            >
+                              {userData.companyname}
+                            </a>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               </div>
               <div className="max-w-[1600px] bg-gray-100 flex justify-center mt-3">
@@ -141,5 +137,5 @@ export default function PartnerRejectlist() {
         </div>
       </div>
     </div>
-  )
+  );
 }

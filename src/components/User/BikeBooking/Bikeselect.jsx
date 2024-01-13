@@ -36,7 +36,7 @@ export default function Bikeselect() {
   const [Endtartime, Setendtime] = useState();
   const [refresh, setrefresh] = useState(false);
   const [apply, setApply] = useState(false);
-  const [wallet, setwallet] = useState('');
+  const [wallet, setwallet] = useState("");
   const navigate = useNavigate();
 
   const lastItemIndex = currentPage * itemsPerPage;
@@ -49,8 +49,7 @@ export default function Bikeselect() {
   }
 
   useEffect(() => {
-
-dispatch(isbookinpagefalse())
+    dispatch(isbookinpagefalse());
     const bikelist = async () => {
       try {
         const response = await getbikes();
@@ -111,8 +110,7 @@ dispatch(isbookinpagefalse())
         const response = await Datesfind(data);
         if (response.data.success) {
           toast.success("Applyed");
-          setwallet(response.data.wallet)
-          console.log(response.data.wallet,'this is my wallet amount')
+          setwallet(response.data.wallet);
           setApply(true);
           dispatch(addBiks(response.data.bikedata));
         }
@@ -121,7 +119,6 @@ dispatch(isbookinpagefalse())
       console.log(error);
     }
   };
-
 
   const pickupdate = (e) => {
     const data = e.target.value;
@@ -156,7 +153,6 @@ dispatch(isbookinpagefalse())
       const citiesInDistrict = bike
         .filter((value) => value.ownerid.district === selectedDistrict)
         .map((value) => {
-          console.log(value);
           return value.ownerid.city;
         });
       setCity([...new Set(citiesInDistrict)]);
@@ -228,7 +224,7 @@ dispatch(isbookinpagefalse())
         DropTime: Endtartime,
         city: datecity,
         BikeId: bikedetail,
-        wallet:wallet
+        wallet: wallet,
       };
       navigate("/bikebooking", {
         state: bookingData,

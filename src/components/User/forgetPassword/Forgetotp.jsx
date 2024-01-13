@@ -92,7 +92,9 @@ export default function ForgetOtp() {
     try {
       e.preventDefault();
       const datas = { userdetails: value, otp: otp };
-      const isOtpFilled = Object.values(otp).every((value) => value.trim() !== "");
+      const isOtpFilled = Object.values(otp).every(
+        (value) => value.trim() !== ""
+      );
 
       if (!isOtpFilled) {
         setErr("Please fill in all the fields");

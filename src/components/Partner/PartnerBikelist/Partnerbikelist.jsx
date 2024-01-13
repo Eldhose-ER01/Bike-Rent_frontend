@@ -14,37 +14,31 @@ export default function Partnerbikelist() {
   const navigate = useNavigate();
   const [bikedata, setbikedata] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0)
-  
+  const [totalPages, setTotalPages] = useState(0);
+
   const handleClick = (index) => {
-    setPage(index + 1)
-  }
-  
+    setPage(index + 1);
+  };
 
   const dispatch = useDispatch();
-
- 
-  
 
   useEffect(() => {
     const bikeslist = async () => {
       const response = await partnerbikefind(page);
       if (response.data.success) {
         setbikedata(response.data.bikelist);
-        setPage(response.data.page)
-          setTotalPages(response.data.totalPages)
+        setPage(response.data.page);
+        setTotalPages(response.data.totalPages);
       }
     };
-    dispatch(isbookinpagefalse())
+    dispatch(isbookinpagefalse());
 
     bikeslist();
   }, [page]);
 
   const bikedelete = async (id) => {
     try {
-      console.log("Deleting bike with ID:", id);
       const response = await deletebike(id);
-      console.log("Delete bike response:", response);
 
       if (response.data.success) {
         toast.success("Bike deleted");
@@ -111,10 +105,10 @@ export default function Partnerbikelist() {
                                   type="button"
                                   className="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
                                   onClick={() => {
-                                      navigate("/partner/editbike", {
-                                        state: { id: value._id, bike: value },
-                                      });
-                                    }}
+                                    navigate("/partner/editbike", {
+                                      state: { id: value._id, bike: value },
+                                    });
+                                  }}
                                 >
                                   Edit
                                 </button>
@@ -131,18 +125,22 @@ export default function Partnerbikelist() {
                         );
                       })}
                   </div>
-                  <div className='max-w-[1600px] bg-gray-100 flex justify-center'>
-        {totalPages > 0 &&
-          [...Array(totalPages)].map((val, index) => (
-            <button
-              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
-              key={index}
-              onClick={() => handleClick(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-      </div>
+                  <div className="max-w-[1600px] bg-gray-100 flex justify-center">
+                    {totalPages > 0 &&
+                      [...Array(totalPages)].map((val, index) => (
+                        <button
+                          className={`${
+                            page === index + 1 ? "bg-black" : "bg-black"
+                          } py-2 px-4 rounded-md m-1 text-white ${
+                            page === index + 1 ? "font-bold" : "font-normal"
+                          } focus:outline-none focus:ring focus:ring-offset-2`}
+                          key={index}
+                          onClick={() => handleClick(index)}
+                        >
+                          {index + 1}
+                        </button>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>

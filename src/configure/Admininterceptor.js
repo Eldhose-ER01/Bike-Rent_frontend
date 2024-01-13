@@ -1,5 +1,6 @@
 import { adminAxiosInstance } from "./Interceptor.jsx";
 
+/*---------------Adminlogin-------------------*/
 const Adminlogin = async (data) => {
   try {
     const response = await adminAxiosInstance.post("/login", { data });
@@ -8,17 +9,20 @@ const Adminlogin = async (data) => {
     console.log(error);
   }
 };
+/*-----------------User View--------------------*/
 const finduser = async (page, searchTerm) => {
   try {
     const encodedSearchTerm = encodeURIComponent(searchTerm); // Encode search term
-    const response = await adminAxiosInstance.get(`/userlist?page=${page}&search=${encodedSearchTerm}`);
+    const response = await adminAxiosInstance.get(
+      `/userlist?page=${page}&search=${encodedSearchTerm}`
+    );
     return response;
   } catch (error) {
     console.log(error);
   }
 };
 
-
+/*--------------------statuschangeuser-----------------*/
 const statuschangeuser = async (id) => {
   try {
     const response = await adminAxiosInstance.put(`/statuschange?id=${id}`);
@@ -27,14 +31,16 @@ const statuschangeuser = async (id) => {
     console.log(error, "error from stataus change");
   }
 };
+/*----------------partnerdata----------------*/
 const partnerdata = async () => {
   try {
-    const response = await adminAxiosInstance.get('/partnerreq');
+    const response = await adminAxiosInstance.get("/partnerreq");
     return response;
   } catch (error) {
     console.log(error);
   }
 };
+/*-------------------------partnerreject----------------------*/
 const partnerreject = async (id) => {
   try {
     const response = await adminAxiosInstance.put(`/rejectdata?id=${id}`);
@@ -43,7 +49,7 @@ const partnerreject = async (id) => {
     console.log(error);
   }
 };
-
+/*-------------------------partnerAccept--------------------------*/
 const partnerAccept = async (id) => {
   try {
     const response = await adminAxiosInstance.put(`/acceptdata?id=${id}`);
@@ -52,17 +58,20 @@ const partnerAccept = async (id) => {
     console.log(error);
   }
 };
-
+/*-------------------------partnerlist------------------------------*/
 const partnerlist = async (searchTerm, page) => {
   try {
     const encodedSearchTerm = encodeURIComponent(searchTerm);
-    const response = await adminAxiosInstance.get(`/partnerdata?page=${page}&search=${encodedSearchTerm}`);
+    const response = await adminAxiosInstance.get(
+      `/partnerdata?page=${page}&search=${encodedSearchTerm}`
+    );
     return response;
   } catch (error) {
     console.log(error);
   }
 };
 
+/*--------------------------statuschangepartner---------------------------*/
 const statuschangepartner = async (id) => {
   try {
     const response = await adminAxiosInstance.put(`/partnerstatus?id=${id}`);
@@ -71,6 +80,7 @@ const statuschangepartner = async (id) => {
     console.log(error, "error from stataus change");
   }
 };
+/*------------------------bikerequst------------------------------------*/
 const bikerequst = async (page) => {
   try {
     const response = await adminAxiosInstance.get(`/bikerequest?page=${page}`);
@@ -79,6 +89,7 @@ const bikerequst = async (page) => {
     console.log(error, "error from stataus change");
   }
 };
+/*---------------------------bikerequstview-------------------------*/
 const bikerequstview = async (id) => {
   try {
     const response = await adminAxiosInstance.get(`/bikerequstview?id=${id}`);
@@ -87,7 +98,7 @@ const bikerequstview = async (id) => {
     console.log(error, "error from stataus change");
   }
 };
-
+/*---------------------------bikeacceptdata------------------------*/
 const bikeacceptdata = async (id) => {
   try {
     const response = await adminAxiosInstance.put(`/acceptbike?id=${id}`);
@@ -96,6 +107,7 @@ const bikeacceptdata = async (id) => {
     console.log(error, "error from stataus change");
   }
 };
+/*----------------------------bikerejected-----------------------*/
 const bikerejected = async (data) => {
   try {
     const response = await adminAxiosInstance.put(
@@ -107,6 +119,7 @@ const bikerejected = async (data) => {
     console.log(error, "error from stataus change");
   }
 };
+/*-------------------------bikepatnerlist----------------------*/
 const bikepatnerlist = async (data) => {
   try {
     const response = await adminAxiosInstance.post("/bikepartnerlist", {
@@ -117,6 +130,7 @@ const bikepatnerlist = async (data) => {
     console.log(error, "error from stataus change");
   }
 };
+/*-----------------------statuschangebike-----------------------*/
 const statuschangebike = async (id) => {
   try {
     const response = await adminAxiosInstance.put(`/blockbike?id=${id}`);
@@ -125,65 +139,61 @@ const statuschangebike = async (id) => {
     console.log(error, "error from stataus change");
   }
 };
-
-const AddCoupons=async(data)=>{
+/*------------------------AddCoupons-----------------------------*/
+const AddCoupons = async (data) => {
   try {
-    const response = await adminAxiosInstance.post('/coupon',{data});
-    return response
-
+    const response = await adminAxiosInstance.post("/coupon", { data });
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
-const findCoupons=async(page)=>{
+};
+/*-----------------------------findCoupons----------------------*/
+const findCoupons = async (page) => {
   try {
     const response = await adminAxiosInstance.get(`/findcoupon?page=${page}`);
-    return response
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
-const couponsblock=async(id)=>{
+};
+/*-------------------------------couponsblock------------------------*/
+const couponsblock = async (id) => {
   try {
     const response = await adminAxiosInstance.post(`/blockcoupon?id=${id}`);
-    return response
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
-const AdminChartView=async()=>{
+};
+/*--------------------------------AdminChartView-----------------------*/
+const AdminChartView = async () => {
   try {
-    const response=await adminAxiosInstance.get('/chartview')
-    return response
+    const response = await adminAxiosInstance.get("/chartview");
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
+};
 
-const Rejectlists=async(page)=>{
+const Rejectlists = async (page) => {
   try {
     console.log("work");
-    const response=await adminAxiosInstance.get(`/rejectlist?page=${page}`)
-    return response
+    const response = await adminAxiosInstance.get(`/rejectlist?page=${page}`);
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
-
-const Sales=async(page)=>{
+};
+/*------------------------Sales--------------------------*/
+const Sales = async (page) => {
   try {
-    const response=await adminAxiosInstance.get(`/adminsales?page=${page}`)
-    return response
+    const response = await adminAxiosInstance.get(`/adminsales?page=${page}`);
+    return response;
   } catch (error) {
     console.log(error, "error from stataus change");
-
   }
-}
+};
 
 export {
   Adminlogin,
@@ -205,5 +215,5 @@ export {
   couponsblock,
   AdminChartView,
   Sales,
-  Rejectlists
+  Rejectlists,
 };

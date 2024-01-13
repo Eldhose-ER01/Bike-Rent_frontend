@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { Getbooking, BookingChange,Cancelbooking} from "../../../configure/Partnerinterceptor";
+import {
+  Getbooking,
+  BookingChange,
+  Cancelbooking,
+} from "../../../configure/Partnerinterceptor";
 import Partnerdash from "../Partnerdashboard/Partnerdash";
 import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 import { useDispatch } from "react-redux";
@@ -9,25 +13,24 @@ import toast from "react-hot-toast";
 export default function BookingDetails() {
   const [bookingData, setBookingData] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const Dispatch=useDispatch()
+  const Dispatch = useDispatch();
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0)
-  
+  const [totalPages, setTotalPages] = useState(0);
+
   const handleClick = (index) => {
-    setPage(index + 1)
-  }
+    setPage(index + 1);
+  };
   const finddata = async () => {
     const response = await Getbooking(page);
     if (response.data.success) setBookingData(response.data.booking);
-    setPage(response.data.page)
-    setTotalPages(response.data.totalPages)
+    setPage(response.data.page);
+    setTotalPages(response.data.totalPages);
   };
   useEffect(() => {
-   
-    Dispatch(isbookinpagefalse())
+    Dispatch(isbookinpagefalse());
     finddata();
-  }, [refresh,page]);
+  }, [refresh, page]);
 
   const statuschange = async (id) => {
     try {
@@ -35,37 +38,36 @@ export default function BookingDetails() {
       if (response.data.success) {
         refresh == true ? setRefresh(false) : setRefresh(true);
       }
-      if(response.data.complete){
-        toast.success("Running Completed")
+      if (response.data.complete) {
+        toast.success("Running Completed");
       }
-      if(response.data.error){
-        toast.success("Wait For Running")
+      if (response.data.error) {
+        toast.success("Wait For Running");
       }
-      if(response.data.messages){
-        toast.success("Running started Wait for end")
+      if (response.data.messages) {
+        toast.success("Running started Wait for end");
       }
     } catch (error) {
       console.log(error);
     }
   };
-const cancel=async(id)=>{
-  try {
-    const response=await Cancelbooking(id)
-      if(response.data.success){
+  const cancel = async (id) => {
+    try {
+      const response = await Cancelbooking(id);
+      if (response.data.success) {
         refresh == true ? setRefresh(false) : setRefresh(true);
-        toast.success("Cancel Booking")
-      }else if(response.data.Running){
-        toast.error("Not Canceld Your Ride has started ")
-      }else if(response.data.Completed){
-        toast.error("Not canceld Your Ride Completed")
-      }else if(response.data.canceld){
-        toast.error("You Are Alredy Canceld Booking")
+        toast.success("Cancel Booking");
+      } else if (response.data.Running) {
+        toast.error("Not Canceld Your Ride has started ");
+      } else if (response.data.Completed) {
+        toast.error("Not canceld Your Ride Completed");
+      } else if (response.data.canceld) {
+        toast.error("You Are Alredy Canceld Booking");
       }
-    
-  } catch (error) {
-    console.log(error);
-  }
-}
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div style={{ display: "flex" }} className="w-screen">
       <div style={{ flex: 1 }}>
@@ -168,7 +170,8 @@ const cancel=async(id)=>{
                                 className=" w-[100px] text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                                 onClick={() => {
                                   cancel(data._id);
-                                }}>
+                                }}
+                              >
                                 Cancel
                               </button>
                             </td>
@@ -190,20 +193,23 @@ const cancel=async(id)=>{
                       })}
                   </tbody>
                 </table>
-              
               </div>
-              <div className='max-w-[1600px] bg-gray-100 flex justify-center'>
-        {totalPages > 0 &&
-          [...Array(totalPages)].map((val, index) => (
-            <button
-              className={`${page === index + 1 ? 'bg-black' : 'bg-black'} py-2 px-4 rounded-md m-1 text-white ${page === index + 1 ? 'font-bold' : 'font-normal'} focus:outline-none focus:ring focus:ring-offset-2`}
-              key={index}
-              onClick={() => handleClick(index)}
-            >
-              {index + 1}
-            </button>
-          ))}
-      </div>
+              <div className="max-w-[1600px] bg-gray-100 flex justify-center">
+                {totalPages > 0 &&
+                  [...Array(totalPages)].map((val, index) => (
+                    <button
+                      className={`${
+                        page === index + 1 ? "bg-black" : "bg-black"
+                      } py-2 px-4 rounded-md m-1 text-white ${
+                        page === index + 1 ? "font-bold" : "font-normal"
+                      } focus:outline-none focus:ring focus:ring-offset-2`}
+                      key={index}
+                      onClick={() => handleClick(index)}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

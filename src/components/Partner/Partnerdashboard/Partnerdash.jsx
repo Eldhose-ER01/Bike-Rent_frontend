@@ -30,7 +30,6 @@ export default function Partnerdash() {
     { name: "Logout", link: "/partner/login", icon: IoMdLogOut },
   ];
 
-
   const [open, setOpen] = useState(true);
 
   const homelogout = () => {
@@ -39,7 +38,6 @@ export default function Partnerdash() {
     localStorage.clear();
     navigate("/partner/login");
   };
-
 
   const [change, setChange] = useState(true);
   const isorder = useSelector((store) => store.navSlice);
@@ -52,12 +50,7 @@ export default function Partnerdash() {
     }
   };
 
-
-  
-
-  useEffect(() => {
-
-  }, [isorder, change]);
+  useEffect(() => {}, [isorder, change]);
 
   return (
     <div>

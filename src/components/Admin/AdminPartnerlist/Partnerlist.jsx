@@ -23,7 +23,6 @@ export default function Partnerlist() {
   const navigate = useNavigate();
   const findUser = async () => {
     try {
-      console.log("Search Value:", search);
       const response = await partnerlist(search, page);
       if (response.data.success) {
         setUser(response.data.userdata);
@@ -37,7 +36,6 @@ export default function Partnerlist() {
   useEffect(() => {
     Dispatch(isbookinpagefalse());
     findUser();
-    
   }, [search, page]);
 
   const viewbikes = (id) => {
@@ -125,67 +123,65 @@ export default function Partnerlist() {
                   </thead>
                   <tbody className="divide-y divide-gray-200">
                     {user.length >= 0 &&
-                      user.map((user, index) => (
-                        
-                        user.isVerifed == 'verified' && (
-                      
-                         
-                          <tr key={user._id}>
-                            <td className="px-6 py-4 text-sm text-left font-medium text-gray-800 whitespace-nowrap">
-                              {index + 1}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
-                              {user.fname}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
-                              {user.email}
-                            </td>
-                            <td className="px-6 py-4 text-sm font-medium  text-left whitespace-nowrap">
-                              <a
-                                className="text-green-500 hover:text-green-700"
-                                href="#"
-                              >
-                                {user.phone}
-                              </a>
-                            </td>
-
-                            <td className="px-6 py-4  text-left whitespace-nowrap">
-                              {user.status ? (
-                                <button
-                                  type="button"
-                                  className=" w-[100px] text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
-                                  onClick={() => {
-                                    bolockorunblock(user._id);
-                                  }}
+                      user.map(
+                        (user, index) =>
+                          user.isVerifed == "verified" && (
+                            <tr key={user._id}>
+                              <td className="px-6 py-4 text-sm text-left font-medium text-gray-800 whitespace-nowrap">
+                                {index + 1}
+                              </td>
+                              <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
+                                {user.fname}
+                              </td>
+                              <td className="px-6 py-4 text-sm text-gray-800 text-left whitespace-nowrap">
+                                {user.email}
+                              </td>
+                              <td className="px-6 py-4 text-sm font-medium  text-left whitespace-nowrap">
+                                <a
+                                  className="text-green-500 hover:text-green-700"
+                                  href="#"
                                 >
-                                  Block
-                                </button>
-                              ) : (
+                                  {user.phone}
+                                </a>
+                              </td>
+
+                              <td className="px-6 py-4  text-left whitespace-nowrap">
+                                {user.status ? (
+                                  <button
+                                    type="button"
+                                    className=" w-[100px] text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                                    onClick={() => {
+                                      bolockorunblock(user._id);
+                                    }}
+                                  >
+                                    Block
+                                  </button>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className=" w-[100px] mtext-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900"
+                                    onClick={() => {
+                                      bolockorunblock(user._id);
+                                    }}
+                                  >
+                                    Unblock
+                                  </button>
+                                )}
+                              </td>
+                              <td className="px-6 py-4 text-sm font-medium  text-left whitespace-nowrap">
                                 <button
                                   type="button"
                                   className=" w-[100px] mtext-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900"
                                   onClick={() => {
-                                    bolockorunblock(user._id);
+                                    viewbikes(user._id);
                                   }}
                                 >
-                                  Unblock
+                                  View Bikes
                                 </button>
-                              )}
-                            </td>
-                            <td className="px-6 py-4 text-sm font-medium  text-left whitespace-nowrap">
-                              <button
-                                type="button"
-                                className=" w-[100px] mtext-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900"
-                                onClick={() => {
-                                  viewbikes(user._id);
-                                }}
-                              >
-                                View Bikes
-                              </button>
-                            </td>
-                          </tr>
-                        )
-                      ))}
+                              </td>
+                            </tr>
+                          )
+                      )}
                   </tbody>
                 </table>
               </div>
