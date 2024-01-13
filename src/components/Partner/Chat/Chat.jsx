@@ -4,7 +4,7 @@ import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 import { useDispatch } from "react-redux";
 import io from "socket.io-client"
 import toast from "react-hot-toast";
-const socket = io.connect('http://localhost:8080')
+const socket = io.connect('https://runrider.site')
 
 export default function Chat() {
     const Dispatch=useDispatch()
@@ -56,6 +56,7 @@ const usechatsid=(id,first,last,image)=>{
     setRefresh(id)
     setname(first+last)
     setimage(image)
+    
 }
 
 const [currentMessage, setCurrentMessage] = useState("");
@@ -115,12 +116,12 @@ if(refresh){
         });
     }
      return (
-    <div className="w-screen flex">
+    <div className="w-screen flex flex-wrap">
     <div className="w-[25%] border h-screen bg-slate-200">
         <div className="flex  items-center mt-7 ">
            <img src={partnerdetail.image} alt=""  className="rounded-full w-20 h-20 ml-4" />
            <div className="ml-3">
-            <h3 className="text-2xl">{partnerdetail.fname} {partnerdetail.lname}</h3>
+            <h3 className="text-2xl flex-wrap">{partnerdetail.fname} {partnerdetail.lname}</h3>
             <div className="border border-primary p-[2px] rounded-full"><p className="text-lg font-light">{partnerdetail.email}</p></div>
             
            </div>
@@ -128,7 +129,7 @@ if(refresh){
         </div>
         <hr className="bg-black mt-5 h-1"/>
       
-        <div className="mx-14 mt-10 bg-slate-200">
+        <div className="mx-14 mt-10 bg-slate-200 flex flex-wrap">
             <div className="text-blue-500 text-lg font-semibold ml-1">Messages</div>
             <div>
             {

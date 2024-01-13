@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Profiledata ,BookingPartner,saveChat,getChat} from "../../../configure/Userinterceptor"
 import io from "socket.io-client"
 import toast from "react-hot-toast"
-const socket = io.connect('http://localhost:8080')
+const socket = io.connect('https://runrider.site')
 export default function Chat() {
    const[user,setUser]=useState([])
    const[partner,setPartner]=useState([])
@@ -113,30 +113,30 @@ const [currentMessage, setCurrentMessage] = useState("");
         });
     }
   return (
-    <div className="w-screen flex">
+    <div className="w-screen flex flex-wrap">
     <div className="w-[25%] border h-screen bg-slate-200">
-        <div className="flex  items-center mt-7 ">
+        <div className="flex  items-center mt-7 flex-wrap">
            <img src={user.image} alt=""  className="rounded-full w-20 h-20 ml-4" />
-           <div className="ml-3">
+           <div className="ml-3 flex-wrap">
             <h3 className="text-2xl">{user.fname} {user.lname}</h3>
-            <div className="border border-primary p-[2px] rounded-full"><p className="text-lg font-light">{user.email}</p></div>
+            <div className="border border-primary p-[2px] rounded-full"><p className="text-lg font-light flex flex-wrap">{user.email}</p></div>
             
            </div>
            
         </div>
         <hr className="bg-black mt-5 h-1"/>
       
-        <div className="mx-14 mt-10 bg-slate-200">
+        <div className="mx-14 mt-10 bg-slate-200 flex-wrap">
             <div className="text-blue-500 text-lg font-semibold ml-1">Messages</div>
             <div>
             {
   partner.map((partner, index) => {
     return (
-      <div key={index} className="flex justify-center items-center py-5 border-b border-b-gray-300" onClick={()=>partnersid(partner._id,partner.fname,partner.lname,partner.image)}>
+      <div key={index} className="flex justify-center items-center py-5 border-b border-b-gray-300 flex-wrap" onClick={()=>partnersid(partner._id,partner.fname,partner.lname,partner.image)}>
         <div className="cursor-pointer flex items-center">
           <img src={partner.image} className="w-20 h-20 rounded-full" alt="" />
           <div className="ml-6">
-            <h3 className="text-lg font-semibold">{partner.fname} {partner.lname}</h3>
+            <h3 className="text-lg font-semibold flex-wrap">{partner.fname} {partner.lname}</h3>
             <div className="border border-primary p-[2px] rounded-full">
               <p className="text-sm font-light text-gray-600"></p>
             </div>
