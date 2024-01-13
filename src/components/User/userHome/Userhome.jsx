@@ -39,7 +39,7 @@ export default function Userhome() {
     };
 
     bikelist();
-  }, []);
+  }, [page]);
   return (
     <div className="">
       <div className="hidden md:block ">
