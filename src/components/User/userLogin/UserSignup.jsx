@@ -250,7 +250,7 @@ export default function UserSignup() {
                   >
                     Sign UP
                   </button>
-                  <button
+                  {/* <button
                     type="submit"
                     className="flex items-center justify-center w-full text-black bg-white-500 hover:bg-black-700 focus:ring-2 focus:outline-none border border-sky-500 font-bold rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black-600 dark:hover-bg-black-700"
                     onClick={handleGoogle}
@@ -261,7 +261,7 @@ export default function UserSignup() {
                       className="w-6 h-6 ml-2"
                       alt="Google Logo"
                     />
-                  </button>
+                  </button> */}
                 </form>
               </div>
             </div>
