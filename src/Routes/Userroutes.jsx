@@ -115,15 +115,15 @@ export default function Userroutes() {
           path="/offer"
           element={userToken ? <Offers /> : <Userlogin />}
         />
-        {/* <Route
+        <Route
           path="/chat"
           element={userToken ? <UserChat /> : <Userlogin />}
-        /> */}
+        />
         <Route
           path="/wallethistory"
           element={userToken ? <WalletHistorys /> : <Userlogin />}
         />
-          <Route path="/chat" element={<UserChat />} />
+          {/* <Route path="/chat" element={<UserChat />} /> */}
         <Route path="/bookingcancel" element={<BookingCancels />} />
 
         <Route path="/error404" element={<Page404notfind />} />
