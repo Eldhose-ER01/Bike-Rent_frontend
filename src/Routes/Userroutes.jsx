@@ -57,7 +57,6 @@ export default function Userroutes() {
   }, []);
   const user = useSelector((store) => store.user.userD);
   const userToken = user.token;
-  console.log(userToken,'hhhhhhhhhhhh')
 
   return (
     <div>

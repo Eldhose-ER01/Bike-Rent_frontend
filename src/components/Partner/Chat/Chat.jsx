@@ -9,8 +9,8 @@ import { isbookinpagefalse } from "../../../redux/NavbarSlice";
 import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 import toast from "react-hot-toast";
-// const socket = io.connect("https://runrider.site");
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect("https://runrider.site");
+// const socket = io.connect("http://localhost:8080");
 
 
 
