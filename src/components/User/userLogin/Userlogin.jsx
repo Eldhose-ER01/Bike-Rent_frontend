@@ -103,7 +103,7 @@ function LoginForm() {
                 />
                 {notemail && <span style={{ color: "red" }}>{notemail}</span>}
                 {errors.email && (
-                  <span style={{ color: "red" }}>Plese fill email</span>
+                  <span style={{ color: "red" }}>Please fill email</span>
                 )}
               </div>
               <div>
@@ -128,7 +128,7 @@ function LoginForm() {
                   <span style={{ color: "red" }}>{nonPassword}</span>
                 )}
                 {errors.password && (
-                  <span style={{ color: "red" }}>Plese fill password</span>
+                  <span style={{ color: "red" }}>Please fill password</span>
                 )}
               </div>
               <div className="flex items-center justify-between">

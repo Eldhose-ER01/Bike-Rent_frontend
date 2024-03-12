@@ -53,7 +53,7 @@ export default function UserSignup() {
       if (response.data.success) {
         navigate("/otp", { state: formValues });
       } else {
-        console.log("errorm");
+        console.log("error");
       }
 
       if (response.data.errorMessage) {

@@ -232,7 +232,7 @@ export default function Bikeselect() {
     }
   };
   return (
-    <div className="container ">
+    <div>
       <div className="h-20 lg:h-24 ">
         <UserNav />
       </div>
@@ -381,7 +381,7 @@ export default function Bikeselect() {
         </div>
       </div>
 
-      <div className="   bg-black flex flex-col items-center">
+      <div className="bg-black flex flex-col items-center">
         <h1 className="text-green-400 text-4xl mt-8 mb-4 font-extrabold">
           Available Bikes
         </h1>
