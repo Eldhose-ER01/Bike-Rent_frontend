@@ -26,8 +26,6 @@ const createAxiosInstanceWithInterceptor = (baseurl, tokenName) => {
       return response;
     },
     (error) => {
-      console.log("Error Response Data:", error.response.data);
-      console.log("Error Response Headers:", error.response.headers);
       if (error.response) {
         if (error.response.status === 404) {
           window.location.href = "/error404";
